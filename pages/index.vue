@@ -3,10 +3,12 @@ const { locale } = useI18n()
 </script>
 
 <template>
-    <div>
-        <p>{{ $t('welcome') }}</p>
-    </div>
-    <div class="">
-        <PodcastBox />
+    <div class="w-full">
+        <div>
+            <p>{{ $t('welcome') }}</p>
+        </div>
+        <div>
+            <PodcastBox />
+        </div>
     </div>
 </template>
