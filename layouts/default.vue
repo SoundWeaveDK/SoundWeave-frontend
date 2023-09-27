@@ -1,7 +1,7 @@
 
 import { SideBar } from '#build/components';
 <template>
-    <div>
+    <div class="flex">
         <SideBar />
         <slot />
     </div>

@@ -4,7 +4,7 @@ const { locale } = useI18n()
 
 <template >
     <!-- Sidebar -->
-    <div class="bg-white dark:bg-slate-800 border-r-8 border-black dark:border-blue-800 h-screen w-64">
-        <h1 class="text-black dark:text-white"> {{ $t('home') }} </h1>
+    <div class="bg-white  border-r-4 border-black min-h-screen w-64 flex flex-row">
+        <h1> {{ $t('home') }} </h1>
     </div>
 </template>
