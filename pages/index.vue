@@ -6,4 +6,7 @@ const { locale } = useI18n()
     <div>
         <p>{{ $t('welcome') }}</p>
     </div>
+    <div class="">
+        <PodcastBox />
+    </div>
 </template>
