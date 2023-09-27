@@ -1,5 +1,9 @@
+<script setup>
+const { locale } = useI18n()
+</script>
+
 <template>
-    <h1 class=" text-blue-800 ">
-        Hello world!
-    </h1>
+    <div>
+        <p>{{ $t('welcome') }}</p>
+    </div>
 </template>
