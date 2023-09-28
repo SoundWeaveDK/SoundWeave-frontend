@@ -1,5 +1,5 @@
 <template>
-    <section class="text-gray-600 body-font flex flex-wrap">
+    <section class="text-gray-600 body-font flex flex-wrap justify-center">
         <div v-for="item in testData" :key="item.id"
             class="flex-shrink-0 w-full lg:w-1/6 md:w-1/4 sm:w-1/2 p-4 m-2 bg-slate-300 rounded">
             <div class="h-full">
