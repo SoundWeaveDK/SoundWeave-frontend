@@ -14,20 +14,19 @@ export default defineNuxtConfig({
       mobileAppIOS: true,
     },
     workbox: {
-      enabled: true,
     },
   },
   i18n: {
     vueI18n: './i18n.config.ts' // if you are using custom path, default 
   },
   devServer: { port: 3001 },
-  devtools: {
-    enabled: true,
-
-    timeline: {
+  /*   devtools: {
       enabled: true,
-    },
-  },
+  
+      timeline: {
+        enabled: true,
+      },
+    }, */
   css: ['~/assets/css/main.css'],
   postcss: {
     plugins: {
