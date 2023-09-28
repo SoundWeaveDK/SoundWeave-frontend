@@ -1,8 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    '@nuxtjs/i18n'
+    '@nuxtjs/i18n',
+    '@kevinmarrec/nuxt-pwa'
   ],
+  pwa: {
+    manifest: {
+      name: 'SoundWeave',
+      short_name: 'SoundWeave',
+      lang: 'en',
+    },
+    meta: {
+      mobileAppIOS: true,
+    },
+    workbox: {
+      enabled: true,
+    },
+  },
   i18n: {
     vueI18n: './i18n.config.ts' // if you are using custom path, default 
   },

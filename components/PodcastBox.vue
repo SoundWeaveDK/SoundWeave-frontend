@@ -3,9 +3,9 @@
         <div v-for="item in testData" :key="item.id"
             class="flex-shrink-0 w-full lg:w-1/6 md:w-1/4 p-4 m-2 bg-slate-200 rounded">
             <div class="h-full">
-                <div class="h-full flex flex-col items-center text-center">
-                    <img alt="thumbnail" class="flex-shrink-0 rounded-lg w-full h-40 object-cover object-center mb-4"
-                        src="https://dummyimage.com/200x200">
+                <div class="h-full flex flex-col items-center">
+                    <img alt="thumbnail" class="flex-shrink-0 rounded-lg w-full h-50 object-cover object-center mb-4"
+                        :src="item.picture ? item.picture : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'">
                     <div class="w-full">
                         <h2 class="title-font font-medium text-lg text-gray-900">{{ item.title }}</h2>
                         <h3 class="text-gray-500 mb-3">{{ item.creator }}</h3>
@@ -22,6 +22,7 @@ export default {
             testData: [
                 {
                     id: 1,
+                    picture: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/1f2b5e119743765.60a406c890f14.png",
                     title: "Sample Title 1",
                     creator: "Sample Creator 1",
                 },
