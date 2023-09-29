@@ -4,7 +4,7 @@ const { locale } = useI18n()
 
 <template>
     <div class="w-full bg-white dark:bg-slate-900 ">
-        <div class="">
+        <div class="h-screen overflow-auto">
             <PodcastBox />
         </div>
     </div>
