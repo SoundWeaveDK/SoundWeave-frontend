@@ -1,7 +1,7 @@
 <template>
-    <section class="text-gray-600 body-font flex flex-wrap justify-center">
+    <section class="text-gray-600 body-font flex flex-wrap justify-center overscroll-auto">
         <div v-for="item in testData" :key="item.id"
-            class="flex-shrink-0 w-full lg:w-1/6 md:w-1/4 sm:w-1/2 p-4 m-2 bg-gray-200 dark:bg-gray-700 rounded-lg">
+            class="flex-shrink-0 w-1/3 sm:w-1/4 md:w-1/4 lg:w-1/6 p-4 m-2 bg-gray-200 dark:bg-gray-700 rounded-lg overscroll-y-auto">
             <div class="h-full">
                 <div class="h-full flex flex-col items-center">
                     <img alt="thumbnail" class="flex-shrink-0 rounded-lg w-full h-50 object-cover object-center mb-4"
