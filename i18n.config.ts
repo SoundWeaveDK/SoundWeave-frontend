@@ -11,6 +11,7 @@ export default defineI18nConfig(() => ({
             yourCollection: 'Collection',
             showMore: 'Show More',
             showLess: 'Show Less',
+            yourFeed: 'Your Feed',
         },
         fr: {
             welcome: 'Bienvenue',
@@ -21,6 +22,7 @@ export default defineI18nConfig(() => ({
             yourCollection: 'Collection',
             showMore: 'Afficher plus',
             showLess: 'Afficher moins',
+            yourFeed: 'Votre fil',
         },
         da: {
             welcome: 'Velkommen',
@@ -31,6 +33,7 @@ export default defineI18nConfig(() => ({
             yourCollection: 'Samling',
             showMore: 'Vis mere',
             showLess: 'Vis mindre',
+            yourFeed: 'Dit feed',
         },
     }
 }))
