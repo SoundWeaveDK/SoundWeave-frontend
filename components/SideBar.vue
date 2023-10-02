@@ -4,11 +4,13 @@ const { locale } = useI18n()
 
 <template >
     <div
-        class="flex overflow-y-auto flex-col h-screen p-3 text-black dark:text-white  bg-white dark:bg-slate-900 w-60 border-solid border-2 border-blue-950 ">
+        class="flex overflow-y-auto flex-col h-screen p-3 text-black dark:text-white  bg-white dark:bg-slate-900 w-full border-solid border-2 border-blue-950 ">
         <div class="space-y-3">
             <div>
                 <!-- logo -->
-                <img src="../assets/images/icon.png" class="w-20 m-auto" />
+                <a href="/">
+                    <img src="../assets/images/icon.png" class="w-20 m-auto" />
+                </a>
             </div>
 
             <div class="flex items-center">
@@ -17,10 +19,10 @@ const { locale } = useI18n()
             <div class="flex-1">
                 <ul class="pt-2 pb-4 space-y-1 text-sm">
                     <li class="rounded-sm">
-                        <button class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md">
+                        <a href="/" class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md">
                             <Icon name="humbleicons:home" size="2em" />
                             <h1 class="text-xl">{{ $t('home') }}</h1>
-                        </button>
+                        </a>
                     </li>
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     <li class="rounded-sm">
@@ -73,8 +75,7 @@ const { locale } = useI18n()
                             <div v-if="index == testLists.length - 1">
                                 <div v-if="collectionMore">
                                     <button class="flex py-2">
-                                        <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.list_name
-                                        }}</p>
+                                        <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.list_name }}</p>
                                     </button>
                                 </div>
                                 <button class="flex py-2" @click="toggleCollection()">
