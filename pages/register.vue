@@ -7,7 +7,7 @@
             <div
                 class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <div class="flex items-center">
+                    <div class="flex items-center justify-center">
                         <h1
                             class="center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             SoundWeave
@@ -25,7 +25,7 @@
                                     <label for="email" class="mb-1 text-sm font-medium text-gray-900 dark:text-white">
                                         Email
                                     </label>
-                                    <input type="text" v-model="email" name="email" id="email"
+                                    <input type="email" v-model="email" name="email" id="email"
                                         class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         autocomplete="email" placeholder="your@email.com" required>
                                 </div>
@@ -43,7 +43,7 @@
                                     <label for="country" class="mb-1 text-sm font-medium text-gray-900 dark:text-white">
                                         {{ $t('country') }}
                                     </label>
-                                    <select v-model="country" name="country" id="country"
+                                    <select required v-model="country" name="country" id="country"
                                         class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="1">Denmark</option>
                                         <option value="2">United Kingdom</option>
@@ -55,7 +55,7 @@
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                         {{ $t('gender') }}
                                     </label>
-                                    <select v-model="gender" name="gender" id="gender"
+                                    <select required v-model="gender" name="gender" id="gender"
                                         class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="1">{{ $t('man') }}</option>
                                         <option value="2">{{ $t('woman') }}</option>
@@ -63,6 +63,12 @@
                                     </select>
                                 </div>
                             </div>
+                            <label for="birthday" class="mb-1 text-sm font-medium text-gray-900 dark:text-white">
+                                {{ $t('birthday') }}
+                            </label>
+                            <input type="date" v-model="birthday" name="birthday" id="birthday"
+                                class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                autocomplete="birthday" placeholder="dd/mm/yyyy" required>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
                                 $t('password') }}</label>
                             <input type="password" v-model="password" name="password" id="password"
@@ -104,10 +110,11 @@ export default {
             icon: icon,
             email: '',
             username: '',
+            gender: '',
+            country: '',
+            birthday: '',
             password: '',
             rePassword: '',
-            gender: '',
-            country: ''
         }
     },
     methods: {
@@ -125,6 +132,7 @@ export default {
                 email: this.email.toLowerCase(),
                 username: this.username,
                 password: this.password,
+                birthday: this.birthday,
                 country: this.country,
                 gender: this.gender
             }).then((res) => {
