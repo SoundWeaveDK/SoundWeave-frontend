@@ -50,7 +50,6 @@ definePageMeta({
 </script>
 
 <script>
-import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import icon from '@/assets/images/icon.png'
 import axios from '@/utils/axiosInstance.js'

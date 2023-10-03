@@ -17,7 +17,7 @@
                             class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             {{ $t('register') }}</h1>
                     </div>
-                    <form class="space-y-4 md:space-y-6" @submit.prevent="verifyRegister"
+                    <form class="space-y-4 md:space-y-6" @submit.prevent="verifyPasswords"
                         onkeydown="return event.key != 'Enter';">
                         <div>
                             <div class="flex flex-wrap">
@@ -45,11 +45,9 @@
                                     </label>
                                     <select v-model="country" name="country" id="country"
                                         class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="Indonesia">Indonesia</option>
-                                        <option value="Malaysia">Malaysia</option>
-                                        <option value="Singapore">Singapore</option>
-                                        <option value="Thailand">Thailand</option>
-                                        <option value="Vietnam">Vietnam</option>
+                                        <option value="1">Denmark</option>
+                                        <option value="2">United Kingdom</option>
+                                        <option value="3">Franch</option>
                                     </select>
                                 </div>
                                 <div class="w-full md:w-1/2 pr-2">
@@ -81,8 +79,8 @@
                             {{ $t('register') }}
                         </button>
                     </form>
-                    <button>
-                        <Icon name=" material-symbols:arrow-circle-left-outline-rounded" size="2.5em" />
+                    <button @click="$router.push('/login')">
+                        <Icon name="material-symbols:arrow-circle-left-outline-rounded" size="2.5em" />
                     </button>
                 </div>
             </div>
@@ -104,47 +102,38 @@ export default {
     data() {
         return {
             icon: icon,
-
             email: '',
             username: '',
             password: '',
             rePassword: '',
+            gender: '',
+            country: ''
         }
     },
     methods: {
-        comparePass() {
+        //verify if the password and the rePassword are the same if not alert the user and dont send the request
+        verifyPasswords() {
             if (this.password != this.rePassword) {
-                alert('Password not match')
+                alert("Passwords are not the same")
+                return false
+            } else {
+                this.verifyRegister()
             }
         },
         verifyRegister() {
-            axios.post('auth/register', {
+            axios.post('/api/users/registerUser', {
                 email: this.email.toLowerCase(),
-                password: parseInt(this.password),
-                name: this.name
+                username: this.username,
+                password: this.password,
+                country: this.country,
+                gender: this.gender
             }).then((res) => {
                 if (res.data.status == 200) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: 'Register success',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                    alert(res.data.message)
                     this.$router.push('/login')
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: res.data.message,
-                    })
+                    alert(res.data.message)
                 }
-            }).catch((err) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: err,
-                })
             })
         },
     }
