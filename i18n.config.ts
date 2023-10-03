@@ -21,6 +21,7 @@ export default defineI18nConfig(() => ({
             woman: 'Woman',
             other: 'Other',
             birthday: 'Birthday',
+            registerSuccess: 'You have successfully registered',
         },
         fr: {
             welcome: 'Bienvenue',
@@ -41,6 +42,7 @@ export default defineI18nConfig(() => ({
             woman: 'Femme',
             other: 'Autre',
             birtday: 'Date de naissance',
+            registerSuccess: "Vous vous êtes inscrit avec succès",
 
         },
         da: {
@@ -62,6 +64,7 @@ export default defineI18nConfig(() => ({
             woman: 'Kvinde',
             other: 'Andet',
             birthday: 'Fødselsdag',
+            registerSuccess: 'Du er nu registreret',
         },
     }
 }))

@@ -61,24 +61,20 @@ export default {
 
             email: '',
             password: '',
-            name: ''
         }
     },
     methods: {
         verifyLogin() {
-            axios.post('auth/login', {
+            axios.post('/api/users/login', {
                 email: this.email.toLowerCase(),
-                password: parseInt(this.password)
+                password: this.password
             }).then((response) => {
                 if (response.status == 200) {
-                    VueCookies.set('token', response.data.token, '1h');
-                    if (response.data.user.roleId == 1) {
-                        VueCookies.set("cY9bf9egP1xpEUOG7nxlww==", true, '2h');
-                    }
+                    localStorage.setItem('accessToken', response.data.accessToken);
                     this.$router.push('/');
                 }
             }).catch((error) => {
-                if (error.response.status == 401) {
+                if (error.response.status == 404) {
                     alert("Forkert eller ugyldig kode.");
                 }
             })

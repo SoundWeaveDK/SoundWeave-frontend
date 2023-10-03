@@ -136,8 +136,8 @@ export default {
                 country: this.country,
                 gender: this.gender
             }).then((res) => {
-                if (res.data.status == 200) {
-                    alert(res.data.message)
+                if (res.data.status == 201) {
+                    this.$t('registerSuccess')
                     this.$router.push('/login')
                 } else {
                     alert(res.data.message)
