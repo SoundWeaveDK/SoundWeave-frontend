@@ -3,7 +3,8 @@ const { locale } = useI18n()
 </script>
 
 <template>
-    <div>
-        <p>{{ $t('welcome') }}</p>
+    <div class=" h-screen  overflow-y-auto p-4">
+        <h1 class="pl-28 text-xl text-black dark:text-white">{{ $t('yourFeed') }}</h1>
+        <PodcastBox />
     </div>
 </template>
