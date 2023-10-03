@@ -11,6 +11,12 @@ export default defineI18nConfig(() => ({
             yourCollection: 'Collection',
             showMore: 'Show More',
             showLess: 'Show Less',
+            password: 'Password',
+            rePassword: 'Repeat Password',
+            register: 'New User',
+            username: 'Username',
+            country: 'Country',
+            gender: 'Gender',
         },
         fr: {
             welcome: 'Bienvenue',
@@ -21,6 +27,12 @@ export default defineI18nConfig(() => ({
             yourCollection: 'Collection',
             showMore: 'Afficher plus',
             showLess: 'Afficher moins',
+            password: 'Mot de passe',
+            rePassword: 'Répéter le mot de passe',
+            register: "nouvel utilisateur",
+            username: "Nom d'utilisateur",
+            country: 'Pays',
+            gender: 'Genre',
         },
         da: {
             welcome: 'Velkommen',
@@ -31,6 +43,12 @@ export default defineI18nConfig(() => ({
             yourCollection: 'Samling',
             showMore: 'Vis mere',
             showLess: 'Vis mindre',
+            password: 'Adgangskode',
+            rePassword: 'Gentag adgangskode',
+            register: 'Ny bruger',
+            username: 'Brugernavn',
+            country: 'Land',
+            gender: 'Køn',
         },
     }
 }))
