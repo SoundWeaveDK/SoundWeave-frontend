@@ -52,7 +52,7 @@ definePageMeta({
 <script>
 import 'sweetalert2/dist/sweetalert2.min.css';
 import icon from '@/assets/images/icon.png'
-import axios from '@/utils/axiosInstance.js'
+import axios from '@/utils/axiosInstance.ts'
 
 export default {
     data() {

@@ -102,7 +102,7 @@ definePageMeta({
 
 <script>
 import icon from '@/assets/images/icon.png'
-import axios from '@/utils/axiosInstance.js'
+import axios from '@/utils/axiosInstance.ts'
 
 export default {
     data() {
