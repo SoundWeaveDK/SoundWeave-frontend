@@ -1,6 +1,8 @@
 export default defineI18nConfig(() => ({
     legacy: false,
     locale: 'en',
+    fallbackWarn: false,
+    missingWarn: false,
     messages: {
         en: {
             welcome: 'Welcome',
@@ -89,19 +91,6 @@ export default defineI18nConfig(() => ({
             search: '検索',
             language: '言語',
         },
-        tr: {
-            welcome: 'Hoşgeldiniz',
-            home: 'Anasayfa',
-            lists: 'Listeler',
-            following: 'Takip Edilenler',
-            watchLater: 'İzlemek İstediğim',
-            yourCollection: 'Koleksiyon',
-            showMore: 'Daha Fazla Göster',
-            showLess: 'Daha Az Göster',
-            yourFeed: 'Akışınız',
-            search: 'Ara',
-            language: 'Dil',
-        },
         cn: {
             welcome: '欢迎',
             home: '首页',
@@ -115,18 +104,18 @@ export default defineI18nConfig(() => ({
             search: '搜索',
             language: '语言',
         },
-        ko: {
-            welcome: '환영합니다',
-            home: '홈',
-            lists: '목록',
-            following: '팔로잉',
-            watchLater: '나중에 볼 동영상',
-            yourCollection: '컬렉션',
-            showMore: '더보기',
-            showLess: '간략히',
-            yourFeed: '피드',
-            search: '검색',
-            language: '언어',
+        sa: {
+            welcome: 'أهلاً بك',
+            home: 'الرئيسية',
+            lists: 'قوائم',
+            following: 'متابعات',
+            watchLater: 'المشاهدة لاحقاً',
+            yourCollection: 'مجموعتك',
+            showMore: 'عرض المزيد',
+            showLess: 'عرض أقل',
+            yourFeed: 'الأخبار',
+            search: 'بحث',
+            language: 'اللغة',
         },
     }
 }))

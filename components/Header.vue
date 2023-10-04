@@ -1,7 +1,7 @@
 <template>
     <header
-        class="p-6 w-full text-black dark:text-white  bg-white dark:bg-slate-900 border-solid border-b-2 border-blue-950 ">
-        <nav class="mx-auto flex items-center justify-between lg:px-8">
+        class="my-auto h-full w-full text-black dark:text-white  bg-white dark:bg-slate-900 border-solid border-b-2 border-blue-950 ">
+        <nav class="mx-auto h-full flex items-center justify-between lg:px-8">
             <!-- searchbar -->
             <input type="text" :placeholder="placeholderText" class="ml-20 rounded-full p-2 w-1/3">
 
@@ -25,7 +25,8 @@
                 <!-- user settings button -->
                 <div>
                     <a href="/profile">
-                        <img src="https://i.pravatar.cc/150?img=3" class="w-14 h-14 rounded-full" />
+                        <!-- <img :src="tempUser[0].user_image" class="rounded-full h-12 w-12"> -->
+                        <img src="../assets/images/fishe.jpg" class="rounded-full h-12 w-12">
                     </a>
                 </div>
             </div>
