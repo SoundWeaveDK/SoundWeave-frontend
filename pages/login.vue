@@ -75,6 +75,7 @@ export default {
             }).then((response) => {
                 if (response.status == 200) {
                     localStorage.setItem('accessToken', response.data.accessToken);
+                    localStorage.setItem('username', response.data.user.username);
                     this.$router.push('/');
                 }
             }).catch((error) => {
