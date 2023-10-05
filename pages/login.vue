@@ -10,14 +10,19 @@
                     <div class="flex items-center justify-center">
                         <h1
                             class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                            SoundWeave login
+                            SoundWeave
+                        </h1>
+                        &nbsp;
+                        <h1
+                            class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                            {{ $t('login') }}
                         </h1>
                     </div>
                     <form class="space-y-4 md:space-y-6" @submit.prevent="verifyLogin"
                         onkeydown="return event.key != 'Enter';">
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Email
+                                {{ $t('email') }}
                             </label>
                             <input type="text" v-model="email" name="email" id="email"
                                 class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -30,7 +35,7 @@
                         </div>
                         <button type="submit"
                             class="w-full text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Login
+                            {{ $t('login') }}
                         </button>
                         <button type="button" @click="$router.push('/register')"
                             class="w-full text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
@@ -50,7 +55,6 @@ definePageMeta({
 </script>
 
 <script>
-import 'sweetalert2/dist/sweetalert2.min.css';
 import icon from '@/assets/images/icon.png'
 import axios from '@/utils/axiosInstance.ts'
 
@@ -63,6 +67,12 @@ export default {
             password: '',
         }
     },
+    beforeMount() {
+        if (localStorage.getItem('accessToken')) {
+            alert(this.$t('alreadyLoggedIn'));
+            this.$router.push('/');
+        }
+    },
     methods: {
         verifyLogin() {
             axios.post('/api/users/login', {
@@ -71,14 +81,16 @@ export default {
             }).then((response) => {
                 if (response.status == 200) {
                     localStorage.setItem('accessToken', response.data.accessToken);
+                    localStorage.setItem('username', response.data.user.username);
                     this.$router.push('/');
                 }
             }).catch((error) => {
-                if (error.response.status == 404) {
-                    alert("Forkert eller ugyldig kode.");
+                if (error) {
+                    alert(this.$t('loginError'));
                 }
             })
         },
     }
-}    </script>
+}    
+</script>
 
