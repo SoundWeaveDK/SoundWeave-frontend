@@ -13,6 +13,7 @@
     "@kevinmarrec/nuxt-pwa": "^0.17.0",
     "@nuxt/devtools": "latest",
     "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge@^8.0.0-rc.5-28271670.101a44c",
+    "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge@^8.0.0-rc.5-28271670.101a44c",
     "autoprefixer": "^10.4.16",
     "nuxt": "^3.7.3",
     "nuxt-icon": "^0.5.0",
@@ -24,5 +25,8 @@
     "@azure/storage-blob": "^12.16.0",
     "dotenv": "^16.3.1",
     "uuid": "^9.0.1"
+  },
+  "dependencies": {
+    "axios": "^1.5.1"
   }
 }
