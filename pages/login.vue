@@ -67,6 +67,12 @@ export default {
             password: '',
         }
     },
+    beforeMount() {
+        if (localStorage.getItem('accessToken')) {
+            alert(this.$t('alreadyLoggedIn'));
+            this.$router.push('/');
+        }
+    },
     methods: {
         verifyLogin() {
             axios.post('/api/users/login', {

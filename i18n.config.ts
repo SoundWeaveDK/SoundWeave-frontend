@@ -31,6 +31,7 @@ export default defineI18nConfig(() => ({
             search: 'Search',
             language: 'Language',
             loginError: 'Email or password is incorrect, please try again',
+            alreadyLoggedIn: 'You are already logged in',
         },
         fr: {
             welcome: 'Bienvenue',
@@ -59,6 +60,7 @@ export default defineI18nConfig(() => ({
             search: 'Recherche',
             language: 'Langue',
             loginError: 'Email ou mot de passe incorrect, veuillez réessayer',
+            alreadyLoggedIn: 'Vous êtes déjà connecté',
 
         },
         da: {
@@ -88,6 +90,7 @@ export default defineI18nConfig(() => ({
             search: 'Søg',
             language: 'Sprog',
             loginError: 'Email eller adgangskode er forkert, prøv igen',
+            alreadyLoggedIn: 'Du er allerede logget ind',
         },
         jp: {
             welcome: 'ようこそ',
@@ -115,6 +118,7 @@ export default defineI18nConfig(() => ({
             search: '検索',
             language: '言語',
             loginError: 'メールアドレスまたはパスワードが間違っています。もう一度お試しください',
+            alreadyLoggedIn: 'すでにログインしています',
 
         },
         cn: {
@@ -143,6 +147,7 @@ export default defineI18nConfig(() => ({
             search: '搜索',
             language: '语言',
             loginError: '电子邮件或密码不正确，请重试',
+            alreadyLoggedIn: '您已经登录',
         },
         sa: {
             welcome: 'أهلا بك',
@@ -170,6 +175,7 @@ export default defineI18nConfig(() => ({
             search: 'بحث',
             language: 'لغة',
             loginError: 'البريد الإلكتروني أو كلمة المرور غير صحيحة ، يرجى المحاولة مرة أخرى',
+            alreadyLoggedIn: 'أنت مسجل الدخول بالفعل',
         },
     }
 }))
