@@ -74,8 +74,8 @@ export default {
         }
     },
     methods: {
-        verifyLogin() {
-            axios.post('/api/users/login', {
+        async verifyLogin() {
+            await axios.post('/api/users/login', {
                 email: this.email.toLowerCase(),
                 password: this.password
             }).then((response) => {
