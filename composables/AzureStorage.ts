@@ -5,9 +5,7 @@ import axios from "~/utils/axiosInstance";
 export const UploadImage = async (fileName: string, file: any) => {
   try {
 
-    const response = await axios.post("/api/azurestorage/getuploadsastoken", {
-      containername: "images",
-    });
+    const response = await axios.post("/api/azurestorage/getuploadsastoken");
 
     const sasToken = response.data;
 
@@ -17,7 +15,7 @@ export const UploadImage = async (fileName: string, file: any) => {
 
     const blockBlobClient = containerClient.getBlockBlobClient(fileName);
 
-    return await blockBlobClient.uploadBrowserData(file);
+    return await blockBlobClient.uploadData(file);
 
   } catch (error) {
     console.error("UploadImage error:", error);
@@ -26,9 +24,7 @@ export const UploadImage = async (fileName: string, file: any) => {
 
 export const UploadPodcast = async (fileName: string, file: any) => {
   try {
-    const response = await axios.post("/api/azurestorage/getuploadsastoken", {
-      containername: "podcasts",
-    });
+    const response = await axios.post("/api/azurestorage/getuploadsastoken");
 
     const sasToken = response.data;
 
@@ -38,10 +34,33 @@ export const UploadPodcast = async (fileName: string, file: any) => {
 
     const blockBlobClient = containerClient.getBlockBlobClient(fileName);
 
-    return await blockBlobClient.uploadBrowserData(file);
+    return await blockBlobClient.uploadData(file);
 
   } catch (error) {
     console.error("UploadImage error:", error);
   }
 };
 
+export const DownloadImage = async (filename: string) => {
+  try {
+    const response = await axios.post("/api/azurestorage/getimage", {
+      filename
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("DownloadImage error:", error);
+  }
+}
+
+export const DownloadPodcast = async (filename: string) => {
+  try {
+    const response = await axios.post("/api/azurestorage/getpodcast", {
+      filename,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("DownloadPodcast error:", error);
+  }
+}
