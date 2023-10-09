@@ -9,7 +9,29 @@ export default {
     "./app.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateRows: {
+        '12': 'repeat(12, minmax(0, 1fr))',
+      },
+      gridRowStart: {
+        '7': '7',
+        '8': '8',
+        '9': '9',
+        '10': '10',
+        '11': '11',
+        '12': '12',
+        '13': '13'
+      },
+      gridRowEnd: {
+        '7': '7',
+        '8': '8',
+        '9': '9',
+        '10': '10',
+        '11': '11',
+        '12': '12',
+        '13': '13'
+      }
+    },
   },
   plugins: [],
 }
