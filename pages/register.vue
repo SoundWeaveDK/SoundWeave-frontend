@@ -134,7 +134,7 @@ export default {
             }
         },
         async verifyRegister() {
-            await axios.post('/api/users/registerUser', {
+            await axios.post('/api/user/register-user', {
                 email: this.email.toLowerCase(),
                 username: this.username,
                 password: this.password,
