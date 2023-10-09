@@ -11,11 +11,11 @@
             <div v-if="!isSoundBarOpen" class=" overflow-y-scroll row-start-2 row-end-12">
                 <slot />
             </div>
-            <div v-if="!isSoundBarOpen" class="row-start-12 row-end-12">
-                <Footer @openSoundBar="handleOpenSoundBar" />
-            </div>
-            <div v-if="isSoundBarOpen">
+            <div v-if="isSoundBarOpen" class=" overflow-y-scroll row-start-2 row-end-12">
                 <BigFooter />
+            </div>
+            <div class="row-start-12 row-end-12">
+                <Footer @openSoundBar="handleOpenSoundBar" />
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@ export default {
 
     methods: {
         handleOpenSoundBar() {
-            this.isSoundBarOpen = true;
+            this.isSoundBarOpen = !this.isSoundBarOpen;
         },
     },
 };
