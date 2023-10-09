@@ -120,16 +120,16 @@ export default {
     },
     methods: {
         //verify if the password and the rePassword are the same if not alert the user and dont send the request
-        verifyPasswords() {
+        async verifyPasswords() {
             if (this.password != this.rePassword) {
                 alert("Passwords are not the same")
                 return false
             } else {
-                this.verifyRegister()
+                await this.verifyRegister()
             }
         },
-        verifyRegister() {
-            axios.post('/api/users/registerUser', {
+        async verifyRegister() {
+            await axios.post('/api/users/registerUser', {
                 email: this.email.toLowerCase(),
                 username: this.username,
                 password: this.password,
