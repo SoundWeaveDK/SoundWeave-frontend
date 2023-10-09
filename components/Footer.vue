@@ -1,15 +1,11 @@
 <template>
     <div class="h-full text-black dark:text-white dark:bg-slate-800 border-solid border-t-2 border-blue-950 rounded-t-lg">
-        <div class="w-full h-full m-auto">
-            <div class=" h-full  ">
-                <!-- line -->
-                <div class="flex h-1/6 justify-center">
-                    <button @click="openSoundBar">
-                        <div class="mx-auto m-1 w-64 h-1 bg-gray-400 rounded-full"></div>
-                        <div class="mx-auto w-44 h-1 bg-gray-400 rounded-full"></div>
-                    </button>
-                </div>
-                <div class="flex items-center justify-between h-5/6 mx-4 my-auto ">
+        <div class="w-full h-full m-auto flex pl-4 pr-4">
+            <div>
+                <img :src="podcast.imageSrc" alt="Podcast Image" class="w-16 h-16 m-1 rounded-sm">
+            </div>
+            <div class=" h-full w-full ">
+                <div class="flex items-center justify-between h-full mx-4 my-auto ">
                     <div class="flex items-center my-auto">
                         <button class="mr-4" @click="togglePlayback">
                             <Icon v-if="isPlaying" name="fa6-solid:pause" size="2em" />
@@ -20,12 +16,21 @@
                             <div class="text-xs ">{{ podcast.artist }}</div>
                         </div>
                     </div>
-                    <div class="flex items-center">
-                        <div class="text-xs  mr-4">{{ currentTime }}</div>
-                        <div class="w-64 h-2 bg-gray-300 rounded-full cursor-pointer" @click="seek">
-                            <div class="h-full bg-blue-500 rounded-full" :style="{ width: progress + '%' }"></div>
+                    <div class="h-full">
+                        <!-- line -->
+                        <div class="flex justify-center h-0">
+                            <button @click="openSoundBar">
+                                <div class="mx-auto m-1 w-64 h-1 bg-gray-400 rounded-full"></div>
+                                <div class="mx-auto w-44 h-1 bg-gray-400 rounded-full"></div>
+                            </button>
                         </div>
-                        <div class="text-xs  ml-4">{{ duration }}</div>
+                        <div class="flex items-center h-full">
+                            <div class="text-xs  mr-4">{{ currentTime }}</div>
+                            <div class="w-64 h-2 bg-gray-300 rounded-full cursor-pointer" @click="seek">
+                                <div class="h-full bg-blue-500 rounded-full" :style="{ width: progress + '%' }"></div>
+                            </div>
+                            <div class="text-xs  ml-4">{{ duration }}</div>
+                        </div>
                     </div>
                     <div class="h-full flex">
                         <!-- add to list -->
@@ -61,6 +66,7 @@ export default {
                 title: 'Crown',
                 artist: 'Kendrick Lamar',
                 audioSrc: '/audio/crown.mp3',
+                imageSrc: '/images/crown.jpg',
             },
         };
     },

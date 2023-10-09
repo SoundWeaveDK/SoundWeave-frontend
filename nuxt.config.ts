@@ -35,4 +35,4 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-})
+});

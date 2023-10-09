@@ -116,6 +116,7 @@ export default defineI18nConfig(() => ({
       loginError: 'ユーザー名またはパスワードが間違っています。もう一度お試しください',
 
     },
+
     cn: {
       welcome: '欢迎',
       home: '主页',

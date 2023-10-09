@@ -120,12 +120,12 @@ export default {
     },
     methods: {
         //verify if the password and the rePassword are the same if not alert the user and dont send the request
-        verifyPasswords() {
+        async verifyPasswords() {
             if (this.password != this.rePassword) {
                 alert("Passwords are not the same")
                 return false
             } else {
-                this.verifyRegister()
+                await this.verifyRegister()
             }
         },
         async verifyRegister() {

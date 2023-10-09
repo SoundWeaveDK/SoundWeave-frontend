@@ -1,7 +1,6 @@
-
 <template>
     <div class="flex h-screen overflow-y-hidden">
-        <div class="w-1/5">
+        <div v-if="!isMobile" id="sideBar" class="md:w-1/5">
             <SideBar />
         </div>
         <div class="w-full h-screen bg-white dark:bg-slate-900 grid grid-rows-12 grid-flow-col">
@@ -11,11 +10,12 @@
             <div v-if="!isSoundBarOpen" class=" overflow-y-scroll row-start-2 row-end-12">
                 <slot />
             </div>
-            <div v-if="!isSoundBarOpen" class="row-start-12 row-end-12">
-                <Footer @openSoundBar="handleOpenSoundBar" />
-            </div>
-            <div v-if="isSoundBarOpen">
+            <div v-if="isSoundBarOpen" class=" overflow-y-scroll row-start-2 row-end-12">
                 <BigFooter />
+            </div>
+            <div class="row-start-12 row-end-12">
+                <Footer v-if="!isMobile" @openSoundBar="handleOpenSoundBar" />
+                <MobileNav v-else @openSoundBar="handleOpenSoundBar" />
             </div>
         </div>
     </div>
@@ -31,13 +31,26 @@ export default {
     data() {
         return {
             isSoundBarOpen: false,
+            isMobile: false,
         };
     },
+    mounted() {
+        this.checkIsMobile();
+        window.addEventListener('resize', this.checkIsMobile);
 
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.checkIsMobile);
+    },
     methods: {
         handleOpenSoundBar() {
-            this.isSoundBarOpen = true;
+            this.isSoundBarOpen = !this.isSoundBarOpen;
         },
+        checkIsMobile() {
+            this.isMobile = window.innerWidth < 769;
+        },
+
     },
 };
 </script>
+
