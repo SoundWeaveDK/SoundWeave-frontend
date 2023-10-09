@@ -27,6 +27,7 @@ export default defineI18nConfig(() => ({
       yourFeed: 'Your Feed',
       search: 'Search',
       language: 'Language',
+      library: 'Your library',
 
     },
     fr: {
@@ -52,6 +53,7 @@ export default defineI18nConfig(() => ({
       yourFeed: 'Votre fil',
       search: 'Recherche',
       language: 'Langue',
+      library: 'Votre bibliothèque',
 
     },
     da: {
@@ -77,6 +79,7 @@ export default defineI18nConfig(() => ({
       yourFeed: 'Dit feed',
       search: 'Søg',
       language: 'Sprog',
+      library: 'Dit bibliotek',
     },
     jp: {
       welcome: 'ようこそ',
@@ -100,6 +103,7 @@ export default defineI18nConfig(() => ({
       yourFeed: 'あなたのフィード',
       search: '検索',
       language: '言語',
+      library: 'あなたのライブラリ',
 
     },
     cn: {
@@ -124,6 +128,7 @@ export default defineI18nConfig(() => ({
       yourFeed: '你的饲料',
       search: '搜索',
       language: '语言',
+      library: '你的图书馆',
     },
     sa: {
       welcome: 'أهلا بك',
@@ -147,6 +152,7 @@ export default defineI18nConfig(() => ({
       yourFeed: 'التغذية الخاصة بك',
       search: 'بحث',
       language: 'لغة',
+      library: 'مكتبتك',
     },
   }
 }))
