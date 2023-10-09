@@ -82,7 +82,7 @@ export default {
 
             email: '',
             password: '',
-            isLoading: false, // Add isLoading property
+            isLoading: false,
         }
     },
     beforeMount() {
@@ -93,7 +93,7 @@ export default {
     },
     methods: {
         async verifyLogin() {
-            this.isLoading = true; // Set isLoading to true
+            this.isLoading = true;
             await axios.post('/api/user/login', {
                 email: this.email.toLowerCase(),
                 password: this.password
@@ -108,7 +108,7 @@ export default {
                     alert(this.$t('loginError'));
                 }
             }).finally(() => {
-                this.isLoading = false; // Set isLoading back to false
+                this.isLoading = false;
             })
         },
     }
