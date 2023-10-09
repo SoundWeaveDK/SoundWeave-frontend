@@ -19,10 +19,11 @@
                     <div class="h-full">
                         <!-- line -->
                         <div class="flex justify-center h-0">
-                            <button @click="openSoundBar">
+                            <!-- if on bigfooter.vue then return to index -->
+                            <NuxtLink :to="destination">
                                 <div class="mx-auto m-1 w-64 h-1 bg-gray-400 rounded-full"></div>
                                 <div class="mx-auto w-44 h-1 bg-gray-400 rounded-full"></div>
-                            </button>
+                            </NuxtLink>
                         </div>
                         <div class="flex items-center h-full">
                             <div class="text-xs  mr-4">{{ currentTime }}</div>
@@ -55,6 +56,17 @@
 
 <script>
 export default {
+    computed: {
+        destination() {
+            if (this.$route.path == "/BigFooter") {
+                return "/";
+            } else {
+                return "/BigFooter";
+            }
+        },
+
+    },
+
     data() {
         return {
             isPlaying: false,
@@ -108,9 +120,6 @@ export default {
         updateVolume(event) {
             const audio = this.$refs.audioPlayer;
             audio.volume = event.target.value;
-        },
-        openSoundBar() {
-            this.$emit('openSoundBar');
         },
     },
 };
