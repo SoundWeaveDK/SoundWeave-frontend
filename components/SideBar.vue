@@ -69,7 +69,7 @@ const { locale } = useI18n()
                     <li class="rounded-sm">
                         <button class="text-xl md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md">
                             <Icon name="grommet-icons:clock" />
-                            <h1 class="text-xl"> {{ $t('watchLater') }}</h1>
+                            <h1 class="text-xl"> {{ $t('listenLater') }}</h1>
                         </button>
                         <div v-for="(lists, index) in testLists">
                             <div v-if="index == testLists.length - 1">

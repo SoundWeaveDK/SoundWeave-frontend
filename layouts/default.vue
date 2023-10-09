@@ -8,10 +8,10 @@
             <div class="row-start-1 row-end-2">
                 <Header />
             </div>
-            <div v-if="!isSoundBarOpen" class=" overflow-y-scroll row-start-2 row-end-12">
+            <div v-if="!isSoundBarOpen" class="row-start-2 row-end-12">
                 <slot />
             </div>
-            <div v-if="isSoundBarOpen" class=" overflow-y-scroll row-start-2 row-end-12">
+            <div v-if="isSoundBarOpen" class="row-start-2 row-end-12">
                 <BigFooter />
             </div>
             <div class="row-start-12 row-end-12">

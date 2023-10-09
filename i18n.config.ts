@@ -9,7 +9,6 @@ export default defineI18nConfig(() => ({
       home: 'Home',
       lists: 'Lists',
       following: 'Following',
-      watchLater: 'Watch Later',
       yourCollection: 'Collection',
       showMore: 'Show More',
       showLess: 'Show Less',
@@ -27,6 +26,8 @@ export default defineI18nConfig(() => ({
       yourFeed: 'Your Feed',
       search: 'Search',
       language: 'Language',
+      listenLater: 'Listen Later',
+      comment: 'Comment',
 
     },
     fr: {
@@ -34,7 +35,6 @@ export default defineI18nConfig(() => ({
       home: 'Accueil',
       lists: 'Listes',
       following: 'Abonnements',
-      watchLater: 'À regarder plus tard',
       yourCollection: 'Collection',
       showMore: 'Afficher plus',
       showLess: 'Afficher moins',
@@ -52,6 +52,8 @@ export default defineI18nConfig(() => ({
       yourFeed: 'Votre fil',
       search: 'Recherche',
       language: 'Langue',
+      listenLater: 'Écouter plus tard',
+      comment: 'Commentaire',
 
     },
     da: {
@@ -77,6 +79,8 @@ export default defineI18nConfig(() => ({
       yourFeed: 'Dit feed',
       search: 'Søg',
       language: 'Sprog',
+      listenLater: 'Lyt senere',
+      comment: 'Kommentar',
     },
     jp: {
       welcome: 'ようこそ',
@@ -100,6 +104,8 @@ export default defineI18nConfig(() => ({
       yourFeed: 'あなたのフィード',
       search: '検索',
       language: '言語',
+      listenLater: '後で聞く',
+      comment: 'コメント',
 
     },
     cn: {
@@ -124,6 +130,9 @@ export default defineI18nConfig(() => ({
       yourFeed: '你的饲料',
       search: '搜索',
       language: '语言',
+      listenLater: '待会儿听',
+      comment: '评论',
+
     },
     sa: {
       welcome: 'أهلا بك',
@@ -147,6 +156,8 @@ export default defineI18nConfig(() => ({
       yourFeed: 'التغذية الخاصة بك',
       search: 'بحث',
       language: 'لغة',
+      listenLater: 'استمع لاحقا',
+      comment: 'تعليق',
     },
   }
 }))
