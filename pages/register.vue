@@ -139,8 +139,8 @@ export default {
                 username: this.username,
                 password: this.password,
                 birthday: this.birthday,
-                country: this.country,
-                gender: this.gender
+                countryId: this.country,
+                genderId: this.gender
             }).then((res) => {
                 if (res.data.status == 201) {
                     alert(this.$t('registerSuccess'))
