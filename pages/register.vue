@@ -126,6 +126,9 @@ export default {
             if (this.password != this.rePassword) {
                 alert("Passwords are not the same")
                 return false
+            } else if (this.password.length < 8) {
+                alert("Password must be at least 8 characters long")
+                return false
             } else {
                 this.verifyRegister()
             }
