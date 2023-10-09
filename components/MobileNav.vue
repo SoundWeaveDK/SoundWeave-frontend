@@ -27,7 +27,6 @@
 
 <style>
 .active {
-    /* bg-gray-50 */
     background-color: #3e39c0;
 }
 </style>
