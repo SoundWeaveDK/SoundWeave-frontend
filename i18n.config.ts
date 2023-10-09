@@ -28,7 +28,10 @@ export default defineI18nConfig(() => ({
       search: 'Search',
       language: 'Language',
       library: 'Your library',
-
+      comment: 'Comment',
+      alreadyLoggedIn: 'You are already logged in',
+      login: 'Login',
+      loginError: 'Wrong username or password, please try again',
     },
     fr: {
       welcome: 'Bienvenue',
@@ -54,7 +57,10 @@ export default defineI18nConfig(() => ({
       search: 'Recherche',
       language: 'Langue',
       library: 'Votre bibliothèque',
-
+      comment: 'Commentaire',  
+      alreadyLoggedIn: 'Vous êtes déjà connecté',  
+      login: "S'identifier",
+      loginError: 'Mauvais nom d\'utilisateur ou mot de passe, veuillez réessayer',
     },
     da: {
       welcome: 'Velkommen',
@@ -80,6 +86,10 @@ export default defineI18nConfig(() => ({
       search: 'Søg',
       language: 'Sprog',
       library: 'Dit bibliotek',
+      comment: 'Kommentar',
+      alreadyLoggedIn: 'Du er allerede logget ind',
+      login: 'Log ind',
+      loginError: 'Forkert brugernavn eller adgangskode, prøv igen',
     },
     jp: {
       welcome: 'ようこそ',
@@ -104,7 +114,10 @@ export default defineI18nConfig(() => ({
       search: '検索',
       language: '言語',
       library: 'あなたのライブラリ',
-
+      comment: 'コメント',
+      alreadyLoggedIn: 'すでにログインしています',
+      login: 'ログイン',
+      loginError: 'ユーザー名またはパスワードが間違っています。もう一度お試しください',
     },
     cn: {
       welcome: '欢迎',
@@ -129,6 +142,10 @@ export default defineI18nConfig(() => ({
       search: '搜索',
       language: '语言',
       library: '你的图书馆',
+      comment: '评论',  
+      alreadyLoggedIn: '您已经登录',
+      login: '登录',
+      loginError: '用户名或密码错误，请重试',
     },
     sa: {
       welcome: 'أهلا بك',
@@ -153,6 +170,10 @@ export default defineI18nConfig(() => ({
       search: 'بحث',
       language: 'لغة',
       library: 'مكتبتك',
+      comment: 'تعليق',
+      alreadyLoggedIn: 'أنت مسجل الدخول بالفعل',
+      login: 'تسجيل الدخول',
+      loginError: 'اسم المستخدم أو كلمة المرور غير صحيحة ، يرجى المحاولة مرة أخرى',
     },
   }
 }))
