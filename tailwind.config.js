@@ -30,6 +30,9 @@ export default {
         '11': '11',
         '12': '12',
         '13': '13'
+      },
+      screens: {
+        'mobile': { 'max': '769px' },
       }
     },
   },
