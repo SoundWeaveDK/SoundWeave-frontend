@@ -75,6 +75,7 @@
   
 <script>
 export default {
+    name: "Podcast",
     computed: {
         placeholderText() {
             return this.$t('comment');
