@@ -7,7 +7,7 @@
             <div class="row-start-1 row-end-2">
                 <Header />
             </div>
-            <div class="row-start-2 row-end-12 overflow-y-scroll">
+            <div class="row-start-2 row-end-12 overflow-y-auto">
                 <slot />
             </div>
             <div class="row-start-12 row-end-12">
