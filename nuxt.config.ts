@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/i18n',
     'nuxt-icon',
-    '@kevinmarrec/nuxt-pwa'
+    '@kevinmarrec/nuxt-pwa',
   ],
   pwa: {
     manifest: {
