@@ -1,4 +1,4 @@
-import { BlobServiceClient } from "@azure/storage-blob";
+import { BlobServiceClient, BlockBlobClient } from "@azure/storage-blob";
 import axios from "~/utils/axiosInstance";
 
 
@@ -25,15 +25,14 @@ export const UploadFile = async (fileName: string, file: File, containerName: st
     // add random string to file name to make it unique
     fileName = Math.random().toString(36).substring(2, 15) + "_" + Date.now() + "_" + fileName;
 
-    const response = await axios.get("/api/azurestorage/getuploadsastoken");
+    const response = await axios.post("/api/azurestorage/getuploadsastoken", {
+      containerName,
+      fileName,
+    });
 
     const sasToken = response.data;
 
-    const blobServiceClient = new BlobServiceClient(sasToken);
-
-    const containerClient = blobServiceClient.getContainerClient(containerName);
-
-    const blockBlobClient = containerClient.getBlockBlobClient(fileName);
+    const blockBlobClient = new BlockBlobClient(sasToken);
 
     return await blockBlobClient.uploadData(file);
 
