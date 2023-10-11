@@ -4,6 +4,8 @@
         <nav class="mx-auto h-full flex items-center justify-between lg:px-8">
             <!-- searchbar -->
             <input type="text" :placeholder="placeholderText" class="ml-20 rounded-full p-2 w-1/3">
+
+
             <div class="mr-20 flex justify-between ">
                 <!-- user settings button -->
                 <div style="position: relative;">
