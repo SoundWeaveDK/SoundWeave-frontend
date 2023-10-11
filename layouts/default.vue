@@ -11,8 +11,8 @@
                 <slot />
             </div>
             <div class="row-start-12 row-end-12">
-                <Footer v-if="!isMobile" />
-                <MobileNav v-else />
+                <Footer />
+                <!-- <MobileNav /> -->
             </div>
         </div>
     </div>
