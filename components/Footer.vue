@@ -2,7 +2,7 @@
     <div class="h-full text-black dark:text-white dark:bg-slate-800 border-solid border-t-2 border-blue-950 rounded-t-lg">
         <div class="w-full h-full m-auto flex pl-4 pr-4">
             <div>
-                <img :src="podcast.imageSrc" alt="Podcast Image" class="w-16 h-16 m-1 rounded-sm">
+                <img :src="podcast.imageSrc" alt="Podcast Image" class="w-16 h-16 m-1 rounded-sm mobile:h-12 mobile:w-12">
             </div>
             <div class=" h-full w-full ">
                 <div class="flex items-center justify-between h-full mx-4 my-auto ">
