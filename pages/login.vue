@@ -74,8 +74,13 @@ definePageMeta({
 <script>
 import icon from '@/assets/images/icon.png'
 import axios from '@/utils/axiosInstance.ts'
+import { useUserStore } from '@/stores/login.ts'
+import { mapStores } from 'pinia'
 
 export default {
+    computed: {
+        ...mapStores(useUserStore)
+    },
     data() {
         return {
             icon: icon,
@@ -98,14 +103,16 @@ export default {
                 email: this.email.toLowerCase(),
                 password: this.password
             }).then((response) => {
+                this.userStore.setUser(response.data.user);
+                console.log(this.userStore.getUser);
                 if (response.status == 200) {
-                    localStorage.setItem('accessToken', response.data.accessToken);
-                    localStorage.setItem('username', response.data.user.username);
+
                     this.$router.push('/');
                 }
             }).catch((error) => {
                 if (error) {
-                    alert(this.$t('loginError'));
+                    //alert(this.$t(error));
+                    console.log(error);
                 }
             }).finally(() => {
                 this.isLoading = false;
