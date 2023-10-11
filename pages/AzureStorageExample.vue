@@ -20,7 +20,7 @@ export default {
       input.type = 'file';
       input.onchange = async e => {
         var file = e.target.files[0];
-        var response = await UploadFile(file.name, file, "images")
+        var response = await UploadFile(file, "images")
         console.log(response)
         this.uploadStatus = response._response.status == 201 ? 'Successfully uploaded' : 'Upload failed'
       }
