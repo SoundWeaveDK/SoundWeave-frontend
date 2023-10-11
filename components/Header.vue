@@ -11,12 +11,15 @@
                 <div style="position: relative;">
                     <div @click="toggleDropdown" class="flex items-center">
                         <!-- <img :src="tempUser[0].user_image" class="rounded-full h-12 w-12"> -->
-                        <img src="../assets/images/fishe.jpg" class="rounded-full h-12 w-12 cursor-pointer">
+                        <img :src="loggedInUser.imageURL ? loggedInUser.imageURL : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
+                            class="rounded-full h-12 w-12 cursor-pointer">
                         <div ref="dropdown" v-if="showDropdown"
                             class="text-black absolute top-full left-0 bg-white border border-gray-300 rounded-md shadow-md p-1"
                             @click.stop>
                             <ul>
-                                <li class="mb-2"><a href="profile">Profile</a></li>
+                                <li class="mb-2">
+                                    <NuxtLink to="profile" :loggedInUser="loggedInUser">Profile</NuxtLink>
+                                </li>
                                 <li>
                                     <div id="languageSelector" class="my-auto">
                                         <form>
@@ -44,22 +47,23 @@
 </template>
 
 <script>
+import { useUserStore } from "../stores/login"
+import { mapStores } from "pinia";
+
 export default {
     computed: {
+        ...mapStores(useUserStore),
         placeholderText() {
             return this.$t('search');
         },
     },
+    created() {
+        this.loggedInUser = this.userStore.getUser;
+    },
     data() {
         return {
             showDropdown: false,
-            tempUser: [
-                {
-                    user_name: "test",
-                    user_image: "https://i.pravatar.cc/150?img=3",
-                    user_id: 1,
-                },
-            ],
+            loggedInUser: [],
         }
     },
     methods: {

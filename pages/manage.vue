@@ -4,7 +4,9 @@
     </div>
 </template>
 
-<script>
+<!-- <script>
+import { useUserStore } from "../stores/login"
+import { mapStores } from "pinia";
 
 export default {
     data() {
@@ -64,4 +66,4 @@ export default {
     }
 }
 
-</script>
+</script> -->
