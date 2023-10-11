@@ -18,7 +18,7 @@
                     </div>
                     <div class="h-full">
                         <!-- line -->
-                        <div class="flex justify-center h-0">
+                        <div class="flex justify-center h-0 mobile:hidden">
                             <!-- if on bigfooter.vue then return to index -->
                             <NuxtLink :to="destination">
                                 <div class="mx-auto m-1 w-64 h-1 bg-gray-400 rounded-full"></div>
@@ -27,13 +27,14 @@
                         </div>
                         <div class="flex items-center h-full">
                             <div class="text-xs  mr-4">{{ currentTime }}</div>
-                            <div class="w-64 h-2 bg-gray-300 rounded-full cursor-pointer" @click="seek">
+                            <div class="w-64 h-2 bg-gray-300 rounded-full cursor-pointer mobile:hidden" @click="seek">
                                 <div class="h-full bg-blue-500 rounded-full" :style="{ width: progress + '%' }"></div>
                             </div>
+                            <p class="text-lg font-semibold md:hidden">-</p>
                             <div class="text-xs  ml-4">{{ duration }}</div>
                         </div>
                     </div>
-                    <div class="h-full flex">
+                    <div class="h-full flex mobile:hidden">
                         <!-- add to list -->
                         <button class="mr-8">
                             <Icon name="ic:round-playlist-add" size="2em" />
@@ -44,7 +45,6 @@
                             <input class="my-auto" type="range" min="0" max="1" step="0.1" v-model="volume"
                                 @change="updateVolume">
                         </div>
-
                     </div>
                 </div>
                 <audio ref="audioPlayer" :src="podcast.audioSrc" @timeupdate="onTimeUpdate"></audio>
