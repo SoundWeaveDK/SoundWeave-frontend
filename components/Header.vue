@@ -17,8 +17,8 @@
                             class="text-black absolute top-full left-0 bg-white border border-gray-300 rounded-md shadow-md p-1"
                             @click.stop>
                             <ul>
-                                <li class="mb-2">
-                                    <NuxtLink to="profile" :loggedInUser="loggedInUser">Profile</NuxtLink>
+                                <li v-if="loggedInUser.id" class="mb-2">
+                                    <NuxtLink :to="linkto">Profile</NuxtLink>
                                 </li>
                                 <li>
                                     <div id="languageSelector" class="my-auto">
@@ -59,11 +59,13 @@ export default {
     },
     created() {
         this.loggedInUser = this.userStore.getUser;
+        this.linkto = "/profile/" + this.loggedInUser.id;
     },
     data() {
         return {
             showDropdown: false,
-            loggedInUser: [],
+            loggedInUser: {},
+            linkto: ""
         }
     },
     methods: {
