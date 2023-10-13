@@ -35,7 +35,13 @@ export const UploadFile = async (file: File, containerName: string) => {
 
     const blockBlobClient = new BlockBlobClient(sasToken);
 
-    return await blockBlobClient.uploadData(file);
+    const uploadResponse = await blockBlobClient.uploadData(file);
+
+    return {
+      fileName,
+      fileUrl: blockBlobClient.url,
+      status: uploadResponse._response.status,
+    };
 
   } catch (error) {
     console.error("UploadImage error:", error);
