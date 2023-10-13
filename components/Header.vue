@@ -35,8 +35,8 @@
                             class="flex mt-1 p-2 shadow-2xl shadow-black divide-y divide-gray-100 dark:bg-gray-600 dark:text-white text-black absolute top-full left-0 bg-white border-gray-200 rounded-md shadow-md p-1"
                             @click.stop>
                             <ul>
-                                <li class="mb-2 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                    <NuxtLink to="profile" :loggedInUser="loggedInUser">{{ $t('profile') }}</NuxtLink>
+                                <li v-if="loggedInUser.id" class="mb-2 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                    <NuxtLink :to="linkto">{{ $t('profile') }}</NuxtLink>
                                 </li>
                                 <li>
                                     <div id="languageSelector" class="my-auto grow">
@@ -89,6 +89,7 @@ export default {
     },
     created() {
         this.loggedInUser = this.userStore.getUser;
+        this.linkto = "/profile/" + this.loggedInUser.id;
     },
     data() {
         return {
@@ -98,7 +99,9 @@ export default {
             podcasts: [
                 { id: 1, title: 'The Joe Rogan Experience', link: '/podcast/1' },
                 { id: 2, title: 'The Daily', link: '/podcast/2' },
-            ]
+            ],
+            loggedInUser: {},
+            linkto: ""
         }
     },
     methods: {
