@@ -21,8 +21,9 @@
         <div class="">
             <div class="float-right mr-16">
                 <!-- manage page -->
-                <div class="h-8">
-                    <NuxtLink v-if="loggedInUser.email === user.email" to="/manage"
+                <div v-if="loggedInUser" class="h-8">
+
+                    <NuxtLink to="/manage"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4">
                         {{ $t('manage') }}
                     </NuxtLink>
@@ -45,6 +46,7 @@ export default {
     },
     created() {
         this.loggedInUser = this.userStore.getUser;
+        console.log(this.loggedInUser);
         if (this.$route.params.id == this.loggedInUser.id) {
             this.user = this.loggedInUser;
         } else {

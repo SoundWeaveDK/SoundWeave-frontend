@@ -40,7 +40,6 @@ export default defineI18nConfig(() => ({
       listenLater: 'Listen Later',
       manage: 'Manage',
 
-
     },
     fr: {
       welcome: 'Bienvenue',

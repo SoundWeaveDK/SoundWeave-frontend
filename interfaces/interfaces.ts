@@ -1,4 +1,5 @@
 export interface User {
+    accessToken: string;
     id: number;
     username: string;
     email: string;
@@ -8,3 +9,14 @@ export interface User {
     gender_name: string;
 }
 
+export interface Podcast {
+    id: number;
+    userId: number;
+    podcast_name: string;
+    podcast_file: string;
+    description: string;
+    thumbnail: string;
+    views: number;
+    likes: number;
+    money: number;
+}

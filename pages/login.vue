@@ -84,7 +84,6 @@ export default {
     data() {
         return {
             icon: icon,
-
             email: '',
             password: '',
             isLoading: false,
@@ -104,6 +103,8 @@ export default {
                 password: this.password
             }).then((response) => {
                 this.userStore.setUser(response.data.user);
+                this.userStore.setAccessToken(response.data.accessToken);
+                console.log(response.data);
                 console.log(this.userStore.getUser);
                 if (response.status == 200) {
 
