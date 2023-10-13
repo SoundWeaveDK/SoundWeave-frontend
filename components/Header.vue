@@ -36,7 +36,7 @@
                             @click.stop>
                             <ul>
                                 <li class="mb-2 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                    <NuxtLink to="profile" :loggedInUser="loggedInUser">Profile</NuxtLink>
+                                    <NuxtLink to="profile" :loggedInUser="loggedInUser">{{ $t('profile') }}</NuxtLink>
                                 </li>
                                 <li>
                                     <div id="languageSelector" class="my-auto grow">
