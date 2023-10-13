@@ -22,7 +22,7 @@ export default {
         var file = e.target.files[0];
         var response = await UploadFile(file, "images")
         console.log(response)
-        this.uploadStatus = response._response.status == 201 ? 'Successfully uploaded' : 'Upload failed'
+        this.uploadStatus = response.status == 201 ? 'Successfully uploaded' : 'Upload failed'
       }
       input.click();
     },
