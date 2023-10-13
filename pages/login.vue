@@ -18,11 +18,10 @@
                             {{ $t('login') }}
                         </h1>
                     </div>
-                    <form class="space-y-4 md:space-y-6" @submit.prevent="verifyLogin"
-                        onkeydown="return event.key != 'Enter';">
+                    <form class="space-y-4 md:space-y-6" @submit.prevent="verifyLogin">
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                {{ $t('email') }}
+                                Email
                             </label>
                             <input type="text" v-model="email" name="email" id="email"
                                 class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -91,7 +90,7 @@ export default {
         }
     },
     beforeMount() {
-        if (localStorage.getItem('accessToken')) {
+        if (localStorage.getItem('user')) {
             alert(this.$t('alreadyLoggedIn'));
             this.$router.push('/');
         }

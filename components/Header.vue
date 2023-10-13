@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div id="searchDropdown"
-                    class="fixed z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-2xl shadow-black w-44 dark:bg-gray-700 mt-1"
+                    class="fixed z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-2xl shadow-black w-44 dark:bg-gray-600 mt-1"
                     :style="{ top: searchResultsTop }">
                     <ul v-if="search.length > 0">
                         <li v-for="podcast in filteredPodcasts" :key="podcast.id"
@@ -32,17 +32,17 @@
                         <img :src="loggedInUser.imageURL ? loggedInUser.imageURL : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
                             class="rounded-full h-12 w-12 cursor-pointer">
                         <div ref="dropdown" v-if="showDropdown"
-                            class="text-black absolute top-full left-0 bg-white border-4 border-gray-300 rounded-md shadow-md p-1"
+                            class="flex mt-1 p-2 shadow-2xl shadow-black divide-y divide-gray-100 dark:bg-gray-600 dark:text-white text-black absolute top-full left-0 bg-white border-gray-200 rounded-md shadow-md p-1"
                             @click.stop>
                             <ul>
-                                <li class="mb-2">
+                                <li class="mb-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <NuxtLink to="profile" :loggedInUser="loggedInUser">Profile</NuxtLink>
                                 </li>
                                 <li>
-                                    <div id="languageSelector" class="my-auto">
+                                    <div id="languageSelector" class="my-auto grow">
                                         <form>
-                                            <label for="locale-select">{{ $t('language') }}:
-                                                <Icon :name="'circle-flags:' + $i18n.locale" />
+                                            <label class="flex" for="locale-select">{{ $t('language') }}:
+                                                <Icon class="self-center" :name="'circle-flags:' + $i18n.locale" />
                                             </label>
                                             <select id="locale-select" v-model="$i18n.locale"
                                                 class="text-black dark:text-white rounded p-2 bg-gray-400">
@@ -54,7 +54,10 @@
                                         </form>
                                     </div>
                                 </li>
-                                <li class="mt-2"><a @click="logout">Logout</a></li>
+                                <button class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                    <li class=""><a @click="logout">Logout</a>
+                                    </li>
+                                </button>
                             </ul>
                         </div>
                     </div>
@@ -102,6 +105,11 @@ export default {
         toggleDropdown() {
             this.showDropdown = !this.showDropdown;
         },
+        logout() {
+            const userCookie = useCookie('user')
+            userCookie.value = null
+            this.$router.push('/login')
+        }
     },
 };
 </script>
