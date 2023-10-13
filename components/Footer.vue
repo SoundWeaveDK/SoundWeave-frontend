@@ -59,10 +59,10 @@
 export default {
     computed: {
         destination() {
-            if (this.$route.path == "/BigFooter") {
+            if (this.$route.path == "/podcast/" + this.podcast.id) {
                 return "/";
             } else {
-                return "/BigFooter";
+                return "/podcast/" + this.podcast.id;
             }
         },
 
@@ -76,6 +76,7 @@ export default {
             progress: 0,
             volume: 1,
             podcast: {
+                id: 1,
                 title: 'Crown',
                 artist: 'Kendrick Lamar',
                 audioSrc: '/audio/crown.mp3',
