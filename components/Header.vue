@@ -101,7 +101,8 @@ export default {
                 { id: 2, title: 'The Daily', link: '/podcast/2' },
             ],
             loggedInUser: {},
-            linkto: ""
+            linkto: "",
+            searchResultsTop: '0px',
         }
     },
     methods: {
