@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="inline-grid mt-4">
-                <PodcastBox />
+                <PodcastBox :podcastData="podcastData" />
             </div>
         </div>
     </div>
@@ -39,12 +39,15 @@
 <script>
 import { useUserStore } from "../stores/login"
 import { mapStores } from "pinia";
+import axios from '@/utils/axiosInstance.ts'
 
 export default {
     computed: {
         ...mapStores(useUserStore)
     },
     created() {
+        this.token = this.userStore.getAccessToken;
+        this.getUserPodcasts();
         this.loggedInUser = this.userStore.getUser;
         console.log(this.loggedInUser);
         if (this.$route.params.id == this.loggedInUser.id) {
@@ -69,7 +72,9 @@ export default {
     data() {
         return {
             user: null,
+            token: "",
             loggedInUser: [],
+            podcastData: [],
         };
     },
     methods: {
@@ -79,6 +84,19 @@ export default {
             var ageDifMs = Date.now() - birthdayDate.getTime();
             var ageDate = new Date(ageDifMs);
             return Math.abs(ageDate.getUTCFullYear() - 1970);
+        },
+        async getUserPodcasts() {
+            await axios.get('api/podcast/read-user-podcast/' + this.$route.params.id, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                this.podcastData = response.data;
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
         },
     },
 };

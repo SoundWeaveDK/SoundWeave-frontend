@@ -41,6 +41,7 @@ export default defineI18nConfig(() => ({
       manage: 'Manage',
       profile: 'Profile',
       logout: 'Logout',
+      explore: 'Explore',
     },
     fr: {
       welcome: 'Bienvenue',
@@ -79,6 +80,7 @@ export default defineI18nConfig(() => ({
       manage: 'Gérer',
       profile: 'Profil',
       logout: 'Se déconnecter',
+      explore: 'Explorer',
     },
     da: {
       welcome: 'Velkommen',
@@ -117,6 +119,7 @@ export default defineI18nConfig(() => ({
       manage: 'Administrer',
       profile: 'Profil',
       logout: 'Log ud',
+      explore: 'Udforsk',
     },
     jp: {
       welcome: 'ようこそ',
@@ -154,6 +157,7 @@ export default defineI18nConfig(() => ({
       manage: '管理',
       profile: 'プロフィール',
       logout: 'ログアウト',
+      explore: '探検する',
     },
     cn: {
       welcome: '欢迎',
@@ -191,6 +195,7 @@ export default defineI18nConfig(() => ({
       manage: '管理',
       profile: '轮廓',
       logout: '登出',
+      explore: '探索',
     },
     sa: {
       welcome: 'أهلا بك',
@@ -228,6 +233,7 @@ export default defineI18nConfig(() => ({
       manage: 'إدارة',
       profile: 'الملف الشخصي',
       logout: 'تسجيل خروج',
+      explore: 'يكتشف',
     },
   }
 }))

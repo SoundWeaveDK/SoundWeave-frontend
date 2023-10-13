@@ -74,12 +74,17 @@
 </template>
   
 <script>
+import axios from '@/utils/axiosInstance.ts'
+
 export default {
     name: "Podcast",
     computed: {
         placeholderText() {
             return this.$t('comment');
         },
+    },
+    created() {
+        this.getSinglePodcasts();
     },
     data() {
         return {
@@ -89,53 +94,23 @@ export default {
             duration: "0:00",
             progress: 0,
             volume: 1,
-            podcast: {
-                id: 1,
-                title: "Crown",
-                artist: "Kendrick Lamar",
-                audioSrc: "/audio/crown.mp3",
-                imageSrc: "/images/crown.jpg",
-                listens: 4600000,
-                isLiked: false,
-                created: "2021-01-01",
-                desc: "This is a description of the podcast episode and it is very long. i hope it wraps properly. what if it doesn't? what will i do? i don't know. i guess i'll just have to wait and see. okay, i think this is enough. no it isn't. i think it is now. i can't tell. This is a description of the podcast episode and it is very long. i hope it wraps properly. what if it doesn't? what will i do? i don't know. i guess i'll just have to wait and see. okay, i think this is enough. no it isn't. i think it is now. i can't tell.",
-                comments: [
-                    {
-                        id: 1,
-                        name: "John Doe",
-                        comment: "This is a comment",
-                    },
-                    {
-                        id: 2,
-                        name: "Jane Doe",
-                        comment: "This is another comment",
-                    },
-                    {
-                        id: 3,
-                        name: "joe",
-                        comment: "This is a comment",
-                    },
-                    {
-                        id: 4,
-                        name: "joe",
-                        comment: "This is a comment",
-                    },
-                    {
-                        id: 5,
-                        name: "john Hitler",
-                        comment: "eine kommentar bitte danke",
-                    },
-                    {
-                        id: 6,
-                        name: "Monke",
-                        comment: "Monkey business is the best business. I love monke. monkey monke monke monkey ",
-                    }
-                ],
-            },
+            podcast: [],
         };
     },
-    methods() {
-
+    methods: {
+        async getSinglePodcasts() {
+            await axios.get('api/podcast/read-single-podcast/' + this.$route.params.id, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                this.podcastData = response.data;
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
     }
 };
 </script>
