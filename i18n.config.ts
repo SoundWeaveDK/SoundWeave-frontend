@@ -40,6 +40,7 @@ export default defineI18nConfig(() => ({
       listenLater: 'Listen Later',
       manage: 'Manage',
       profile: 'Profile',
+      logout: 'Logout',
     },
     fr: {
       welcome: 'Bienvenue',
@@ -77,6 +78,7 @@ export default defineI18nConfig(() => ({
       listenLater: 'Écouter plus tard',
       manage: 'Gérer',
       profile: 'Profil',
+      logout: 'Se déconnecter',
     },
     da: {
       welcome: 'Velkommen',
@@ -114,6 +116,7 @@ export default defineI18nConfig(() => ({
       listenLater: 'Lyt senere',
       manage: 'Administrer',
       profile: 'Profil',
+      logout: 'Log ud',
     },
     jp: {
       welcome: 'ようこそ',
@@ -150,6 +153,7 @@ export default defineI18nConfig(() => ({
       listenLater: '後で聞く',
       manage: '管理',
       profile: 'プロフィール',
+      logout: 'ログアウト',
     },
     cn: {
       welcome: '欢迎',
@@ -186,6 +190,7 @@ export default defineI18nConfig(() => ({
       listenLater: '稍后收听',
       manage: '管理',
       profile: '轮廓',
+      logout: '登出',
     },
     sa: {
       welcome: 'أهلا بك',
@@ -222,6 +227,7 @@ export default defineI18nConfig(() => ({
       listenLater: 'استمع لاحقا',
       manage: 'إدارة',
       profile: 'الملف الشخصي',
+      logout: 'تسجيل خروج',
     },
   }
 }))

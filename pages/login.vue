@@ -90,7 +90,9 @@ export default {
         }
     },
     beforeMount() {
-        if (localStorage.getItem('user')) {
+        const userCookie = useCookie('user')
+
+        if (userCookie.value != null) {
             alert(this.$t('alreadyLoggedIn'));
             this.$router.push('/');
         }

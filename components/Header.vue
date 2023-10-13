@@ -55,7 +55,7 @@
                                     </div>
                                 </li>
                                 <button class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                    <li class=""><a @click="logout">Logout</a>
+                                    <li class=""><a @click="logout">{{ $t('logout') }}</a>
                                     </li>
                                 </button>
                             </ul>
