@@ -24,7 +24,7 @@
                             <div class="flex flex-wrap">
                                 <div class="w-full md:w-1/2 pr-2">
                                     <label for="email" class="mb-1 text-sm font-medium text-gray-900 dark:text-white">
-                                        {{ $t('email') }}
+                                        Email
                                     </label>
                                     <input type="email" v-model="email" name="email" id="email"
                                         class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -46,9 +46,8 @@
                                     </label>
                                     <select required v-model="country" name="country" id="country"
                                         class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="1">Denmark</option>
-                                        <option value="2">United Kingdom</option>
-                                        <option value="3">Franch</option>
+                                        <option v-for="country in countries" :key="country.id" :value="country.id">
+                                            {{ country.country_name }}</option>
                                     </select>
                                 </div>
                                 <div class="w-full md:w-1/2 pr-2">
@@ -58,9 +57,8 @@
                                     </label>
                                     <select required v-model="gender" name="gender" id="gender"
                                         class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="1">{{ $t('man') }}</option>
-                                        <option value="2">{{ $t('woman') }}</option>
-                                        <option value="3">{{ $t('other') }}</option>
+                                        <option v-for="genders in genders" :key="genders.id" :value="genders.id">
+                                            {{ genders.gender_name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -74,20 +72,21 @@
                                 $t('password') }}</label>
                             <input type="password" v-model="password" name="password" id="password"
                                 class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                autocomplete="new-password" placeholder="••••••••" minlenght="8" required>
+                                autocomplete="new-password" placeholder="••••••••" minlength="8" required>
                             <label for="rePassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
                                 $t('rePassword') }}</label>
                             <input type="password" v-model="rePassword" name="rePassword" id="rePassword"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 autocomplete="new-password" placeholder="••••••••" minlength="8" required>
                         </div>
-                        <button type="submit" @click="registerModal"
+                        <button type="submit" @click="verifyRegister"
                             class="w-full text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                             {{ $t('register') }}
                         </button>
                     </form>
-                    <button @click="$router.push('/login')">
-                        <Icon name="material-symbols:arrow-circle-left-outline-rounded" size="2.5em" />
+                    <button @click="$router.push('/login')" title="Login">
+                        <Icon name="material-symbols:arrow-circle-left-outline-rounded" class="dark:text-neutral-50"
+                            size="2.5em" />
                     </button>
                 </div>
             </div>
@@ -110,39 +109,55 @@ export default {
         return {
             icon: icon,
             email: '',
+            countries: [],
+            genders: [],
             username: '',
-            gender: '',
-            country: '',
             birthday: '',
             password: '',
             rePassword: '',
         }
     },
+    mounted() {
+        this.getCountries(),
+            this.getGenders()
+    },
     methods: {
-        //verify if the password and the rePassword are the same if not alert the user and dont send the request
-        async verifyPasswords() {
+        /*verifyPasswords() {
             if (this.password != this.rePassword) {
                 alert("Passwords are not the same")
                 return false
+            } else if (this.password.length < 8) {
+                alert("Password must be at least 8 characters long")
+                return false
             } else {
-                await this.verifyRegister()
+                this.verifyRegister()
             }
-        },
+        },*/
         async verifyRegister() {
-            await axios.post('/api/users/registerUser', {
+            await axios.post('/api/user/register-user', {
                 email: this.email.toLowerCase(),
                 username: this.username,
                 password: this.password,
                 birthday: this.birthday,
-                country: this.country,
-                gender: this.gender
+                countryId: this.country,
+                genderId: this.gender
             }).then((res) => {
-                if (res.data.status == 201) {
+                if (res.status == 201) {
                     alert(this.$t('registerSuccess'))
                     this.$router.push('/login')
                 } else {
                     alert(this.$t('registerError'))
                 }
+            })
+        },
+        async getCountries() {
+            await axios.get('/api/country/read-countrys').then((res) => {
+                this.countries = res.data
+            })
+        },
+        async getGenders() {
+            await axios.get('api/gender/read-genders').then((res) => {
+                this.genders = res.data
             })
         },
     }

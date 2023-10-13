@@ -1,55 +1,16 @@
 <template>
-    <div class="p-6">
-        <div class="flex items-center space-x-4 ml-16">
-            <div class="flex-shrink-0">
-                <img src="https://via.placeholder.com/150" alt="Profile picture" class="rounded-full w-24 h-24">
-            </div>
-            <div>
-                <h2 class="text-2xl font-medium text-black dark:text-white ">{{ user.username }}</h2>
-                <div class="text-gray-600  dark:text-white">{{ user.email }}</div>
-                <div class="text-gray-600 dark:text-white">{{ user.age }} {{ $t('yearsOld') }}, {{ user.gender }}, {{
-                    $t('from') }} {{ user.country
-    }}</div>
-            </div>
-            <div class="flex-1 text-right mr-16">
-                <button v-if="loggedInUser.id !== user.id"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                    {{ $t('follow') }}
-                </button>
-            </div>
-        </div>
-        <div class="">
-            <div class="float-right mr-16">
-                <!-- analytics page -->
-                <NuxtLink v-if="loggedInUser.id === user.id" to="/analytics"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4">
-                    {{ $t('analytics') }}
-                </NuxtLink>
-                <!-- upload -->
-                <button v-if="loggedInUser.id === user.id" @click="upload"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                    {{ $t('upload') }}
-                </button>
-            </div>
-            <div class="inline-grid mt-4">
-                <PodcastBox />
-            </div>
-        </div>
+    <div>
+
     </div>
 </template>
-  
-<script>
-import Swal from 'sweetalert2';
+
+<!-- <script>
+import { useUserStore } from "../stores/login"
+import { mapStores } from "pinia";
 
 export default {
     data() {
         return {
-            user: null,
-            loggedInUser: {
-                id: 1,
-                username: 'Joe Biden',
-                email: 'joeBiden@usgov.com'
-            },
             userPodcasts: [
                 {
                     id: 1,
@@ -63,19 +24,9 @@ export default {
             ],
         };
     },
-    created() {
-        this.user = {
-            id: 1,
-            email: 'joeBiden@usgov.com',
-            username: 'Joe Biden',
-            created_at: '2021-01-01',
-            gender: 'Male',
-            age: 78,
-            country: 'USA',
-        };
-    },
     methods: {
         async upload() {
+            console.log(this.userStore.getUser);
             const { value: formValues } = await Swal.fire({
                 title: 'Upload podcast',
                 html:
@@ -113,5 +64,6 @@ export default {
             }
         },
     }
-};
-</script>
+}
+
+</script> -->

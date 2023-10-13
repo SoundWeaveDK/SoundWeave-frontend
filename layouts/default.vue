@@ -7,12 +7,14 @@
             <div class="row-start-1 row-end-2">
                 <Header />
             </div>
-            <div class="row-start-2 row-end-12 overflow-y-auto">
+            <div class="row-start-2 row-end-11 md:row-end-12 overflow-y-auto">
                 <slot />
             </div>
-            <div class="row-start-12 row-end-12">
-                <Footer v-if="!isMobile" />
-                <MobileNav v-else />
+            <div class="row-start-11 row-end-12 md:row-end-13 md:row-start-12">
+                <Footer />
+            </div>
+            <div v-if="isMobile" class="row-start-12 row-end-13 dark:bg-slate-800">
+                <MobileNav />
             </div>
         </div>
     </div>
