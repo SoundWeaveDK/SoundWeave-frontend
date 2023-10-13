@@ -2,7 +2,7 @@
     <div class="h-full text-black dark:text-white dark:bg-slate-800 border-solid border-t-2 border-blue-950 rounded-t-lg">
         <div class="w-full h-full m-auto flex pl-4 pr-4">
             <div>
-                <img :src="podcast.imageSrc" alt="Podcast Image" class="w-16 h-16 m-1 rounded-sm">
+                <img :src="podcast.imageSrc" alt="Podcast Image" class="w-16 h-16 m-1 rounded-sm mobile:h-12 mobile:w-12">
             </div>
             <div class=" h-full w-full ">
                 <div class="flex items-center justify-between h-full mx-4 my-auto ">
@@ -18,7 +18,7 @@
                     </div>
                     <div class="h-full">
                         <!-- line -->
-                        <div class="flex justify-center h-0">
+                        <div class="flex justify-center h-0 mobile:hidden">
                             <!-- if on bigfooter.vue then return to index -->
                             <NuxtLink :to="destination">
                                 <div class="mx-auto m-1 w-64 h-1 bg-gray-400 rounded-full"></div>
@@ -27,16 +27,18 @@
                         </div>
                         <div class="flex items-center h-full">
                             <div class="text-xs  mr-4">{{ currentTime }}</div>
-                            <div class="w-64 h-2 bg-gray-300 rounded-full cursor-pointer" @click="seek">
+                            <div class="w-64 h-2 bg-gray-300 rounded-full cursor-pointer mobile:hidden" @click="seek">
                                 <div class="h-full bg-blue-500 rounded-full" :style="{ width: progress + '%' }"></div>
                             </div>
+                            <p class="text-lg font-semibold md:hidden">-</p>
                             <div class="text-xs  ml-4">{{ duration }}</div>
                         </div>
                     </div>
-                    <div class="h-full flex">
+                    <div class="h-full flex mobile:hidden">
                         <!-- add to list -->
                         <button class="mr-8">
-                            <Icon name="ic:round-playlist-add" size="2em" />
+                            <Icon v-if="!isLiked" name="icon-park-outline:like" size="1.5em" />
+                            <Icon v-else name="icon-park-solid:like" size="1.5em" />
                         </button>
                         <!-- volume -->
                         <div class="volume block h-full my-auto">
@@ -44,7 +46,6 @@
                             <input class="my-auto" type="range" min="0" max="1" step="0.1" v-model="volume"
                                 @change="updateVolume">
                         </div>
-
                     </div>
                 </div>
                 <audio ref="audioPlayer" :src="podcast.audioSrc" @timeupdate="onTimeUpdate"></audio>
@@ -58,10 +59,10 @@
 export default {
     computed: {
         destination() {
-            if (this.$route.path == "/BigFooter") {
+            if (this.$route.path == "/podcast/" + this.podcast.id) {
                 return "/";
             } else {
-                return "/BigFooter";
+                return "/podcast/" + this.podcast.id;
             }
         },
 
@@ -75,11 +76,13 @@ export default {
             progress: 0,
             volume: 1,
             podcast: {
+                id: 1,
                 title: 'Crown',
                 artist: 'Kendrick Lamar',
                 audioSrc: '/audio/crown.mp3',
                 imageSrc: '/images/crown.jpg',
             },
+            isLiked: false,
         };
     },
     methods: {

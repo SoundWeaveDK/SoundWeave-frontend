@@ -24,6 +24,12 @@ const { locale } = useI18n()
                             <h1 class="text-xl">{{ $t('home') }}</h1>
                         </a>
                     </li>
+                    <li class="rounded-sm">
+                        <a href="/explore" class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md">
+                            <Icon name="material-symbols:explore-outline-rounded" size="2em" />
+                            <h1 class="text-xl">{{ $t('explore') }}</h1>
+                        </a>
+                    </li>
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     <li class="rounded-sm">
                         <p class="flex items-center p-2 space-x-3 rounded-md">
