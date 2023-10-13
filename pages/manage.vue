@@ -18,9 +18,6 @@
                             {{ podcast.views }}
                         </p>
                     </div>
-                    <div class="my-auto">
-                        <p class="text-sm">{{ podcast.description }}</p>
-                    </div>
                     <div class="flex float-right h-full my-auto ml-auto">
                         <button @click="editPodcast(podcast.id, podcast.podcast_name, podcast.description)"
                             class="px-4 hover:text-gray-400">
