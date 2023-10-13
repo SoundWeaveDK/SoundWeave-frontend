@@ -37,7 +37,8 @@
                     <div class="h-full flex mobile:hidden">
                         <!-- add to list -->
                         <button class="mr-8">
-                            <Icon name="ic:round-playlist-add" size="2em" />
+                            <Icon v-if="!isLiked" name="icon-park-outline:like" size="1.5em" />
+                            <Icon v-else name="icon-park-solid:like" size="1.5em" />
                         </button>
                         <!-- volume -->
                         <div class="volume block h-full my-auto">
@@ -80,6 +81,7 @@ export default {
                 audioSrc: '/audio/crown.mp3',
                 imageSrc: '/images/crown.jpg',
             },
+            isLiked: false,
         };
     },
     methods: {
