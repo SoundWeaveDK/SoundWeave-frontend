@@ -5,7 +5,7 @@
             <!-- searchbar -->
             <div class="relative ml-20 w-1/3">
                 <div>
-                    <input type="text" v-model="search" :placeholder="placeholderText"
+                    <input type="text" v-model="search" :placeholder="placeholderText" @click="getPodcasts"
                         class="text-black dark:text-white p-2 w-full outline-none border-b-2 border-gray-500 dark:border-white dark:bg-transparent" />
                     <div class="absolute right-0 top-0 mt-2 mr-2 text-gray-600 dark:text-white">
                         <button>
@@ -14,12 +14,11 @@
                     </div>
                 </div>
                 <div id="searchDropdown"
-                    class="fixed z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-2xl shadow-black w-44 dark:bg-gray-600 mt-1"
-                    :style="{ top: searchResultsTop }">
+                    class="fixed z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-2xl shadow-black w-44 dark:bg-gray-600 mt-1">
                     <ul v-if="search.length > 0">
                         <li v-for="podcast in filteredPodcasts" :key="podcast.id"
-                            class="px-2 py-1 hover:bg-gray-300 dark:hover:bg-gray-500 cursor-pointer">
-                            <NuxtLink :to="podcast.link">{{ podcast.title }}</NuxtLink>
+                            class="px-2 py-1 hover:bg-gray-300 dark:hover-bg-gray-500 cursor-pointer">
+                            <NuxtLink :to="'/podcast/' + podcast.id">{{ podcast.podcast_name }}</NuxtLink>
                         </li>
                     </ul>
                 </div>
@@ -54,7 +53,7 @@
                                         </form>
                                     </div>
                                 </li>
-                                <button class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                <button v-if="loggedInUser.id" class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <li class=""><a @click="logout">{{ $t('logout') }}</a>
                                     </li>
                                 </button>
@@ -68,6 +67,7 @@
 </template>
 
 <script>
+import axios from '@/utils/axiosInstance.ts'
 import { useUserStore } from "../stores/login"
 import { mapStores } from "pinia";
 
@@ -78,13 +78,10 @@ export default {
             return this.$t('search');
         },
         filteredPodcasts() {
-            const filtered = this.podcasts.filter(podcast => {
-                return podcast.title.toLowerCase().includes(this.search.toLowerCase()) && this.search.length > 0
+            // Make sure to include the 'id' property in the filteredPodcasts array
+            return this.podcastData.filter(podcast => {
+                return podcast.podcast_name.toLowerCase().includes(this.search.toLowerCase()) && this.search.length > 0
             });
-            if (filtered.length === 0) {
-                return [{ id: 0, title: 'No podcasts found' }];
-            }
-            return filtered;
         },
     },
     created() {
@@ -96,13 +93,11 @@ export default {
             showDropdown: false,
             loggedInUser: [],
             search: '',
-            podcasts: [
-                { id: 1, title: 'The Joe Rogan Experience', link: '/podcast/1' },
-                { id: 2, title: 'The Daily', link: '/podcast/2' },
-            ],
+            podcastsData: [],
             loggedInUser: {},
             linkto: "",
             searchResultsTop: '0px',
+            isLoggedIn: false,
         }
     },
     methods: {
@@ -113,7 +108,17 @@ export default {
             const userCookie = useCookie('user')
             userCookie.value = null
             this.$router.push('/login')
-        }
+        },
+        async getPodcasts() {
+            await axios.get('/api/podcast/read-preview-podcasts', {
+            }).then((response) => {
+                this.podcastData = response.data;
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
     },
 };
 </script>
