@@ -149,7 +149,7 @@ export default {
                     if (mp3Response.status == 201) {
                         // upload podcast to database
 
-                        await new Promise(r => setTimeout(r, 15000));
+                        await new Promise(r => setTimeout(r, 5000));
 
                         try {
                             await axios.post('api/azurestorage/getimage', {
@@ -163,7 +163,7 @@ export default {
                         } catch (error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'Virus detected in image!',
+                                text: 'Virus detected in image. Upload failed!',
                                 icon: 'error',
                                 confirmButtonText: 'OK',
                             });
@@ -184,7 +184,7 @@ export default {
                         catch (error) {
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'Virus detected in podcast!',
+                                text: 'Virus detected in podcast. Upload failed!',
                                 icon: 'error',
                                 confirmButtonText: 'OK',
                             });
