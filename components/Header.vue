@@ -54,7 +54,7 @@
                                         </form>
                                     </div>
                                 </li>
-                                <button class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                <button v-if="loggedInUser.id" class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <li class=""><a @click="logout">{{ $t('logout') }}</a>
                                     </li>
                                 </button>
@@ -103,6 +103,7 @@ export default {
             loggedInUser: {},
             linkto: "",
             searchResultsTop: '0px',
+            isLoggedIn: false,
         }
     },
     methods: {
@@ -113,7 +114,7 @@ export default {
             const userCookie = useCookie('user')
             userCookie.value = null
             this.$router.push('/login')
-        }
+        },
     },
 };
 </script>
