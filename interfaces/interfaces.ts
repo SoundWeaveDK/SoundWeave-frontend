@@ -20,3 +20,14 @@ export interface Podcast {
     likes: number;
     money: number;
 }
+
+export interface Followed {
+    id: number;
+    username: string;
+}
+
+export interface watchLater {
+    id: number;
+    userId: number;
+    podcastId: number;
+}

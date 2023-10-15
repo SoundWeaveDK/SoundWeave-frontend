@@ -30,6 +30,14 @@ const { locale } = useI18n()
                             <h1 class="text-xl">{{ $t('explore') }}</h1>
                         </a>
                     </li>
+                    <li>
+                        <!-- Collection page -->
+                        <NuxtLink to="/collection"
+                            class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md">
+                            <Icon name="material-symbols:collections-bookmark" size="2em" />
+                            <h1 class="text-xl">{{ $t('yourCollection') }}</h1>
+                        </NuxtLink>
+                    </li>
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     <li class="rounded-sm">
                         <p class="flex items-center p-2 space-x-3 rounded-md">
@@ -37,48 +45,62 @@ const { locale } = useI18n()
                         </p>
                     </li>
                     <!-- followed creators -->
-                    <div v-for="(creators, index) in testCreators">
-                        <div v-if="index == testCreators.length - 1">
-                            <div v-if="followMore">
-                                <button class="flex py-2">
-                                    <img :src="creators.creator_image" class="w-10 h-10 rounded-full" />
-                                    <p class="text-sm my-auto px-2 ">{{ creators.creator_name }}</p>
+                    <li>
+                        <p v-if="!loggedInUser.id" class="flex items-center p-2 space-x-3 rounded-md">
+                            {{ $t('loginFollowed') }}
+                        </p>
+                        <p v-else-if="followed.length == 0" class="flex items-center p-2 space-x-3 rounded-md">
+                            {{ $t('noFollowed') }}
+                        </p>
+                        <div v-else v-for="(creators, index) in followed">
+                            <div v-if="index == followed.length - 1 && index > 4">
+                                <NuxtLink v-if="followMore" :to="'/profile/' + creators.id" class="flex py-2">
+                                    <img v-if="creators.creator_image == null" src="../assets/images/fishe.jpg"
+                                        class="w-10 h-10 rounded-full" />
+                                    <img v-else :src="creators.creator_image" class="w-10 h-10 rounded-full" />
+                                    <p class="text-sm my-auto px-2 ">{{ creators.username }}</p>
+                                </NuxtLink>
+                                <button class="flex py-2" @click="toggleFollow()">
+                                    <Icon v-if="followMore" name="ic:baseline-keyboard-arrow-up" />
+                                    <Icon v-else name="ic:baseline-keyboard-arrow-down" />
+                                    <p v-if="followMore" class="text-sm my-auto px-2 hover:text-gray-500 ">{{
+                                        $t('showLess') }}</p>
+                                    <p v-else class="text-sm my-auto px-2 hover:text-gray-500 ">{{ $t('showMore') }}</p>
                                 </button>
                             </div>
-                            <button class="flex py-2" @click="toggleFollow()">
-                                <Icon v-if="followMore" name="ic:baseline-keyboard-arrow-up" />
-                                <Icon v-else name="ic:baseline-keyboard-arrow-down" />
-                                <p v-if="followMore" class="text-sm my-auto px-2 hover:text-gray-500 ">{{
-                                    $t('showLess') }}</p>
-                                <p v-else class="text-sm my-auto px-2 hover:text-gray-500 ">{{ $t('showMore') }}</p>
-                            </button>
+                            <div v-else-if="index < 4">
+                                <NuxtLink :to="'/profile/' + creators.id" class="flex py-2">
+                                    <img v-if="creators.creator_image == null" src="../assets/images/fishe.jpg"
+                                        class="w-10 h-10 rounded-full" />
+                                    <img v-else :src="creators.creator_image" class="w-10 h-10 rounded-full" />
+                                    <p class="text-sm my-auto px-2 ">{{ creators.username }}</p>
+                                </NuxtLink>
+                            </div>
+                            <div v-else-if="followMore">
+                                <NuxtLink :to="'/profile/' + creators.id" class="flex py-2">
+                                    <img v-if="creators.creator_image == null" src="../assets/images/fishe.jpg"
+                                        class="w-10 h-10 rounded-full" />
+                                    <img v-else :src="creators.creator_image" class="w-10 h-10 rounded-full" />
+                                    <p class="text-sm my-auto px-2 ">{{ creators.username }}</p>
+                                </NuxtLink>
+                            </div>
                         </div>
-                        <div v-else-if="index < 4">
-                            <button class="flex py-2">
-                                <img :src="creators.creator_image" class="w-10 h-10 rounded-full" />
-                                <p class="text-sm my-auto px-2 ">{{ creators.creator_name }}</p>
-                            </button>
-                        </div>
-                        <div v-else-if="followMore">
-                            <button class="flex py-2">
-                                <img :src="creators.creator_image" class="w-10 h-10 rounded-full" />
-                                <p class="text-sm my-auto px-2 ">{{ creators.creator_name }}</p>
-                            </button>
-                        </div>
-                    </div>
+                    </li>
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     <li class="rounded-sm">
                         <p class="flex items-center p-2 space-x-3 rounded-md">
-                            {{ $t('yourCollection') }}
+                            {{ $t('favorites') }}
                         </p>
                     </li>
                     <li class="rounded-sm">
-                        <button class="text-xl md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md">
-                            <Icon name="grommet-icons:clock" />
-                            <h1 class="text-xl"> {{ $t('listenLater') }}</h1>
-                        </button>
-                        <div v-for="(lists, index) in testLists">
-                            <div v-if="index == testLists.length - 1">
+                        <p v-if="!loggedInUser.id" class="flex items-center p-2 space-x-3 rounded-md">
+                            {{ $t('loginFavorites') }}
+                        </p>
+                        <p v-else-if="favorites.length == 0" class="flex items-center p-2 space-x-3 rounded-md">
+                            {{ $t('noFavorites') }}
+                        </p>
+                        <div v-else v-for="(lists, index) in favorites">
+                            <div v-if="index == favorites.length - 1">
                                 <div v-if="collectionMore">
                                     <button class="flex py-2">
                                         <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.list_name }}</p>
@@ -111,84 +133,75 @@ const { locale } = useI18n()
 </template>
 
 <script>
-
+import axios from '@/utils/axiosInstance.ts'
+import { useUserStore } from "../stores/login"
+import { mapStores } from "pinia";
 export default {
     name: 'SideBar',
+    computed: {
+        ...mapStores(useUserStore)
+    },
+    created() {
+        this.token = this.userStore.getAccessToken;
+        this.loggedInUser = this.userStore.getUser;
+        if (this.loggedInUser.id) {
+            this.getFollowing();
+            this.getFavorites();
+        }
+
+    },
     data() {
         return {
+            token: '',
+            loggedInUser: [],
             followMore: false,
             collectionMore: false,
             // my lists
-            testLists: [
-                {
-                    id: 1,
-                    list_name: "Sample List 1",
-                },
-                {
-                    id: 2,
-                    list_name: "Sample List 2",
-                },
-                {
-                    id: 3,
-                    list_name: "Sample List 3",
-                },
-                {
-                    id: 4,
-                    list_name: "Sample List 4",
-                },
-                {
-                    id: 5,
-                    list_name: "Sample List 5",
-                },
-                {
-                    id: 6,
-                    list_name: "Sample List 6",
-                }
-                // Add more test data items as needed
-            ],
-            // followed creators
-            testCreators: [
-                {
-                    id: 1,
-                    creator_name: "Sample Creator 1",
-                    creator_image: "https://dummyimage.com/200x200",
-                },
-                {
-                    id: 2,
-                    creator_name: "Sample Creator 2",
-                    creator_image: "https://dummyimage.com/200x200",
-                },
-                {
-                    id: 3,
-                    creator_name: "Sample Creator 3",
-                    creator_image: "https://dummyimage.com/200x200",
-                },
-                {
-                    id: 4,
-                    creator_name: "Sample Creator 4",
-                    creator_image: "https://dummyimage.com/200x200",
-                },
-                {
-                    id: 5,
-                    creator_name: "Sample Creator 5",
-                    creator_image: "https://dummyimage.com/200x200",
-                },
-                {
-                    id: 6,
-                    creator_name: "Sample Creator 6",
-                    creator_image: "https://dummyimage.com/200x200",
-                }
-                // Add more test data items as needed
-            ],
+            favorites: [],
+            followed: [],
+            loaded: false,
         };
     },
     methods: {
-        // toggle the show more button
         toggleFollow() {
             this.followMore = !this.followMore;
         },
         toggleCollection() {
             this.collectionMore = !this.collectionMore;
+        },
+        async getFollowing() {
+            // get the user's following
+            await axios.get('/api/followuser/read-users-followers/' + this.loggedInUser.id, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                this.followed = [];
+                for (let i = 0; i < response.data.length; i++) {
+                    for (let j = 0; j < response.data[i].following.length; j++) {
+                        this.followed.push(response.data[i].following[j]);
+                    }
+                }
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+            this.loaded = true;
+        },
+        async getFavorites() {
+            // get the user's favorites
+            await axios.get('/api/podcastliked/read-users-podcast-liked/' + this.loggedInUser.id, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                this.favorites = response.data;
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
         },
     },
 };

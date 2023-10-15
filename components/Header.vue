@@ -32,7 +32,7 @@
                         <img :src="loggedInUser.imageURL ? loggedInUser.imageURL : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
                             class="rounded-full h-12 w-12 cursor-pointer">
                         <div ref="dropdown" v-if="showDropdown"
-                            class="flex mt-1 p-2 shadow-2xl shadow-black divide-y divide-gray-100 dark:bg-gray-600 dark:text-white text-black absolute top-full left-0 bg-white border-gray-200 rounded-md shadow-md p-1"
+                            class="flex mt-1 p-2 shadow-2xl shadow-black divide-y divide-gray-100 dark:bg-gray-600 dark:text-white text-black absolute top-full left-0 bg-white border-gray-200 rounded-md "
                             @click.stop>
                             <ul>
                                 <li v-if="loggedInUser.id" class="mb-2 hover:bg-gray-300 dark:hover:bg-gray-500">
