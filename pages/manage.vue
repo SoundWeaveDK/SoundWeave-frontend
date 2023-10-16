@@ -14,8 +14,7 @@
                 </svg>
                 <span class="sr-only"> {{ $t('scanningForViruses') }} </span>
             </div>
-            <!-- center the paragraph -->
-            <p class="text-black dark:text-white text-center text-xl mr-16">{{ $t('scanningForViruses') }}</p>
+            <p class="text-black dark:text-white text-center text-xl mr-20">{{ $t('scanningForViruses') }}</p>
         </div>
         <div v-else>
             <div class="flex justify-between" style="height: 10%;">
@@ -134,10 +133,24 @@ export default {
                     ];
                 },
             });
-
             if (formValues) {
                 this.loading = true;
                 const [title, image, mp3, description] = formValues;
+                // Check aspect ratio of thumbnail image
+                const img = new Image();
+                img.src = URL.createObjectURL(image);
+                img.onload = async () => {
+                    const aspectRatio = img.width / img.height;
+                    if (aspectRatio !== 1) {
+                        Swal.fire({
+                            title: this.$t('error'),
+                            text: this.$t('thumbnailAspectRatioError'),
+                            icon: 'error',
+                            confirmButtonText: this.$t('ok'),
+                        });
+                        return;
+                    }
+                };
                 const tempimage = new File([image], image.name, { type: image.type });
                 const imageResponse = await UploadFile(tempimage, "images");
                 if (imageResponse.status == 201) {
@@ -217,12 +230,12 @@ export default {
                                 });
                             }
                         });
+
                     }
                 }
             }
             this.loading = false;
         },
-
         async editPodcast(id, title, description) {
             const { value: formValues } = await Swal.fire({
                 title: 'Edit podcast',

@@ -1,10 +1,29 @@
-<script setup>
-const { locale } = useI18n()
-</script>
-
 <template>
-    <div class=" h-screen p-4">
-        <h1 class="lg:pl-28 mobile:text-center text-xl text-black dark:text-white">{{ $t('yourFeed') }}</h1>
-        <PodcastBox />
-    </div>
+    <PodcastBox :podcastData="podcastData" />
 </template>
+<script>
+import axios from '@/utils/axiosInstance.ts'
+
+export default {
+    data() {
+        return {
+            podcastData: [],
+        };
+    },
+    created() {
+        this.getUserPodcasts();
+    },
+    methods: {
+        async getUserPodcasts() {
+            await axios.get('/api/podcast/read-preview-podcasts', {
+            }).then((response) => {
+                this.podcastData = response.data;
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+    },
+};
+</script>
