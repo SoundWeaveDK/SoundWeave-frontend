@@ -80,8 +80,7 @@ export default {
         return {
             token: "",
             user: {},
-            loading: false,
-            aspectRatioValid: true,
+            loading: false
         };
     },
     methods: {
@@ -104,7 +103,6 @@ export default {
                 }
             });
         },
-
         async createPodcast() {
             // TODO: Implement create functionality
             const { value: formValues } = await Swal.fire({
@@ -144,26 +142,21 @@ export default {
             if (formValues) {
                 this.loading = true;
                 const [title, image, mp3, description] = formValues;
+
                 // Check aspect ratio of thumbnail image
-                const img = new Image();
-                img.src = URL.createObjectURL(image);
-                const check = img.onload = async () => {
-                    const aspectRatio = img.width / img.height;
-                    if (aspectRatio !== 1) {
-                        Swal.fire({
-                            title: this.$t('error'),
-                            text: this.$t('thumbnailAspectRatioError'),
-                            icon: 'error',
-                            confirmButtonText: this.$t('ok'),
-                        });
-                        this.loading = false;
-                        this.aspectRatioValid = false;
-                    }
-                };
-                await check();
-                if (!this.aspectRatioValid) {
+                const aspectRatioValid = await this.checkAspectRatio(image);
+                console.log(aspectRatioValid);
+                if (!aspectRatioValid) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Thumbnail image must be 1:1 aspect ratio!',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                    this.loading = false;
                     return;
                 }
+
                 const tempimage = new File([image], image.name, { type: image.type });
                 const imageResponse = await UploadFile(tempimage, "images");
                 if (imageResponse.status == 201) {
@@ -311,7 +304,6 @@ export default {
 
             }
         },
-
         async deletePodcast(id) {
             await axios.delete(`/api/podcast/delete-podcast/${id}`, {
                 headers: {
@@ -337,6 +329,21 @@ export default {
             });
 
         },
-    },
+        // returns true if aspect ratio is 1:1, false otherwise
+        async checkAspectRatio(image) {
+            const img = new Image();
+            img.src = URL.createObjectURL(image);
+            return new Promise((resolve, reject) => {
+                img.onload = () => {
+                    const { width, height } = img;
+                    if (width == height) {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                };
+            });
+        },
+    }
 };
 </script>
