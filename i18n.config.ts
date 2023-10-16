@@ -62,6 +62,7 @@ export default defineI18nConfig(() => ({
                   noFavorites: 'You have no favorites. Go to a podcast and click the favorite button to add it to your favorites.',
                   thumbnailAspectRatioError: 'Thumbnail aspect ratio must be 1:1',
                   feed: 'Feed',
+                  scanningForViruses: 'Scanning for viruses',
             },
             fr: {
                   welcome: 'Bienvenue',
@@ -121,6 +122,7 @@ export default defineI18nConfig(() => ({
                   noFavorites: 'Vous n\'avez aucun favori. Allez sur un podcast et cliquez sur le bouton favori pour l\'ajouter à vos favoris.',
                   thumbnailAspectRatioError: 'Le rapport hauteur / largeur de la vignette doit être de 1:1',
                   feed: 'Fil',
+                  scanningForViruses: 'Analyse des virus',
             },
 
             da: {
@@ -181,6 +183,7 @@ export default defineI18nConfig(() => ({
                   noFavorites: 'Du har ingen favoritter. Gå til en podcast og klik på knappen favorit for at tilføje den til dine favoritter.',
                   thumbnailAspectRatioError: 'Thumbnail-aspektforholdet skal være 1:1',
                   feed: 'Feed',
+                  scanningForViruses: 'Scanner for virus',
             },
             jp: {
                   welcome: 'ようこそ',
@@ -239,6 +242,7 @@ export default defineI18nConfig(() => ({
                   noFavorites: 'お気に入りはありません。ポッドキャストに移動して、お気に入りボタンをクリックしてお気に入りに追加します。',
                   thumbnailAspectRatioError: 'サムネイルのアスペクト比は1：1である必要があります',
                   feed: 'フィード',
+                  scanningForViruses: 'ウイルスをスキャン中',
             },
             cn: {
                   welcome: '欢迎',
@@ -297,6 +301,7 @@ export default defineI18nConfig(() => ({
                   noFavorites: '您没有收藏。转到播客并单击收藏按钮将其添加到收藏夹。',
                   thumbnailAspectRatioError: '缩略图纵横比必须为1:1',
                   feed: '饲料',
+                  scanningForViruses: '正在扫描病毒',
             },
             sa: {
                   welcome: 'أهلا بك',
@@ -355,6 +360,7 @@ export default defineI18nConfig(() => ({
                   noFavorites: 'ليس لديك أي مفضلات. انتقل إلى بودكاست وانقر فوق زر المفضلة لإضافته إلى المفضلة.',
                   thumbnailAspectRatioError: 'يجب أن يكون نسبة العرض إلى الارتفاع للصورة المصغرة 1:1',
                   feed: 'تغذية',
+                  scanningForViruses: 'البحث عن الفيروسات',
             },
       }
 }))
