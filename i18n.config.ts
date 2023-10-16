@@ -51,9 +51,10 @@ export default defineI18nConfig(() => ({
                   cancel: 'Cancel',
                   success: 'Success',
                   worked: 'Podcast uploaded successfully!',
-                    explore: 'Explore',
+                  explore: 'Explore',
                   profile: 'Profile',
                   logout: 'Logout',
+                  scanningForViruses: 'Scanning for viruses',
             },
             fr: {
                   welcome: 'Bienvenue',
@@ -102,9 +103,10 @@ export default defineI18nConfig(() => ({
                   cancel: 'Annuler',
                   success: 'Succès',
                   worked: 'Podcast téléchargé avec succès!',
-                    explore: 'Explorer',
+                  explore: 'Explorer',
                   profile: 'Profil',
                   logout: 'Se déconnecter',
+                  scanningForViruses: 'Analyse des virus',
             },
 
             da: {
@@ -156,7 +158,8 @@ export default defineI18nConfig(() => ({
                   worked: 'Podcast uploadet med succes!',
                   profile: 'Profil',
                   logout: 'Log ud',
-                    explore: 'Udforsk',
+                  explore: 'Udforsk',
+                  scanningForViruses: 'Scanner for virus',
             },
             jp: {
                   welcome: 'ようこそ',
@@ -206,7 +209,8 @@ export default defineI18nConfig(() => ({
                   worked: 'ポッドキャストが正常にアップロードされました！',
                   profile: 'プロフィール',
                   logout: 'ログアウト',
-                    explore: '探検する',
+                  explore: '探検する',
+                  scanningForViruses: 'ウイルスをスキャン中',
             },
             cn: {
                   welcome: '欢迎',
@@ -254,9 +258,10 @@ export default defineI18nConfig(() => ({
                   cancel: '取消',
                   success: '成功',
                   worked: '播客上传成功！',
-                    explore: '探索',
+                  explore: '探索',
                   profile: '轮廓',
                   logout: '登出',
+                  scanningForViruses: '正在扫描病毒',
             },
             sa: {
                   welcome: 'أهلا بك',
@@ -304,9 +309,10 @@ export default defineI18nConfig(() => ({
                   cancel: 'إلغاء',
                   success: 'نجاح',
                   worked: 'تم تحميل البودكاست بنجاح!',
-              explore: 'يكتشف',
+                  explore: 'يكتشف',
                   profile: 'الملف الشخصي',
                   logout: 'تسجيل خروج',
+                  scanningForViruses: 'البحث عن الفيروسات',
             },
       }
 }))
