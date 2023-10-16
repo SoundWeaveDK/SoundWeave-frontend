@@ -147,7 +147,6 @@ export default {
                 }
             });
         },
-
         async getUser() {
             await axios.get('/api/user/read-single-user/' + this.$route.params.id, {
                 headers: {

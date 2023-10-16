@@ -27,7 +27,7 @@ const { locale } = useI18n()
                     <li class="rounded-sm">
                         <a href="/explore" class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md">
                             <Icon name="material-symbols:explore-outline-rounded" size="2em" />
-                            <h1 class="text-xl">{{ $t('explore') }}</h1>
+                            <h1 class="text-xl">{{ $t('feed') }}</h1>
                         </a>
                     </li>
                     <li>
