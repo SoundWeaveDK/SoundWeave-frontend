@@ -6,10 +6,14 @@ import type { Podcast } from '../interfaces/interfaces';
 export const usePodcastStore = defineStore('podcast', {
     state: () => ({
         podcast: [] as Podcast[],
+        selectedPodcast: {} as Podcast,
     }),
     getters: {
         getPodcasts(): Podcast[] {
             return this.podcast;
+        },
+        getSelectedPodcast(): Podcast {
+            return this.selectedPodcast;
         }
     },
     actions: {
@@ -31,6 +35,9 @@ export const usePodcastStore = defineStore('podcast', {
                 }
                 return podcastMap;
             });
+        },
+        setSelectedPodcast(podcast: Podcast) {
+            this.selectedPodcast = podcast;
         }
     },
     persist: true,

@@ -1,8 +1,9 @@
 <template>
     <div class="h-full text-black dark:text-white dark:bg-slate-800 border-solid border-t-2 border-blue-950 rounded-t-lg">
-        <div class="w-full h-full m-auto flex pl-4 pr-4">
-            <div>
-                <img :src="podcast.imageSrc" alt="Podcast Image" class="w-16 h-16 m-1 rounded-sm mobile:h-12 mobile:w-12">
+        <div v-if="podcastStore.getSelectedPodcast.id" class="w-full h-full m-auto flex pl-4 pr-4">
+            <div class="my-auto rounded">
+                <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image"
+                    class="w-16 h-16 m-1 rounded-sm mobile:h-12 mobile:w-12">
             </div>
             <div class=" h-full w-full ">
                 <div class="flex items-center justify-between h-full mx-4 my-auto ">
@@ -12,8 +13,7 @@
                             <Icon v-else name="fa6-solid:play" size="2em" />
                         </button>
                         <div class="flex flex-col">
-                            <div class="text-sm font-medium ">{{ podcast.title }}</div>
-                            <div class="text-xs ">{{ podcast.artist }}</div>
+                            <div class="text-sm font-medium ">{{ podcastStore.getSelectedPodcast.podcast_name }}</div>
                         </div>
                     </div>
                     <div class="h-full">
@@ -35,7 +35,17 @@
                         </div>
                     </div>
                     <div class="h-full flex mobile:hidden">
-                        <!-- add to list -->
+                        <!-- Add podcast to watch later -->
+                        <button
+                            v-if="!watchLaterStore.getWatchLater.find(watchLater => watchLater.podcastId == podcastStore.getSelectedPodcast.id)"
+                            @click="addWatchLater" class="mr-8">
+                            <Icon name="material-symbols:bookmark-add-outline" size="1.5em" />
+                        </button>
+                        <button v-else @click="deleteWatchLater" class="mr-8">
+                            <Icon name="material-symbols:bookmark" size="1.5em" />
+                        </button>
+
+                        <!-- Like podcast -->
                         <button class="mr-8">
                             <Icon v-if="!isLiked" name="icon-park-outline:like" size="1.5em" />
                             <Icon v-else name="icon-park-solid:like" size="1.5em" />
@@ -48,40 +58,53 @@
                         </div>
                     </div>
                 </div>
-                <audio ref="audioPlayer" :src="podcast.audioSrc" @timeupdate="onTimeUpdate"></audio>
+                <audio ref="audioPlayer" :src="podcastStore.getSelectedPodcast.podcast_file"
+                    @timeupdate="onTimeUpdate"></audio>
             </div>
+        </div>
+        <div v-else>
+            <!-- you havent selected a podcast yet -->
+            <p class="text-center text-sm font-medium my-auto">Select a podcast to play</p>
         </div>
     </div>
 </template>
 
 
 <script>
+import axios from '@/utils/axiosInstance.ts'
+import { useUserStore } from "../stores/login"
+import { usePodcastStore } from '~/stores/podcast'
+import { useWatchLaterStore } from '~/stores/watchLater'
+import { mapStores } from "pinia";
+
 export default {
     computed: {
+        ...mapStores(useUserStore, usePodcastStore, useWatchLaterStore),
         destination() {
-            if (this.$route.path == "/podcast/" + this.podcast.id) {
+            if (this.$route.path == "/podcast/" + this.podcastStore.getSelectedPodcast.id) {
                 return "/";
             } else {
-                return "/podcast/" + this.podcast.id;
+                return "/podcast/" + this.podcastStore.getSelectedPodcast.id;
             }
         },
-
     },
-
+    created() {
+        this.token = this.userStore.getAccessToken;
+        this.loggedinUser = this.userStore.getUser;
+        if (this.loggedinUser.id) {
+            this.getWatchLater();
+        }
+    },
     data() {
         return {
+            loggedinUser: "",
+            storedPodcast: "",
+            token: '',
             isPlaying: false,
             currentTime: '0:00',
             duration: '0:00',
             progress: 0,
             volume: 1,
-            podcast: {
-                id: 1,
-                title: 'Crown',
-                artist: 'Kendrick Lamar',
-                audioSrc: '/audio/crown.mp3',
-                imageSrc: '/images/crown.jpg',
-            },
             isLiked: false,
         };
     },
@@ -123,6 +146,48 @@ export default {
         updateVolume(event) {
             const audio = this.$refs.audioPlayer;
             audio.volume = event.target.value;
+        },
+        async getWatchLater() {
+            await axios.get('/api/watchlater/read-users-watch-later/' + this.loggedinUser.id, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                this.watchLaterStore.setWatchLater(response.data);
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+        async addWatchLater() {
+            await axios.post('/api/watchlater/add-watch-later', {
+                userId: this.loggedinUser.id,
+                podcastId: this.podcastStore.getSelectedPodcast.id,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                this.watchLaterStore.addWatchLater(response.data);
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+        async deleteWatchLater() {
+            await axios.delete('/api/watchlater/delete-single-watch-later/' + this.watchLaterStore.getWatchLater.find(watchLater => watchLater.podcastId == this.podcastStore.getSelectedPodcast.id).id, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                this.watchLaterStore.deleteWatchLater(response.data.id);
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
         },
     },
 };

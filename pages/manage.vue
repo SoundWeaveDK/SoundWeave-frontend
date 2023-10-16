@@ -1,37 +1,63 @@
 <template>
-    {{ console.log("hello") }}
     <div class="max-w-7xl h-full mx-auto py-6 sm:px-6 lg:px-8">
-        <div class="flex justify-between" style="height: 10%;">
-            <h2 class="text-2xl font-bold text-black dark:text-white">{{ $t('managePodcasts') }}</h2>
-            <button @click="createPodcast" class="bg-blue-500 hover:bg-blue-700 text-white font-bold h-10 px-4 rounded">
-                {{ $t('uploadPodcast') }}
-            </button>
+        <div v-if="loading">
+            <div role="status" style="display: flex; align-items: center; justify-content: center;">
+                <svg aria-hidden=" true"
+                    class="inline w-24 h-24 mr-24 text-gray-200 animate-spin dark:text-gray-600 fill-green-500 dark:fill-white"
+                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor" />
+                    <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill" />
+                </svg>
+                <span class="sr-only"> {{ $t('scanningForViruses') }} </span>
+            </div>
+            <p class="text-black dark:text-white text-center text-xl mr-20">{{ $t('scanningForViruses') }}</p>
         </div>
-        <div class="text-black dark:text-white overflow-auto " style="height: 90%;">
-            <div v-for="podcast in podcastStore.getPodcasts">
-                <div class="flex rounded my-4 p-4 border-solid border-2 border-blue-950 ">
-                    <img :src="podcast.thumbnail" class="h-20 w-20 rounded">
-                    <div class="block h-full mx-4 my-auto">
-                        <p class="text-xl font-bold">{{ podcast.podcast_name }}</p>
-                        <p class="text-sm">
-                            <Icon name="ph:vinyl-record" size="2em" />
-                            {{ podcast.views }}
-                        </p>
-                    </div>
-                    <div class="flex float-right h-full my-auto ml-auto">
-                        <button @click="editPodcast(podcast.id, podcast.podcast_name, podcast.description)"
-                            class="px-4 hover:text-gray-400">
-                            {{ $t('edit') }}
-                        </button>
-                        <button @click="deletePodcast(podcast.id)" class="pr-4 hover:text-gray-400 ">
-                            {{ $t('delete') }}
-                        </button>
+        <div v-else>
+            <div class="flex justify-between" style="height: 10%;">
+                <h2 class="text-2xl font-bold text-black dark:text-white">{{ $t('managePodcasts') }}</h2>
+                <button @click="createPodcast" class="bg-blue-500 hover:bg-blue-700 text-white font-bold h-10 px-4 rounded">
+                    {{ $t('uploadPodcast') }}
+                </button>
+            </div>
+            <div>
+                <div class="text-black dark:text-white overflow-auto " style="height: 90%;">
+                    <div v-for="podcast in podcastStore.getPodcasts">
+                        <div class="flex rounded my-4 p-4 border-solid border-2 border-blue-950 ">
+                            <img :src="podcast.thumbnail" class="h-20 w-20 rounded">
+                            <div class="block h-full mx-4 my-auto">
+                                <p class="text-xl font-bold">{{ podcast.podcast_name }}</p>
+                                <p class="text-sm">
+                                    <Icon name="ph:vinyl-record" size="2em" />
+                                    {{ podcast.views }}
+                                </p>
+                            </div>
+                            <div class="flex float-right h-full my-auto ml-auto">
+                                <button @click="editPodcast(podcast.id, podcast.podcast_name, podcast.description)"
+                                    class="px-4 hover:text-gray-400">
+                                    {{ $t('edit') }}
+                                </button>
+                                <button @click="deletePodcast(podcast.id)" class="pr-4 hover:text-gray-400 ">
+                                    {{ $t('delete') }}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script setup>
+
+definePageMeta({
+    middleware: ["auth"]
+})
+</script>
   
 <script>
 
@@ -54,6 +80,7 @@ export default {
         return {
             token: "",
             user: {},
+            loading: false
         };
     },
     methods: {
@@ -79,7 +106,6 @@ export default {
 
         async createPodcast() {
             // TODO: Implement create functionality
-
             const { value: formValues } = await Swal.fire({
                 title: 'Upload podcast',
                 html:
@@ -114,21 +140,72 @@ export default {
                     ];
                 },
             });
-
             if (formValues) {
+                this.loading = true;
                 const [title, image, mp3, description] = formValues;
-                // Upload the podcast...
-                // make image into file type
+                // Check aspect ratio of thumbnail image
+                const img = new Image();
+                img.src = URL.createObjectURL(image);
+                img.onload = async () => {
+                    const aspectRatio = img.width / img.height;
+                    if (aspectRatio !== 1) {
+                        Swal.fire({
+                            title: this.$t('error'),
+                            text: this.$t('thumbnailAspectRatioError'),
+                            icon: 'error',
+                            confirmButtonText: this.$t('ok'),
+                        });
+                        return;
+                    }
+                };
                 const tempimage = new File([image], image.name, { type: image.type });
                 const imageResponse = await UploadFile(tempimage, "images");
-                // log the file name
                 if (imageResponse.status == 201) {
-                    //make mp3 into file type
                     const tempmp3 = new File([mp3], mp3.name, { type: mp3.type });
                     const mp3Response = await UploadFile(tempmp3, "podcasts");
-                    // log the file name
                     if (mp3Response.status == 201) {
-                        // upload podcast to database
+                        await new Promise(r => setTimeout(r, 5000));
+                        try {
+                            await axios.post('api/azurestorage/getimage', {
+                                fileName: imageResponse.fileName,
+                            },
+                                {
+                                    headers: {
+                                        Authorization: `Bearer ${this.token}`,
+                                    }
+                                });
+                        } catch (error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Virus detected in image. Upload failed!',
+                                icon: 'error',
+                                confirmButtonText: 'OK',
+                            });
+                            this.loading = false;
+                            return;
+                        }
+
+                        try {
+                            await axios.post('api/azurestorage/getpodcast', {
+                                fileName: mp3Response.fileName,
+                            },
+                                {
+                                    headers: {
+                                        Authorization: `Bearer ${this.token}`,
+                                    }
+                                });
+                        }
+                        catch (error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Virus detected in podcast. Upload failed!',
+                                icon: 'error',
+                                confirmButtonText: 'OK',
+                            });
+                            this.loading = false;
+                            return;
+                        }
+
                         await axios.post('/api/podcast/create-podcast', {
                             userId: this.user.id,
                             podcast_name: title,
@@ -164,8 +241,8 @@ export default {
                     }
                 }
             }
+            this.loading = false;
         },
-
         async editPodcast(id, title, description) {
             const { value: formValues } = await Swal.fire({
                 title: 'Edit podcast',

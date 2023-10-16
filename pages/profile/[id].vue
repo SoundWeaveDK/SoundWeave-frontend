@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6">
+    <div v-if="user" class="p-6">
         <div class="flex items-center space-x-4 ml-24">
             <div class="flex-shrink-0">
                 <img src="https://via.placeholder.com/150" alt="Profile picture" class="rounded-full w-24 h-24">
@@ -12,16 +12,23 @@
         $t('from') }} {{ user.fk_country_id.country_name }}</div>
             </div>
             <div class="flex-1 text-right">
-                <button v-if="loggedInUser.id !== user.id"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-24">
-                    {{ $t('follow') }}
-                </button>
+                <div v-if="loggedInUser.id !== user.id">
+                    <button v-if="followed.includes(user.id)" @click="unfollowUser"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4">
+                        {{ $t('unfollow') }}
+                    </button>
+                    <button v-else @click="followUser"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4">
+                        {{ $t('follow') }}
+                    </button>
+                </div>
+
             </div>
         </div>
         <div class="">
             <div class="float-right mr-16">
                 <!-- manage page -->
-                <div v-if="loggedInUser" class="h-8">
+                <div v-if="loggedInUser.id == user.id" class="h-8">
 
                     <NuxtLink to="/manage"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4">
@@ -38,41 +45,27 @@
   
 <script>
 import { useUserStore } from "../stores/login"
+import { useFollowedStore } from "@/stores/followed"
 import { mapStores } from "pinia";
 import axios from '@/utils/axiosInstance.ts'
 
 export default {
     computed: {
-        ...mapStores(useUserStore)
+        ...mapStores(useUserStore, useFollowedStore)
     },
     created() {
         this.token = this.userStore.getAccessToken;
-        this.getUserPodcasts();
         this.loggedInUser = this.userStore.getUser;
-        console.log(this.loggedInUser);
-        if (this.$route.params.id == this.loggedInUser.id) {
-            this.user = this.loggedInUser;
-        } else {
-            this.user = {
-                birthday: "1942-11-20",
-                countryId: 1,
-                createdAt: "2021-05-04T14:00:00.000Z",
-                email: "JoeBiden@USGOV.com",
-                fk_country_id: {
-                    country_name: "USA",
-                },
-                fk_gender_id: {
-                    gender_name: "Male"
-                },
-                genderId: 1,
-                id: 0,
-            };
-        }
+
+        this.getUserPodcasts();
+        this.getUser();
+        this.getFollowing();
     },
     data() {
         return {
             user: null,
             token: "",
+            followed: [],
             loggedInUser: [],
             podcastData: [],
         };
@@ -92,6 +85,76 @@ export default {
                 }
             }).then((response) => {
                 this.podcastData = response.data;
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+        async getFollowing() {
+            // get the user's following
+            await axios.get('/api/followuser/read-users-followers/' + this.loggedInUser.id, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                this.followed = [];
+                for (let i = 0; i < response.data.length; i++) {
+                    for (let j = 0; j < response.data[i].following.length; j++) {
+                        this.followed.push(response.data[i].following[j].id);
+                    }
+                }
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+        async followUser() {
+            // follow user
+            await axios.put('/api/followuser/follow-user', {
+                followerId: this.loggedInUser.id,
+                followingId: this.user.id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                if (response.status == 200) {
+                    this.getFollowing();
+                }
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+        async unfollowUser() {
+            await axios.put('/api/followuser/unfollow-user', {
+                followerId: this.loggedInUser.id,
+                followingId: this.user.id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                if (response.status == 200) {
+                    this.getFollowing();
+                }
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+
+        async getUser() {
+            await axios.get('/api/user/read-single-user/' + this.$route.params.id, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }).then((response) => {
+                this.user = response.data;
             }).catch((error) => {
                 if (error) {
                     alert((error));

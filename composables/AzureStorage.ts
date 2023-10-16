@@ -19,6 +19,11 @@ export const UploadFile = async (file: File, containerName: string) => {
       throw new Error("File type not permitted. Use jpeg, jpg, png, gif, mp3, ogg, or wav");
     }
 
+    // if file is image type
+    if (file.type.includes("image")) {
+      // resize image to 320x320 1:1 ratio
+    }
+
     if (file.size > 100000000) {
       throw new Error("File size must be less than 100MB");
     }

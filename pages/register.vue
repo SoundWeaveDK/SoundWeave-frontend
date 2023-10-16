@@ -36,7 +36,7 @@
                                     </label>
                                     <input type="text" v-model="username" name="username" id="username"
                                         class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        autocomplete="username" placeholder="Joe Mama" required>
+                                        autocomplete="username" placeholder="Joe Mama" maxlength="17" required>
                                 </div>
                             </div>
                             <div class="flex flex-wrap">
@@ -122,17 +122,6 @@ export default {
             this.getGenders()
     },
     methods: {
-        /*verifyPasswords() {
-            if (this.password != this.rePassword) {
-                alert("Passwords are not the same")
-                return false
-            } else if (this.password.length < 8) {
-                alert("Password must be at least 8 characters long")
-                return false
-            } else {
-                this.verifyRegister()
-            }
-        },*/
         async verifyRegister() {
             await axios.post('/api/user/register-user', {
                 email: this.email.toLowerCase(),
@@ -143,7 +132,6 @@ export default {
                 genderId: this.gender
             }).then((res) => {
                 if (res.status == 201) {
-                    alert(this.$t('registerSuccess'))
                     this.$router.push('/login')
                 } else {
                     alert(this.$t('registerError'))
