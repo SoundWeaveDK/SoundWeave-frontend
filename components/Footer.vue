@@ -1,6 +1,14 @@
 <template>
     <div class="h-full text-black dark:text-white dark:bg-slate-800 border-solid border-t-2 border-blue-950 rounded-t-lg">
-        <div v-if="podcastStore.getSelectedPodcast.id" class="w-full h-full m-auto flex pl-4 pr-4">
+        <div v-if="!userStore.getUser.id">
+            <!-- you havent selected a podcast yet -->
+            <p class="text-center text-sm font-medium my-auto">Login to listen to podcasts</p>
+        </div>
+        <div v-else-if="!podcastStore.getSelectedPodcast.id">
+            <!-- you havent selected a podcast yet -->
+            <p class="text-center text-sm font-medium my-auto">Select a podcast to play</p>
+        </div>
+        <div v-else class="w-full h-full m-auto flex pl-4 pr-4">
             <div class="my-auto rounded">
                 <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image"
                     class="w-16 h-16 m-1 rounded-sm mobile:h-12 mobile:w-12">
@@ -61,10 +69,6 @@
                 <audio ref="audioPlayer" :src="podcastStore.getSelectedPodcast.podcast_file"
                     @timeupdate="onTimeUpdate"></audio>
             </div>
-        </div>
-        <div v-else>
-            <!-- you havent selected a podcast yet -->
-            <p class="text-center text-sm font-medium my-auto">Select a podcast to play</p>
         </div>
     </div>
 </template>
