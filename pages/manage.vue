@@ -80,7 +80,8 @@ export default {
         return {
             token: "",
             user: {},
-            loading: false
+            loading: false,
+            aspectRatioValid: true,
         };
     },
     methods: {
@@ -146,7 +147,7 @@ export default {
                 // Check aspect ratio of thumbnail image
                 const img = new Image();
                 img.src = URL.createObjectURL(image);
-                img.onload = async () => {
+                const check = img.onload = async () => {
                     const aspectRatio = img.width / img.height;
                     if (aspectRatio !== 1) {
                         Swal.fire({
@@ -155,9 +156,14 @@ export default {
                             icon: 'error',
                             confirmButtonText: this.$t('ok'),
                         });
-                        return;
+                        this.loading = false;
+                        this.aspectRatioValid = false;
                     }
                 };
+                await check();
+                if (!this.aspectRatioValid) {
+                    return;
+                }
                 const tempimage = new File([image], image.name, { type: image.type });
                 const imageResponse = await UploadFile(tempimage, "images");
                 if (imageResponse.status == 201) {
