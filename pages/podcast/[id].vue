@@ -16,10 +16,11 @@
                                 class="w-10 h-10 mr-4 rounded-full float-left" />
                             <img v-else src="../../assets/images/fishe.jpg" class="h-10 w-10 rounded mr-4"
                                 alt="Creator Image">
-                            <!-- <p class="text-black dark:text-white font-bold text-xl">{{ podcast.fk_user_id.username }}</p> -->
+                            <!-- <p class="text-black dark:text-white font-bold text-xl my-auto">{{ podcast.fk_user_id.username
+                            }}</p> -->
                         </NuxtLink>
                         <!-- listens -->
-                        <p class="text-black dark:text-white text-2xl font-bold ml-auto">
+                        <p class="text-black dark:text-white text-2xl font-bold ml-auto my-auto">
                             {{ podcast.views }}
                             <Icon name="fluent:headphones-sound-wave-20-filled" class="mr-2 h-full my-auto" />
                         </p>
@@ -120,7 +121,6 @@ export default {
     data() {
         return {
             token: '',
-            userImage: "../assets/images/fishe.jpg",
             isPlaying: false,
             currentTime: "0:00",
             duration: "0:00",
@@ -136,7 +136,6 @@ export default {
                     Authorization: `Bearer ${this.token}`
                 }
             }).then((response) => {
-                console.log(response.data);
                 this.podcast = response.data;
             }).catch((error) => {
                 if (error) {

@@ -61,6 +61,7 @@ export default defineI18nConfig(() => ({
                   noFollowed: 'You are not following any creators. Go to a creators profile and click the follow button to follow them.',
                   noFavorites: 'You have no favorites. Go to a podcast and click the favorite button to add it to your favorites.',
                   thumbnailAspectRatioError: 'Thumbnail aspect ratio must be 1:1',
+                  feed: 'Feed',
                   scanningForViruses: 'Scanning for viruses',
             },
             fr: {
@@ -120,6 +121,7 @@ export default defineI18nConfig(() => ({
                   noFollowed: 'Vous ne suivez aucun créateur. Allez sur le profil d\'un créateur et cliquez sur le bouton suivre pour le suivre.',
                   noFavorites: 'Vous n\'avez aucun favori. Allez sur un podcast et cliquez sur le bouton favori pour l\'ajouter à vos favoris.',
                   thumbnailAspectRatioError: 'Le rapport hauteur / largeur de la vignette doit être de 1:1',
+                  feed: 'Fil',
                   scanningForViruses: 'Analyse des virus',
             },
 
@@ -180,6 +182,7 @@ export default defineI18nConfig(() => ({
                   noFollowed: 'Du følger ikke nogen skabere. Gå til en skabers profil og klik på knappen følg for at følge dem.',
                   noFavorites: 'Du har ingen favoritter. Gå til en podcast og klik på knappen favorit for at tilføje den til dine favoritter.',
                   thumbnailAspectRatioError: 'Thumbnail-aspektforholdet skal være 1:1',
+                  feed: 'Feed',
                   scanningForViruses: 'Scanner for virus',
             },
             jp: {
@@ -238,6 +241,7 @@ export default defineI18nConfig(() => ({
                   noFollowed: 'クリエイターをフォローしていません。クリエイターのプロフィールに移動して、フォローボタンをクリックしてフォローしてください。',
                   noFavorites: 'お気に入りはありません。ポッドキャストに移動して、お気に入りボタンをクリックしてお気に入りに追加します。',
                   thumbnailAspectRatioError: 'サムネイルのアスペクト比は1：1である必要があります',
+                  feed: 'フィード',
                   scanningForViruses: 'ウイルスをスキャン中',
             },
             cn: {
@@ -296,6 +300,7 @@ export default defineI18nConfig(() => ({
                   noFollowed: '您没有关注任何创建者。转到创建者个人资料并单击关注按钮以关注他们。',
                   noFavorites: '您没有收藏。转到播客并单击收藏按钮将其添加到收藏夹。',
                   thumbnailAspectRatioError: '缩略图纵横比必须为1:1',
+                  feed: '饲料',
                   scanningForViruses: '正在扫描病毒',
             },
             sa: {
@@ -354,6 +359,7 @@ export default defineI18nConfig(() => ({
                   noFollowed: 'أنت لا تتابع أي مبدعين. انتقل إلى ملف تعريف مبدع وانقر فوق زر المتابعة لمتابعته.',
                   noFavorites: 'ليس لديك أي مفضلات. انتقل إلى بودكاست وانقر فوق زر المفضلة لإضافته إلى المفضلة.',
                   thumbnailAspectRatioError: 'يجب أن يكون نسبة العرض إلى الارتفاع للصورة المصغرة 1:1',
+                  feed: 'تغذية',
                   scanningForViruses: 'البحث عن الفيروسات',
             },
       }
