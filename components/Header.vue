@@ -57,6 +57,10 @@
                                     <li class=""><a @click="logout">{{ $t('logout') }}</a>
                                     </li>
                                 </button>
+                                <button v-else class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                    <li class=""><a href="/login">{{ $t('login') }}</a>
+                                    </li>
+                                </button>
                             </ul>
                         </div>
                     </div>
