@@ -114,55 +114,69 @@ export default {
                     ];
                 },
             });
-
             if (formValues) {
                 const [title, image, mp3, description] = formValues;
-                // Upload the podcast...
-                // make image into file type
-                const tempimage = new File([image], image.name, { type: image.type });
-                const imageResponse = await UploadFile(tempimage, "images");
-                // log the file name
-                if (imageResponse.status == 201) {
-                    //make mp3 into file type
-                    const tempmp3 = new File([mp3], mp3.name, { type: mp3.type });
-                    const mp3Response = await UploadFile(tempmp3, "podcasts");
-                    // log the file name
-                    if (mp3Response.status == 201) {
-                        // upload podcast to database
-                        await axios.post('/api/podcast/create-podcast', {
-                            userId: this.user.id,
-                            podcast_name: title,
-                            podcast_file: mp3Response.fileName,
-                            description: description,
-                            thumbnail: imageResponse.fileName,
-                        },
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${this.token}`,
-                                }
-                            }
-
-                        ).then((response) => {
-                            if (response.status == 201) {
-                                this.podcastStore.addPodcast(response.data);
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: 'Podcast uploaded successfully!',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK',
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: 'Podcast upload failed!',
-                                    icon: 'error',
-                                    confirmButtonText: 'OK',
-                                });
-                            }
+                // Check aspect ratio of thumbnail image
+                const img = new Image();
+                img.src = URL.createObjectURL(image);
+                img.onload = async () => {
+                    const aspectRatio = img.width / img.height;
+                    if (aspectRatio !== 1) {
+                        Swal.fire({
+                            title: this.$t('error'),
+                            text: this.$t('thumbnailAspectRatioError'),
+                            icon: 'error',
+                            confirmButtonText: this.$t('ok'),
                         });
-
+                        return;
                     }
-                }
+                    // Upload the podcast...
+                    // make image into file type
+                    const tempimage = new File([image], image.name, { type: image.type });
+                    const imageResponse = await UploadFile(tempimage, "images");
+                    // log the file name
+                    if (imageResponse.status == 201) {
+                        //make mp3 into file type
+                        const tempmp3 = new File([mp3], mp3.name, { type: mp3.type });
+                        const mp3Response = await UploadFile(tempmp3, "podcasts");
+                        // log the file name
+                        if (mp3Response.status == 201) {
+                            // upload podcast to database
+                            await axios.post('/api/podcast/create-podcast', {
+                                userId: this.user.id,
+                                podcast_name: title,
+                                podcast_file: mp3Response.fileName,
+                                description: description,
+                                thumbnail: imageResponse.fileName,
+                            },
+                                {
+                                    headers: {
+                                        Authorization: `Bearer ${this.token}`,
+                                    }
+                                }
+
+                            ).then((response) => {
+                                if (response.status == 201) {
+                                    this.podcastStore.addPodcast(response.data);
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: 'Podcast uploaded successfully!',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK',
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'Podcast upload failed!',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK',
+                                    });
+                                }
+                            });
+
+                        }
+                    }
+                };
             }
         },
 
