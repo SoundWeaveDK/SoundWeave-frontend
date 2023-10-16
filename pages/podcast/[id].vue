@@ -79,6 +79,13 @@
         </div>
     </div>
 </template>
+
+<script setup>
+
+definePageMeta({
+    middleware: ["auth"]
+})
+</script>
   
 <script>
 import axios from '@/utils/axiosInstance.ts'

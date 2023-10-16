@@ -122,17 +122,6 @@ export default {
             this.getGenders()
     },
     methods: {
-        /*verifyPasswords() {
-            if (this.password != this.rePassword) {
-                alert("Passwords are not the same")
-                return false
-            } else if (this.password.length < 8) {
-                alert("Password must be at least 8 characters long")
-                return false
-            } else {
-                this.verifyRegister()
-            }
-        },*/
         async verifyRegister() {
             await axios.post('/api/user/register-user', {
                 email: this.email.toLowerCase(),
@@ -143,7 +132,6 @@ export default {
                 genderId: this.gender
             }).then((res) => {
                 if (res.status == 201) {
-                    alert(this.$t('registerSuccess'))
                     this.$router.push('/login')
                 } else {
                     alert(this.$t('registerError'))
