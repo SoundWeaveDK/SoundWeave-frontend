@@ -9,17 +9,19 @@
             <p class="text-center text-sm font-medium my-auto">Select a podcast to play</p>
         </div>
         <div v-else class="w-full h-full m-auto flex pl-4 pr-4">
-            <div class="my-auto rounded">
-                <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image"
-                    class="w-16 h-16 m-1 rounded-sm mobile:h-12 mobile:w-12">
+            <div class="flex">
+                <div class="my-auto rounded">
+                    <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image"
+                        class="w-16 h-16 m-1 rounded-sm mobile:h-10 mobile:w-14">
+                </div>
+                <button class="ml-3" @click="togglePlayback">
+                    <Icon v-if="isPlaying" name="fa6-solid:pause" size="2em" />
+                    <Icon v-else name="fa6-solid:play" size="2em" />
+                </button>
             </div>
-            <div class=" h-full w-full ">
+            <div @click="toPodcast" class="h-full w-full ">
                 <div class="flex items-center justify-between h-full mx-4 my-auto ">
                     <div class="flex items-center my-auto">
-                        <button class="mr-4" @click="togglePlayback">
-                            <Icon v-if="isPlaying" name="fa6-solid:pause" size="2em" />
-                            <Icon v-else name="fa6-solid:play" size="2em" />
-                        </button>
                         <div class="flex flex-col">
                             <div class="text-sm font-medium ">{{ podcastStore.getSelectedPodcast.podcast_name }}</div>
                         </div>
@@ -192,6 +194,15 @@ export default {
                     alert((error));
                 }
             });
+        },
+        toPodcast() {
+            if (window.innerWidth < 769) {
+                if (this.$route.path == "/podcast/" + this.podcastStore.getSelectedPodcast.id) {
+                    this.$router.push("/");
+                } else {
+                    this.$router.push("/podcast/" + this.podcastStore.getSelectedPodcast.id);
+                }
+            }
         },
     },
 };
