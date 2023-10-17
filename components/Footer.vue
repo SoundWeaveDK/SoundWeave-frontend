@@ -148,6 +148,8 @@ export default {
             const progress = clickX / duration;
             const newTime = duration * progress;
             audio.currentTime = newTime;
+            // console.log("event: " + event.clientX + " progressReat: " + progressRect.left + " clickX: " + clickX + " progress: " + " duration: " + duration + + progress + " newTime: " + newTime);
+
         },
         updateVolume(event) {
             const audio = this.$refs.audioPlayer;
