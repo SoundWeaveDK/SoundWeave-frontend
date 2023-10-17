@@ -43,7 +43,7 @@
                                             <label class="flex" for="locale-select">{{ $t('language') }}:
                                                 <Icon class="self-center" :name="'circle-flags:' + $i18n.locale" />
                                             </label>
-                                            <select id="locale-select" v-model="$i18n.locale"
+                                            <select id="locale-select" v-model="$i18n.locale" @change="updateLanguage"
                                                 class="text-black dark:text-white rounded p-2 bg-gray-400">
                                                 <option v-for="locale in $i18n.availableLocales" :key="locale"
                                                     :value="locale" class="text-black">
@@ -76,6 +76,13 @@ import { useUserStore } from "../stores/login"
 import { mapStores } from "pinia";
 
 export default {
+    mounted() {
+        if (sessionStorage.getItem("locale")) {
+            this.$i18n.locale = localStorage.getItem("locale");
+        } else {
+            sessionStorage.setItem("locale", this.$i18n.locale);
+        }
+    },
     computed: {
         ...mapStores(useUserStore),
         placeholderText() {
@@ -122,6 +129,9 @@ export default {
                     alert((error));
                 }
             });
+        },
+        updateLanguage() {
+            localStorage.setItem('locale', this.$i18n.locale)
         },
     },
 };

@@ -57,8 +57,8 @@
 
                         <!-- Like podcast -->
                         <button class="mr-8">
-                            <Icon v-if="!isLiked" name="icon-park-outline:like" size="1.5em" />
-                            <Icon v-else name="icon-park-solid:like" size="1.5em" />
+                            <!-- <Icon v-if="!isLiked" name="icon-park-outline:like" size="1.5em" />
+                            <Icon v-else name="icon-park-solid:like" size="1.5em" /> -->
                         </button>
                         <!-- volume -->
                         <div class="volume block h-full my-auto">
@@ -95,23 +95,18 @@ export default {
         },
     },
     created() {
-        this.token = this.userStore.getAccessToken;
-        this.loggedinUser = this.userStore.getUser;
-        if (this.loggedinUser.id) {
+        if (this.userStore.getUser.id) {
             this.getWatchLater();
+            this.getLikedPodcast();
         }
     },
     data() {
         return {
-            loggedinUser: "",
-            storedPodcast: "",
-            token: '',
             isPlaying: false,
             currentTime: '0:00',
             duration: '0:00',
             progress: 0,
             volume: 1,
-            isLiked: false,
         };
     },
     methods: {
@@ -154,9 +149,9 @@ export default {
             audio.volume = event.target.value;
         },
         async getWatchLater() {
-            await axios.get('/api/watchlater/read-users-watch-later/' + this.loggedinUser.id, {
+            await axios.get('/api/watchlater/read-users-watch-later/' + this.userStore.getUser.id, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 this.watchLaterStore.setWatchLater(response.data);
@@ -168,11 +163,11 @@ export default {
         },
         async addWatchLater() {
             await axios.post('/api/watchlater/add-watch-later', {
-                userId: this.loggedinUser.id,
+                userId: this.userStore.getUser.id,
                 podcastId: this.podcastStore.getSelectedPodcast.id,
             }, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 this.watchLaterStore.addWatchLater(response.data);
@@ -185,7 +180,7 @@ export default {
         async deleteWatchLater() {
             await axios.delete('/api/watchlater/delete-single-watch-later/' + this.watchLaterStore.getWatchLater.find(watchLater => watchLater.podcastId == this.podcastStore.getSelectedPodcast.id).id, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 this.watchLaterStore.deleteWatchLater(response.data.id);
@@ -204,6 +199,21 @@ export default {
                 }
             }
         },
+
+        async getLikedPodcast() {
+            await axios.get('/api/podcastliked/read-users-podcast-liked/' + this.userStore.getUser.id, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+                console.log(response.data);
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+
     },
 };
 </script>

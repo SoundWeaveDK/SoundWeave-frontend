@@ -7,7 +7,8 @@
                 <p class="text-black dark:text-white text-xl font-bold">Watch Later</p>
 
                 <div>
-                    <PodcastBox />
+                    {{ console.log(watchLaterStore.getWatchLater.map(item => item.fk_podcast_id)) }}
+                    <!-- <PodcastBox :podcastData="watchLaterStore.getWatchLater.map(item => item.fk_podcast_id)" /> -->
                 </div>
 
             </div>
@@ -52,7 +53,7 @@ export default {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
-                console.log(response.data);
+                this.watchLaterStore.setWatchLater(response.data);
             }).catch((error) => {
                 if (error) {
                     alert((error));
