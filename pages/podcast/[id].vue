@@ -107,14 +107,12 @@ export default {
         },
     },
     created() {
-        this.token = this.userStore.getAccessToken;
         if (this.podcastStore.getSelectedPodcast) {
             this.getSinglePodcasts();
         }
     },
     data() {
         return {
-            token: '',
             isPlaying: false,
             currentTime: "0:00",
             duration: "0:00",
@@ -126,7 +124,7 @@ export default {
         async getSinglePodcasts() {
             await axios.get('api/podcast/read-single-podcast/' + this.$route.params.id, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 if (response.data.status === 200) {

@@ -1,14 +1,15 @@
 <template>
-    <PodcastBox :podcastData="podcastData" />
+    <PodcastBox :podcastData="podcastStore.getPodcasts" />
 </template>
 <script>
 import axios from '@/utils/axiosInstance.ts'
 import { useUserStore } from "../stores/login"
 import { mapStores } from "pinia";
+import { usePodcastStore } from '~/stores/podcast';
 
 export default {
     computed: {
-        ...mapStores(useUserStore)
+        ...mapStores(useUserStore, usePodcastStore)
     },
     created() {
         if (this.userStore.getUser.id) {
@@ -18,11 +19,6 @@ export default {
             this.getPreviewPodcasts();
         }
     },
-    data() {
-        return {
-            podcastData: [],
-        };
-    },
     methods: {
         async getLoggedInPreviewPodcasts() {
             await axios.get('/api/podcast/read-explore-podcast', {
@@ -30,7 +26,7 @@ export default {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`,
                 }
             }).then((response) => {
-                this.podcastData = response.data;
+                this.podcastStore.setPodcasts(response.data);
             }).catch((error) => {
                 if (error) {
                     alert((error));
@@ -39,7 +35,7 @@ export default {
         },
         async getPreviewPodcasts() {
             await axios.get('/api/podcast/read-preview-podcast').then((response) => {
-                this.podcastData = response.data;
+                this.podcastStore.setPodcasts(response.data);
             }).catch((error) => {
                 if (error) {
                     alert((error));

@@ -46,14 +46,15 @@ const { locale } = useI18n()
                     </li>
                     <!-- followed creators -->
                     <li>
-                        <p v-if="!loggedInUser.id" class="flex items-center p-2 space-x-3 rounded-md">
+                        <p v-if="!userStore.getUser.id" class="flex items-center p-2 space-x-3 rounded-md">
                             {{ $t('loginFollowed') }}
                         </p>
-                        <p v-else-if="followed.length == 0" class="flex items-center p-2 space-x-3 rounded-md">
+                        <p v-else-if="followedStore.getFollowed.length == 0"
+                            class="flex items-center p-2 space-x-3 rounded-md">
                             {{ $t('noFollowed') }}
                         </p>
-                        <div v-else v-for="(creators, index) in followed">
-                            <div v-if="index == followed.length - 1 && index > 4">
+                        <div v-else v-for="(creators, index) in followedStore.getFollowed">
+                            <div v-if="index == followedStore.getFollowed.length - 1 && index > 4">
                                 <NuxtLink v-if="followMore" :to="'/profile/' + creators.id" class="flex py-2">
                                     <img v-if="creators.creator_image == null" src="../assets/images/fishe.jpg"
                                         class="w-10 h-10 rounded-full" />
@@ -93,7 +94,7 @@ const { locale } = useI18n()
                         </p>
                     </li>
                     <li class="rounded-sm">
-                        <p v-if="!loggedInUser.id" class="flex items-center p-2 space-x-3 rounded-md">
+                        <p v-if="!userStore.getUser.id" class="flex items-center p-2 space-x-3 rounded-md">
                             {{ $t('loginFavorites') }}
                         </p>
                         <p v-else-if="favorites.length == 0" class="flex items-center p-2 space-x-3 rounded-md">
@@ -136,15 +137,16 @@ const { locale } = useI18n()
 import axios from '@/utils/axiosInstance.ts'
 import { useUserStore } from "../stores/login"
 import { mapStores } from "pinia";
+import { useFollowedStore } from '~/stores/followed';
+
 export default {
     name: 'SideBar',
     computed: {
-        ...mapStores(useUserStore)
+        ...mapStores(useUserStore, useFollowedStore)
     },
     created() {
         this.token = this.userStore.getAccessToken;
-        this.loggedInUser = this.userStore.getUser;
-        if (this.loggedInUser.id) {
+        if (this.userStore.getUser.id) {
             this.getFollowing();
             this.getFavorites();
         }
@@ -153,12 +155,10 @@ export default {
     data() {
         return {
             token: '',
-            loggedInUser: [],
             followMore: false,
             collectionMore: false,
             // my lists
             favorites: [],
-            followed: [],
             loaded: false,
         };
     },
@@ -171,15 +171,15 @@ export default {
         },
         async getFollowing() {
             // get the user's following
-            await axios.get('/api/followuser/read-users-followers/' + this.loggedInUser.id, {
+            await axios.get('/api/followuser/read-users-followers/' + this.userStore.getUser.id, {
                 headers: {
                     Authorization: `Bearer ${this.token}`
                 }
             }).then((response) => {
-                this.followed = [];
+                this.followedStore.clearFollowed();
                 for (let i = 0; i < response.data.length; i++) {
                     for (let j = 0; j < response.data[i].following.length; j++) {
-                        this.followed.push(response.data[i].following[j]);
+                        this.followedStore.addFollowed(response.data[i].following[j]);
                     }
                 }
             }).catch((error) => {
@@ -191,7 +191,7 @@ export default {
         },
         async getFavorites() {
             // get the user's favorites
-            await axios.get('/api/podcastliked/read-users-podcast-liked/' + this.loggedInUser.id, {
+            await axios.get('/api/podcastliked/read-users-podcast-liked/' + this.userStore.getUser.id, {
                 headers: {
                     Authorization: `Bearer ${this.token}`
                 }
