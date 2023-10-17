@@ -19,13 +19,15 @@ const { locale } = useI18n()
             <div class="flex-1">
                 <ul class="pt-2 pb-4 space-y-1 text-sm">
                     <li class="rounded-sm">
-                        <a href="/" class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md">
+                        <a href="/"
+                            class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md hover:text-gray-400">
                             <Icon name="humbleicons:home" size="2em" />
                             <h1 class="text-xl">{{ $t('home') }}</h1>
                         </a>
                     </li>
                     <li class="rounded-sm">
-                        <a href="/explore" class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md">
+                        <a href="/explore"
+                            class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md hover:text-gray-400">
                             <Icon name="material-symbols:explore-outline-rounded" size="2em" />
                             <h1 class="text-xl">{{ $t('feed') }}</h1>
                         </a>
@@ -33,7 +35,7 @@ const { locale } = useI18n()
                     <li>
                         <!-- Collection page -->
                         <NuxtLink to="/collection"
-                            class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md">
+                            class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md hover:text-gray-400">
                             <Icon name="material-symbols:collections-bookmark" size="2em" />
                             <h1 class="text-xl">{{ $t('yourCollection') }}</h1>
                         </NuxtLink>
