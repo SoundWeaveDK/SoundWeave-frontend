@@ -3,16 +3,17 @@
         <div class="col-span-4 h-full">
             <div class="h-3/6 p-8">
                 <h1 class="text-4xl font-bold text-black dark:text-white pb-4 w-fit mx-auto">
-                    {{ podcast.podcast_name }}
+                    {{ podcastStore.getSelectedPodcast.podcast_name }}
                 </h1>
-                <img :src="podcast.thumbnail" alt="Podcast Image" class="w-72 h-72 m-auto" />
+                <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image" class="w-72 h-72 m-auto" />
             </div>
             <div class="p-8">
                 <div class="flex justify-between w-full">
                     <div class="flex">
                         <!-- Creator -->
-                        <NuxtLink :to="`/profile/${podcast.userId}`" class="flex">
-                            <img v-if="podcast.creator_image" :src="podcast.creator_image"
+                        <NuxtLink :to="`/profile/${podcastStore.getSelectedPodcast.userId}`" class="flex">
+                            <img v-if="podcastStore.getSelectedPodcast.creator_image"
+                                :src="podcastStore.getSelectedPodcast.creator_image"
                                 class="w-10 h-10 mr-4 rounded-full float-left" />
                             <img v-else src="../../assets/images/fishe.jpg" class="h-10 w-10 rounded mr-4"
                                 alt="Creator Image">
@@ -21,16 +22,17 @@
                         </NuxtLink>
                         <!-- listens -->
                         <p class="text-black dark:text-white text-2xl font-bold ml-auto my-auto">
-                            {{ podcast.views }}
+                            {{ podcastStore.getSelectedPodcast.views }}
                             <Icon name="fluent:headphones-sound-wave-20-filled" class="mr-2 h-full my-auto" />
                         </p>
                     </div>
                 </div>
 
                 <!-- description -->
-                <div v-if="podcast.created" class="text-black dark:text-white text-xl font-bold mr-2 float-right">
+                <div v-if="podcastStore.getSelectedPodcast.created"
+                    class="text-black dark:text-white text-xl font-bold mr-2 float-right">
                     <!-- upload date -->
-                    <p>{{ podcast.created }}</p>
+                    <p>{{ podcastStore.getSelectedPodcast.created }}</p>
                 </div>
                 <div v-else>
                     <p class="text-black dark:text-white text-xl font-bold mr-2 float-right">
@@ -40,7 +42,7 @@
 
                 <div class=" text-black h-max-64 overflow-y-auto dark:text-white text-xl font-bold inline-block">
                     <!-- description -->
-                    <p>{{ podcast.description }}</p>
+                    <p>{{ podcastStore.getSelectedPodcast.description }}</p>
                 </div>
             </div>
         </div>
@@ -63,7 +65,8 @@
                     </div>
                     <div class="h-96 w-full overflow-y-auto">
                         <!-- comments -->
-                        <div v-if="podcast.comments" v-for="message in podcast.comments" class="w-full p-2">
+                        <div v-if="podcastStore.getSelectedPodcast.comments"
+                            v-for="message in podcastStore.getSelectedPodcast.comments" class="w-full p-2">
                             <div>
                                 <img src="../assets/images/fishe.jpg" class="w-10 h-10 mr-4 rounded-full float-left" />
                                 <p class="text-black dark:text-white font-bold">{{ message.name }}</p>
@@ -97,24 +100,15 @@ import { mapStores } from "pinia";
 
 export default {
     name: "Podcast",
-    setup() {
-        const podcastStore = usePodcastStore()
-
-        const SelectedPodcast = podcastStore.getSelectedPodcast
-
-        return {
-            SelectedPodcast
-        }
-    },
     computed: {
-        ...mapStores(useUserStore),
+        ...mapStores(useUserStore, usePodcastStore),
         placeholderText() {
             return this.$t('comment');
         },
     },
     created() {
         this.token = this.userStore.getAccessToken;
-        if (this.SelectedPodcast.id) {
+        if (this.podcastStore.getSelectedPodcast) {
             this.getSinglePodcasts();
         }
     },
@@ -126,7 +120,6 @@ export default {
             duration: "0:00",
             progress: 0,
             volume: 1,
-            podcast: [],
         };
     },
     methods: {
@@ -136,7 +129,9 @@ export default {
                     Authorization: `Bearer ${this.token}`
                 }
             }).then((response) => {
-                this.podcast = response.data;
+                if (response.data.status === 200) {
+                    this.podcastStore.setSelectedPodcast(response.data.podcast);
+                }
             }).catch((error) => {
                 if (error) {
                     alert((error));
