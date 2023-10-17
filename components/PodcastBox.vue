@@ -43,6 +43,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { usePodcastStore } from '~/stores/podcast'
+import { useUserStore } from "../stores/login"
 
 export default defineComponent({
     props: {
@@ -52,10 +53,15 @@ export default defineComponent({
     },
     setup() {
         const podcastStore = usePodcastStore()
+        const userStore = useUserStore()
         const isLoading = ref(true)
 
         const storePodcastData = (podcast) => {
             podcastStore.setSelectedPodcast(podcast)
+        }
+
+        const updatePodcastData = (newData) => {
+
         }
 
         onMounted(() => {
