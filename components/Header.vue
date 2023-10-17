@@ -14,10 +14,10 @@
                     </div>
                 </div>
                 <div id="searchDropdown"
-                    class="fixed z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-2xl shadow-black w-44 dark:bg-gray-600 mt-1">
+                    class="fixed z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-2xl border border-gray-4 shadow-black w-44 dark:bg-gray-600 mt-1">
                     <ul v-if="search.length > 0">
                         <li v-for="podcast in filteredPodcasts" :key="podcast.id"
-                            class="px-2 py-1 hover:bg-gray-300 dark:hover-bg-gray-500 cursor-pointer">
+                            class="px-2 py-1 hover:bg-gray-300 dark:hover-bg-gray-500 rounded-lg cursor-pointer">
                             <NuxtLink :to="'/podcast/' + podcast.id">{{ podcast.podcast_name }}</NuxtLink>
                         </li>
                     </ul>
@@ -114,7 +114,7 @@ export default {
             this.$router.push('/login')
         },
         async getPodcasts() {
-            await axios.get('/api/podcast/read-preview-podcasts', {
+            await axios.get('/api/podcast/read-preview-podcast', {
             }).then((response) => {
                 this.podcastData = response.data;
             }).catch((error) => {
