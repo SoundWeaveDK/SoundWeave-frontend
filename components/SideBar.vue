@@ -100,13 +100,15 @@ const { locale } = useI18n()
                         <p v-else-if="favorites.length == 0" class="flex items-center p-2 space-x-3 rounded-md">
                             {{ $t('noFavorites') }}
                         </p>
-                        <div v-else v-for="(lists, index) in favorites">
-                            <div v-if="index == favorites.length - 1">
-                                <div v-if="collectionMore">
-                                    <button class="flex py-2">
-                                        <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.list_name }}</p>
-                                    </button>
-                                </div>
+                        <div v-else v-for="(lists, index) in likedStore.getLiked ">
+                            <div v-if="index == likedStore.getLiked.length - 1 && index > 4">
+                                <NuxtLink v-if="collectionMore" :to="'/podcast/' + lists.podcastId" class="flex py-2">
+                                    <img v-if="lists.podcast_image == null" src="../assets/images/fishe.jpg"
+                                        class="w-10 h-10 rounded-full" />
+                                    <img v-else :src="lists.thumbnail" class="w-10 h-10 rounded-full" />
+                                    {{ console.log(lists) }}
+                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.podcast_name }}</p>
+                                </NuxtLink>
                                 <button class="flex py-2" @click="toggleCollection()">
                                     <Icon v-if="collectionMore" name="ic:baseline-keyboard-arrow-up" />
                                     <Icon v-else name="ic:baseline-keyboard-arrow-down" />
@@ -116,14 +118,20 @@ const { locale } = useI18n()
                                 </button>
                             </div>
                             <div v-else-if="index < 4">
-                                <button class="flex py-2">
-                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.list_name }}</p>
-                                </button>
+                                <NuxtLink :to="'/podcast/' + lists.podcastId" class="flex py-2">
+                                    <img v-if="lists.podcast_image == null" src="../assets/images/fishe.jpg"
+                                        class="w-10 h-10 rounded-full" />
+                                    <img v-else :src="lists.thumbnail" class="w-10 h-10 rounded-full" />
+                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.podcast_name }}</p>
+                                </NuxtLink>
                             </div>
                             <div v-else-if="collectionMore">
-                                <button class="flex py-2">
-                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.list_name }}</p>
-                                </button>
+                                <NuxtLink :to="'/podcast/' + lists.podcastId" class="flex py-2">
+                                    <img v-if="lists.podcast_image == null" src="../assets/images/fishe.jpg"
+                                        class="w-10 h-10 rounded-full" />
+                                    <img v-else :src="lists.thumbnail" class="w-10 h-10 rounded-full" />
+                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.podcast_name }}</p>
+                                </NuxtLink>
                             </div>
                         </div>
                     </li>
@@ -138,11 +146,12 @@ import axios from '@/utils/axiosInstance.ts'
 import { useUserStore } from "../stores/login"
 import { mapStores } from "pinia";
 import { useFollowedStore } from '~/stores/followed';
+import { useLikedStore } from '~/stores/liked';
 
 export default {
     name: 'SideBar',
     computed: {
-        ...mapStores(useUserStore, useFollowedStore)
+        ...mapStores(useUserStore, useFollowedStore, useLikedStore)
     },
     created() {
         this.token = this.userStore.getAccessToken;

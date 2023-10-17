@@ -28,13 +28,13 @@
                 <div style="position: relative;">
                     <div @click="toggleDropdown" class="flex items-center">
                         <!-- <img :src="tempUser[0].user_image" class="rounded-full h-12 w-12"> -->
-                        <img :src="loggedInUser.imageURL ? loggedInUser.imageURL : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
+                        <img :src="userStore.getUser.imageURL ? userStore.getUser.imageURL : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
                             class="rounded-full h-12 w-12 cursor-pointer">
                         <div ref="dropdown" v-if="showDropdown"
                             class="flex mt-1 p-2 shadow-2xl shadow-black divide-y divide-gray-100 dark:bg-gray-600 dark:text-white text-black absolute top-full left-0 bg-white border-gray-200 rounded-md "
                             @click.stop>
                             <ul>
-                                <li v-if="loggedInUser.id" class="mb-2 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                <li v-if="userStore.getUser.id" class="mb-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <NuxtLink :to="linkto">{{ $t('profile') }}</NuxtLink>
                                 </li>
                                 <li>
@@ -53,7 +53,7 @@
                                         </form>
                                     </div>
                                 </li>
-                                <button v-if="loggedInUser.id" class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                <button v-if="userStore.getUser.id" class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <li class=""><a @click="logout">{{ $t('logout') }}</a>
                                     </li>
                                 </button>
@@ -74,17 +74,18 @@
 import axios from '@/utils/axiosInstance.ts'
 import { useUserStore } from "../stores/login"
 import { mapStores } from "pinia";
+import { usePodcastStore } from '~/stores/podcast';
 
 export default {
     mounted() {
-        if (sessionStorage.getItem("locale")) {
+        if (localStorage.getItem("locale")) {
             this.$i18n.locale = localStorage.getItem("locale");
         } else {
-            sessionStorage.setItem("locale", this.$i18n.locale);
+            localStorage.setItem("locale", this.$i18n.locale);
         }
     },
     computed: {
-        ...mapStores(useUserStore),
+        ...mapStores(useUserStore, usePodcastStore),
         placeholderText() {
             return this.$t('search');
         },
@@ -96,19 +97,14 @@ export default {
         },
     },
     created() {
-        this.loggedInUser = this.userStore.getUser;
-        this.linkto = "/profile/" + this.loggedInUser.id;
+        this.linkto = "/profile/" + this.userStore.getUser.id;
     },
     data() {
         return {
             showDropdown: false,
-            loggedInUser: [],
             search: '',
-            podcastsData: [],
-            loggedInUser: {},
             linkto: "",
             searchResultsTop: '0px',
-            isLoggedIn: false,
         }
     },
     methods: {
@@ -121,9 +117,9 @@ export default {
             this.$router.push('/login')
         },
         async getPodcasts() {
-            await axios.get('/api/podcast/read-preview-podcasts', {
+            await axios.get('/api/podcast/read-preview-podcast', {
             }).then((response) => {
-                this.podcastData = response.data;
+                this.podcastStore.setPodcasts(response.data);
             }).catch((error) => {
                 if (error) {
                     alert((error));
