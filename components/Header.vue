@@ -25,8 +25,7 @@
                 <!-- user settings button -->
                 <div style="position: relative;">
                     <div @click="toggleDropdown" class="flex items-center">
-                        <!-- <img :src="tempUser[0].user_image" class="rounded-full h-12 w-12"> -->
-                        <img :src="userStore.getUser.imageURL ? userStore.getUser.imageURL : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
+                        <img :src="userStore.getUser.profile_picture ? userStore.getUser.profile_picture : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
                             class="rounded-full h-12 w-12 cursor-pointer">
                         <div ref="dropdown" v-if="showDropdown"
                             class="flex mt-1 p-2 shadow-2xl shadow-black divide-y divide-gray-100 dark:bg-gray-600 dark:text-white text-black absolute top-full left-0 bg-white border-gray-200 rounded-md ">
@@ -100,7 +99,9 @@ export default {
             userCookie.value = null
             podcastCookie.value = null
             watchLaterCookie.value = null
-            this.$router.push('/login')
+
+            this.$router.push('/')
+            location.reload()
         },
         async getPodcasts() {
             await axios.get('/api/podcast/read-preview-podcast', {
@@ -108,13 +109,10 @@ export default {
                 this.podcastStore.setPodcasts(response.data);
             }).catch((error) => {
                 if (error) {
-                    console.log((error));
+                    console.log(error);
                 }
             });
-        },
-        updateLanguage() {
-            localStorage.setItem('locale', this.$i18n.locale)
-        },
+        }
     },
 };
 </script>

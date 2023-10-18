@@ -166,7 +166,7 @@ export default {
                 this.watchLaterStore.setWatchLater(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -182,7 +182,7 @@ export default {
                 this.watchLaterStore.addWatchLater(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -195,7 +195,7 @@ export default {
                 this.watchLaterStore.deleteWatchLater(response.data.id);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -217,7 +217,7 @@ export default {
                 this.likedStore.setLiked(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -233,7 +233,7 @@ export default {
                 this.likedStore.addLiked(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -246,7 +246,7 @@ export default {
                 this.likedStore.deleteLiked(response.data.id);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -272,7 +272,7 @@ export default {
 
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         }

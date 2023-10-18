@@ -150,7 +150,7 @@ export default {
                 }
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
