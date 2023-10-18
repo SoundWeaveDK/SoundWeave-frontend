@@ -225,8 +225,8 @@ export default {
                 headers: {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
-            }).then((response) => {
-                this.likedStore.addLiked(response.data);
+            }).then(() => {
+                this.getLikedPodcast();
             }).catch((error) => {
                 if (error) {
                     console.log(error);
@@ -238,8 +238,8 @@ export default {
                 headers: {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
-            }).then((response) => {
-                this.likedStore.deleteLiked(response.data.id);
+            }).then(() => {
+                this.getLikedPodcast();
             }).catch((error) => {
                 if (error) {
                     console.log(error);
