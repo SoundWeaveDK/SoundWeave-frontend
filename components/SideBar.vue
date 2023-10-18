@@ -1,7 +1,3 @@
-<script setup>
-const { locale } = useI18n()
-</script>
-
 <template >
     <div
         class="flex overflow-y-auto flex-col h-screen p-3 text-black dark:text-white  bg-white dark:bg-slate-900 w-full border-solid border-2 border-blue-950 ">

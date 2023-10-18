@@ -68,6 +68,7 @@ export default defineI18nConfig(() => ({
                   history: 'History',
                   noWatchLater: 'You have no podcasts in your watch later list. Go to a podcast and click the watch later button to add it to your watch later list.',
                   noHistory: 'You have no podcasts in your history. Go to a podcast and click the play button to add it to your history.',
+                  editProfile: 'Edit Profile',
             },
             fr: {
                   welcome: 'Bienvenue',
@@ -133,6 +134,7 @@ export default defineI18nConfig(() => ({
                   history: 'Histoire',
                   noWatchLater: 'Vous n\'avez aucun podcast dans votre liste À regarder plus tard. Allez sur un podcast et cliquez sur le bouton À regarder plus tard pour l\'ajouter à votre liste À regarder plus tard.',
                   noHistory: 'Vous n\'avez aucun podcast dans votre historique. Allez sur un podcast et cliquez sur le bouton Lecture pour l\'ajouter à votre historique.',
+                  editProfile: 'Modifier le profil',
             },
 
             da: {
@@ -199,6 +201,7 @@ export default defineI18nConfig(() => ({
                   history: 'Historie',
                   noWatchLater: 'Du har ingen podcasts på din se senere liste. Gå til en podcast og klik på knappen se senere for at tilføje den til din se senere liste.',
                   noHistory: 'Du har ingen podcasts i din historie. Gå til en podcast og klik på knappen afspil for at tilføje den til din historie.',
+                  editProfile: 'Rediger profil',
             },
             jp: {
                   welcome: 'ようこそ',
@@ -263,6 +266,7 @@ export default defineI18nConfig(() => ({
                   history: '歴史',
                   noWatchLater: '後で見るリストにポッドキャストがありません。ポッドキャストに移動して、後で見るボタンをクリックして後で見るリストに追加します。',
                   noHistory: '履歴にポッドキャストがありません。ポッドキャストに移動して、再生ボタンをクリックして履歴に追加します。',
+                  editProfile: 'プロフィールを編集',
             },
             cn: {
                   welcome: '欢迎',
@@ -327,6 +331,7 @@ export default defineI18nConfig(() => ({
                   history: '历史',
                   noWatchLater: '您的稍后观看列表中没有播客。转到播客并单击稍后观看按钮将其添加到稍后观看列表。',
                   noHistory: '您的历史中没有播客。转到播客并单击播放按钮将其添加到历史记录中。',
+                  editProfile: '编辑个人资料',
             },
             sa: {
                   welcome: 'أهلا بك',
@@ -391,6 +396,7 @@ export default defineI18nConfig(() => ({
                   history: 'التاريخ',
                   noWatchLater: 'ليس لديك أي بودكاست في قائمة مشاهدة لاحقًا. انتقل إلى بودكاست وانقر فوق زر مشاهدة لاحقًا لإضافته إلى قائمة مشاهدة لاحقًا.',
                   noHistory: 'ليس لديك أي بودكاست في سجلك. انتقل إلى بودكاست وانقر فوق زر التشغيل لإضافته إلى سجلك.',
+                  editProfile: 'تعديل الملف الشخصي',
             },
       }
 }))
