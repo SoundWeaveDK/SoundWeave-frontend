@@ -14,6 +14,12 @@ export const useFollowedStore = defineStore("followed", {
         setFollowed(followed: Followed[]) {
             this.followed = followed;
         },
+        addFollowed(followed: Followed) {
+            this.followed.push(followed);
+        },
+        clearFollowed() {
+            this.followed = [];
+        },
     },
     persist: true,
 });

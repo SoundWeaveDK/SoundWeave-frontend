@@ -1,5 +1,5 @@
 <template>
-    <section class="text-gray-600 body-font flex flex-wrap justify-center overscroll-auto">
+    <section class="text-gray-600 body-font flex flex-wrap overscroll-auto items-start">
         <div v-if="isLoading"
             class="flex-shrink-0 w-2/3 sm:w-1/4 md:w-1/4 lg:w-1/6 p-4 m-2 bg-gray-200 dark:bg-gray-700 rounded-lg overscroll-y-auto">
             <div class="h-full">
@@ -27,11 +27,13 @@
                     </NuxtLink>
                     <div class="w-full mobile:pl-3">
                         <NuxtLink :to="'/podcast/' + item.id" @click="storePodcastData(item)">
-                            <h2 class="title-font font-semibold text-lg text-gray-900 dark:text-neutral-100">
+                            <h2
+                                class="title-font font-semibold text-lg text-gray-900 dark:text-neutral-100 hover:text-gray-400">
                                 {{ item.podcast_name }}</h2>
                         </NuxtLink>
                         <NuxtLink :to="'/profile/' + item.userId" @click="storePodcastData(item)">
-                            <h3 class="text-gray-500 dark:text-gray-400 mb-">{{ item.fk_user_id.username }}</h3>
+                            <h3 class="text-black dark:text-white mb- hover:text-gray-400">{{ item.fk_user_id.username
+                            }}</h3>
                         </NuxtLink>
                     </div>
                 </div>
@@ -43,6 +45,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { usePodcastStore } from '~/stores/podcast'
+import { useUserStore } from "../stores/login"
 
 export default defineComponent({
     props: {
@@ -52,10 +55,15 @@ export default defineComponent({
     },
     setup() {
         const podcastStore = usePodcastStore()
+        const userStore = useUserStore()
         const isLoading = ref(true)
 
         const storePodcastData = (podcast) => {
             podcastStore.setSelectedPodcast(podcast)
+        }
+
+        const updatePodcastData = (newData) => {
+
         }
 
         onMounted(() => {

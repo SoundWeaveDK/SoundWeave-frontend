@@ -1,20 +1,20 @@
 import { defineStore } from 'pinia';
-import type { watchLater } from '../interfaces/interfaces';
+import type { WatchLater } from '../interfaces/interfaces';
 
 export const useWatchLaterStore = defineStore('watchLater', {
     state: () => ({
-        watchLater: [] as watchLater[],
+        watchLater: [] as WatchLater[],
     }),
     getters: {
-        getWatchLater(): watchLater[] {
+        getWatchLater(): WatchLater[] {
             return this.watchLater;
         }
     },
     actions: {
-        setWatchLater(watchLater: watchLater[]) {
+        setWatchLater(watchLater: WatchLater[]) {
             this.watchLater = watchLater;
         },
-        addWatchLater(watchLater: watchLater) {
+        addWatchLater(watchLater: WatchLater) {
             this.watchLater.push(watchLater);
         },
         deleteWatchLater(id: number) {
