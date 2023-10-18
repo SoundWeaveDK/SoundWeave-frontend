@@ -26,13 +26,20 @@ export interface Followed {
     username: string;
 }
 
-export interface watchLater {
+export interface WatchLater {
     id: number;
     userId: number;
-    podcastId: number;
+    fk_podcast_id: Podcast
+
 }
 
 export interface Liked {
+    id: number;
+    podcastId: number;
+    userId: number;
+}
+export interface Viewed {
+    fk_podcast_id: Podcast;
     id: number;
     podcastId: number;
     userId: number;
