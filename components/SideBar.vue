@@ -195,7 +195,7 @@ export default {
                 }
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
             this.loaded = true;
@@ -210,7 +210,7 @@ export default {
                 this.favorites = response.data;
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },

@@ -108,7 +108,7 @@ export default {
                 this.podcastStore.setPodcasts(response.data);
             }).catch((error) => {
                 if (error) {
-                    console.log((error));
+                    console.log(error);
                 }
             });
         },

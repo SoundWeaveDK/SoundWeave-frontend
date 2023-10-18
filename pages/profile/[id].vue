@@ -81,7 +81,7 @@ export default {
                 this.podcastData = response.data;
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -100,7 +100,7 @@ export default {
                 }
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
             this.loaded = true;
@@ -120,7 +120,7 @@ export default {
                 }
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -138,7 +138,7 @@ export default {
                 }
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -151,7 +151,7 @@ export default {
                 this.user = response.data;
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },

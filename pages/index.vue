@@ -29,7 +29,7 @@ export default {
                 this.podcastStore.setPodcasts(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -38,7 +38,7 @@ export default {
                 this.podcastStore.setPodcasts(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },

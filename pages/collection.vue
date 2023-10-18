@@ -63,7 +63,7 @@ export default {
                 this.watchLaterStore.setWatchLater(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -76,7 +76,7 @@ export default {
                 console.log(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         }
