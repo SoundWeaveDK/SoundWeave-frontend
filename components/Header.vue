@@ -34,11 +34,13 @@
                                     <NuxtLink :to="linkto">{{ $t('profile') }}</NuxtLink>
                                 </li>
                                 <button v-if="userStore.getUser.id" class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                    <li class=""><a @click="logout">{{ $t('logout') }}</a>
+                                    <li class="">
+                                        <NuxtLink @click="logout">{{ $t('logout') }}</NuxtLink>
                                     </li>
                                 </button>
                                 <button v-else class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                    <li class=""><a href="/login">{{ $t('login') }}</a>
+                                    <li class="">
+                                        <NuxtLink href="/login">{{ $t('login') }}</NuxtLink>
                                     </li>
                                 </button>
                             </ul>

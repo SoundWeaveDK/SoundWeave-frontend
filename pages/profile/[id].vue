@@ -87,6 +87,14 @@
     </div>
 </template>
   
+<script setup>
+
+definePageMeta({
+    middleware: ["auth"]
+})
+</script>
+  
+
 <script>
 import { useUserStore } from "../stores/login"
 import { useFollowedStore } from "@/stores/followed"
