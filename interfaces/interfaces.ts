@@ -21,6 +21,23 @@ export interface Podcast {
     money: number;
 }
 
+export interface Comment {
+    comment: string;
+    id: number;
+    fk_user_id: {
+        username: string;
+    }
+    _count: {
+        Comments_liked: number;
+    }
+}
+
+export interface CommentLike {
+    userId: number;
+    commentId: number;
+}
+
+
 export interface Followed {
     id: number;
     username: string;
