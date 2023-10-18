@@ -2,11 +2,11 @@
     <div class="h-full text-black dark:text-white dark:bg-slate-800 border-solid border-t-2 border-blue-950 rounded-t-lg">
         <div v-if="!userStore.getUser.id">
             <!-- you havent selected a podcast yet -->
-            <p class="text-center text-sm font-medium my-auto">Login to listen to podcasts</p>
+            <p class="text-center text-sm font-medium my-auto"> {{ $t('loginPlay') }}</p>
         </div>
         <div v-else-if="!podcastStore.getSelectedPodcast.id">
             <!-- you havent selected a podcast yet -->
-            <p class="text-center text-sm font-medium my-auto">Select a podcast to play</p>
+            <p class="text-center text-sm font-medium my-auto"> {{ $t('selectPodcast') }}</p>
         </div>
         <div v-else class="w-full h-full m-auto flex pl-4 pr-4">
             <div class="flex">
@@ -56,9 +56,13 @@
                         </button>
 
                         <!-- Like podcast -->
-                        <button class="mr-8">
-                            <Icon v-if="!isLiked" name="icon-park-outline:like" size="1.5em" />
-                            <Icon v-else name="icon-park-solid:like" size="1.5em" />
+                        <button
+                            v-if="likedStore.getLiked.find(liked => liked.podcastId == podcastStore.getSelectedPodcast.id)"
+                            class="mr-8" @click="deleteLikedPodcast">
+                            <Icon name="icon-park-solid:like" size="1.5em" />
+                        </button>
+                        <button v-else class="mr-8" @click="addLikedPodcast">
+                            <Icon name="icon-park-outline:like" size="1.5em" />
                         </button>
                         <!-- volume -->
                         <div class="volume block h-full my-auto">
@@ -81,11 +85,12 @@ import axios from '@/utils/axiosInstance.ts'
 import { useUserStore } from "../stores/login"
 import { usePodcastStore } from '~/stores/podcast'
 import { useWatchLaterStore } from '~/stores/watchLater'
+import { useLikedStore } from '~/stores/liked'
 import { mapStores } from "pinia";
 
 export default {
     computed: {
-        ...mapStores(useUserStore, usePodcastStore, useWatchLaterStore),
+        ...mapStores(useUserStore, usePodcastStore, useWatchLaterStore, useLikedStore),
         destination() {
             if (this.$route.path == "/podcast/" + this.podcastStore.getSelectedPodcast.id) {
                 return "/";
@@ -95,23 +100,19 @@ export default {
         },
     },
     created() {
-        this.token = this.userStore.getAccessToken;
-        this.loggedinUser = this.userStore.getUser;
-        if (this.loggedinUser.id) {
+        if (this.userStore.getUser.id) {
             this.getWatchLater();
+            this.getLikedPodcast();
         }
     },
     data() {
         return {
-            loggedinUser: "",
-            storedPodcast: "",
-            token: '',
             isPlaying: false,
-            currentTime: '0:00',
-            duration: '0:00',
+            currentTime: '00:00',
+            duration: '00:00',
             progress: 0,
             volume: 1,
-            isLiked: false,
+            Viewed: false,
         };
     },
     methods: {
@@ -121,6 +122,7 @@ export default {
                 this.isPlaying = false;
                 audio.pause();
             } else {
+                this.wait10();
                 this.isPlaying = true;
                 audio.play();
             }
@@ -148,15 +150,17 @@ export default {
             const progress = clickX / duration;
             const newTime = duration * progress;
             audio.currentTime = newTime;
+            // console.log("event: " + event.clientX + " progressReat: " + progressRect.left + " clickX: " + clickX + " progress: " + " duration: " + duration + + progress + " newTime: " + newTime);
+
         },
         updateVolume(event) {
             const audio = this.$refs.audioPlayer;
             audio.volume = event.target.value;
         },
         async getWatchLater() {
-            await axios.get('/api/watchlater/read-users-watch-later/' + this.loggedinUser.id, {
+            await axios.get('/api/watchlater/read-users-watch-later/' + this.userStore.getUser.id, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 this.watchLaterStore.setWatchLater(response.data);
@@ -168,11 +172,11 @@ export default {
         },
         async addWatchLater() {
             await axios.post('/api/watchlater/add-watch-later', {
-                userId: this.loggedinUser.id,
+                userId: this.userStore.getUser.id,
                 podcastId: this.podcastStore.getSelectedPodcast.id,
             }, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 this.watchLaterStore.addWatchLater(response.data);
@@ -185,7 +189,7 @@ export default {
         async deleteWatchLater() {
             await axios.delete('/api/watchlater/delete-single-watch-later/' + this.watchLaterStore.getWatchLater.find(watchLater => watchLater.podcastId == this.podcastStore.getSelectedPodcast.id).id, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 this.watchLaterStore.deleteWatchLater(response.data.id);
@@ -204,6 +208,74 @@ export default {
                 }
             }
         },
+        async getLikedPodcast() {
+            await axios.get('/api/podcastliked/read-users-podcast-liked/' + this.userStore.getUser.id, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+                this.likedStore.setLiked(response.data);
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+        async addLikedPodcast() {
+            await axios.post('/api/podcastliked/add-liked-podcast', {
+                userId: this.userStore.getUser.id,
+                podcastId: this.podcastStore.getSelectedPodcast.id,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+                this.likedStore.addLiked(response.data);
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+        async deleteLikedPodcast() {
+            await axios.delete('/api/podcastliked/delete-single-liked-podcast/' + this.likedStore.getLiked.find(Liked => Liked.podcastId == this.podcastStore.getSelectedPodcast.id).id, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+                this.likedStore.deleteLiked(response.data.id);
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+        async wait10() {
+            if (!this.Viewed) {
+                // run timer for 10 seconds
+                setTimeout(() => {
+                    this.addView();
+                    this.Viewed = true;
+                }, 10000);
+
+            }
+        },
+        async addView() {
+            await axios.post('/api/podcastviewed/add-viewed-podcast', {
+                userId: this.userStore.getUser.id,
+                podcastId: this.podcastStore.getSelectedPodcast.id,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        }
     },
 };
 </script>
