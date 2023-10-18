@@ -91,7 +91,6 @@ export default {
                 }
             }).then((response) => {
                 if (response.status == 200) {
-                    // console.log(response.data);
                     this.podcastStore.setPodcasts(response.data);
                 } else {
                     Swal.fire({
@@ -144,12 +143,14 @@ export default {
                 const [title, image, mp3, description] = formValues;
 
                 // Check aspect ratio of thumbnail image
-                const aspectRatioValid = await this.checkAspectRatio(image);
-                console.log(aspectRatioValid);
-                if (!aspectRatioValid) {
+                try {
+                    await this.checkAspectRatio(image);
+                }
+                catch (error) {
+                    console.log(error);
                     Swal.fire({
                         title: 'Error!',
-                        text: 'Thumbnail image must be 1:1 aspect ratio!',
+                        text: error.message,
                         icon: 'error',
                         confirmButtonText: 'OK',
                     });
@@ -157,7 +158,23 @@ export default {
                     return;
                 }
 
-                const tempimage = new File([image], image.name, { type: image.type });
+                // Resize image
+                try {
+                    var resizedImage = await this.resizeImage(image);
+                }
+                catch (error) {
+                    console.log(error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                    this.loading = false;
+                    return;
+                }
+
+                const tempimage = new File([resizedImage], image.name, { type: resizedImage.type });
                 const imageResponse = await UploadFile(tempimage, "images");
                 if (imageResponse.status == 201) {
                     const tempmp3 = new File([mp3], mp3.name, { type: mp3.type });
@@ -283,7 +300,6 @@ export default {
                     }
 
                 ).then((response) => {
-                    console.log(response);
                     if (response.status == 201) {
                         Swal.fire({
                             title: 'Success!',
@@ -329,18 +345,62 @@ export default {
             });
 
         },
-        // returns true if aspect ratio is 1:1, false otherwise
+        // returns true if aspect ratio is 1:1
         async checkAspectRatio(image) {
             const img = new Image();
             img.src = URL.createObjectURL(image);
-            return new Promise((resolve, reject) => {
+
+            return new Promise(async (resolve, reject) => {
                 img.onload = () => {
                     const { width, height } = img;
-                    if (width == height) {
+                    if (width === height) {
                         resolve(true);
                     } else {
-                        resolve(false);
+                        reject(new Error("Aspect ratio is not 1:1"));
                     }
+                };
+                img.onerror = () => {
+                    reject(new Error("Failed to load the image"));
+                };
+            });
+        },
+        // returns a resized image blob for thumbnail
+        async resizeImage(image) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const MAX_WIDTH = 300;
+            const MAX_HEIGHT = 300;
+
+            return new Promise(async (resolve, reject) => {
+                const img = new Image();
+                img.src = URL.createObjectURL(image);
+
+                img.onload = () => {
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+                    canvas.toBlob((blob) => {
+                        resolve(blob);
+                    }, 'image/jpeg', 1);
+                };
+
+                img.onerror = () => {
+                    reject(new Error("Failed to load the image"));
                 };
             });
         },

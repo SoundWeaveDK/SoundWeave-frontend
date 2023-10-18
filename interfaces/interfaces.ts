@@ -31,3 +31,9 @@ export interface watchLater {
     userId: number;
     podcastId: number;
 }
+
+export interface Liked {
+    id: number;
+    podcastId: number;
+    userId: number;
+}
