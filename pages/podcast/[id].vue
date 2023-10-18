@@ -44,7 +44,7 @@
                 </div>
                 <div v-else>
                     <p class="text-black dark:text-white text-xl font-bold mr-2 float-right">
-                        Nigga didnt make timeStamp yet
+                        {{ podcastStore.getSelectedPodcast.createdAt.slice(0, 10) }}
                     </p>
                 </div>
 
@@ -60,12 +60,12 @@
                 <div class="rounded border-solid border-2 h-full">
                     <div class="h-1/6">
                         <div class="flex">
-                            <textarea type="text"
+                            <textarea v-model="newComment" type="text"
                                 class="w-full m-4 mb-0 border-solid border-b-2 bg-transparent text-black dark:text-white "
                                 :placeholder="placeholderText" />
                         </div>
                         <div>
-                            <button
+                            <button @click="postComment"
                                 class="bg-black dark:bg-white text-white dark:text-black rounded-full w-24 h-8 m-4 float-right">
                                 <p class="text-sm">{{ $t('comment') }}</p>
                             </button>
@@ -73,17 +73,22 @@
                     </div>
                     <div class="h-96 w-full overflow-y-auto">
                         <!-- comments -->
-                        <div v-if="podcastStore.getSelectedPodcast.comments"
-                            v-for="message in podcastStore.getSelectedPodcast.comments" class="w-full p-2">
+                        <div v-if="commentStore" v-for="comment in commentStore.getComments" :key="comment.id"
+                            class="w-full p-2" :id="comment.id">
                             <div>
-                                <img src="../assets/images/fishe.jpg" class="w-10 h-10 mr-4 rounded-full float-left" />
-                                <p class="text-black dark:text-white font-bold">{{ message.name }}</p>
-                                <p class="text-black dark:text-white"> {{ message.comment }} </p>
+                                <p class="text-black dark:text-white font-bold">{{ comment.fk_user_id.username }}
+                                    <button v-if="comment.userId === userStore.getUser.id"
+                                        class="bg-red text-black dark:text-white text-xs"
+                                        @click="deleteComment(comment.id)">
+                                        Delete
+                                    </button>
+                                </p>
+                                <p class="text-black dark:text-white">{{ comment.comment }}</p>
                                 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                             </div>
                         </div>
-                        <div>
-                            <p class="text-black dark:text-white font-bold">Nigga didnt make comments yet</p>
+                        <div v-else>
+                            <p class="text-black dark:text-white font-bold">No comments yet</p>
                         </div>
                     </div>
                 </div>
@@ -104,12 +109,14 @@ definePageMeta({
 import axios from '@/utils/axiosInstance.ts'
 import { useUserStore } from "../stores/login"
 import { usePodcastStore } from '~/stores/podcast'
+import { useCommentStore } from '~/stores/comments'
+import { useCommentLikeStore } from '~/stores/commentLike'
 import { mapStores } from "pinia";
 
 export default {
     name: "Podcast",
     computed: {
-        ...mapStores(useUserStore, usePodcastStore),
+        ...mapStores(useUserStore, usePodcastStore, useCommentStore, useCommentLikeStore),
         placeholderText() {
             return this.$t('comment');
         },
@@ -118,6 +125,8 @@ export default {
         if (this.podcastStore.getSelectedPodcast) {
             this.getSinglePodcasts();
         }
+        this.fetchComments();
+        console.log(this.commentStore.getComments);
     },
     data() {
         return {
@@ -126,6 +135,7 @@ export default {
             duration: "0:00",
             progress: 0,
             volume: 1,
+            newComment: "",
         };
     },
     methods: {
@@ -153,6 +163,58 @@ export default {
                 this.isPlaying = true;
                 audio.play();
             }
+        },
+        async fetchComments() {
+            await axios.get('/api/podcastcomments/read-single-podcast-comments/' + this.podcastStore.getSelectedPodcast.id, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+                if (response.status === 200) {
+                    this.commentStore.setComments(response.data);
+                    console.log(this.useCommentStore.getComments);
+                }
+            }).catch((error) => {
+                if (error) {
+                    console.log((error));
+                }
+            });
+        },
+        async postComment() {
+            await axios.post('/api/podcastcomments/add-comment', {
+                comment: this.newComment,
+                userId: this.userStore.getUser.id,
+                podcastId: this.podcastStore.getSelectedPodcast.id,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+                if (response.status === 201) {
+                    this.newComment = "";
+                    this.commentStore.addComment(response.data);
+                    console.log(response.data);
+                }
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+        deleteComment(commentId) {
+            axios.delete('/api/podcastcomments/delete-comment/' + commentId, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+                if (response.status === 200) {
+                    this.commentStore.deleteComment(commentId);
+                }
+            }).catch((error) => {
+                if (error) {
+                    console.log((error));
+                }
+            });
         },
         onTimeUpdate() {
             const audio = this.$refs.audioPlayer;
