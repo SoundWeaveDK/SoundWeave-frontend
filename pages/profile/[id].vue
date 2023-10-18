@@ -12,8 +12,8 @@
         $t('from') }} {{ user.fk_country_id.country_name }}</div>
             </div>
             <div class="flex-1 text-right">
-                <div v-if="loggedInUser.id !== user.id">
-                    <button v-if="followed.includes(user.id)" @click="unfollowUser"
+                <div v-if="userStore.getUser.id !== user.id">
+                    <button v-if="followedStore.getFollowed.some(data => data.id === user.id)" @click="unfollowUser"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4">
                         {{ $t('unfollow') }}
                     </button>
@@ -28,7 +28,7 @@
         <div class="">
             <div class="float-right mr-16">
                 <!-- manage page -->
-                <div v-if="loggedInUser.id == user.id" class="h-8">
+                <div v-if="userStore.getUser.id == user.id" class="h-8">
 
                     <NuxtLink to="/manage"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4">
@@ -54,9 +54,6 @@ export default {
         ...mapStores(useUserStore, useFollowedStore)
     },
     created() {
-        this.token = this.userStore.getAccessToken;
-        this.loggedInUser = this.userStore.getUser;
-
         this.getUserPodcasts();
         this.getUser();
         this.getFollowing();
@@ -64,9 +61,6 @@ export default {
     data() {
         return {
             user: null,
-            token: "",
-            followed: [],
-            loggedInUser: [],
             podcastData: [],
         };
     },
@@ -81,7 +75,7 @@ export default {
         async getUserPodcasts() {
             await axios.get('api/podcast/read-user-podcast/' + this.$route.params.id, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 this.podcastData = response.data;
@@ -93,15 +87,15 @@ export default {
         },
         async getFollowing() {
             // get the user's following
-            await axios.get('/api/followuser/read-users-followers/' + this.loggedInUser.id, {
+            await axios.get('/api/followuser/read-users-followers/' + this.userStore.getUser.id, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
-                this.followed = [];
+                this.followedStore.clearFollowed();
                 for (let i = 0; i < response.data.length; i++) {
                     for (let j = 0; j < response.data[i].following.length; j++) {
-                        this.followed.push(response.data[i].following[j].id);
+                        this.followedStore.addFollowed(response.data[i].following[j]);
                     }
                 }
             }).catch((error) => {
@@ -109,15 +103,16 @@ export default {
                     alert((error));
                 }
             });
+            this.loaded = true;
         },
         async followUser() {
             // follow user
             await axios.put('/api/followuser/follow-user', {
-                followerId: this.loggedInUser.id,
+                followerId: this.userStore.getUser.id,
                 followingId: this.user.id
             }, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 if (response.status == 200) {
@@ -131,11 +126,11 @@ export default {
         },
         async unfollowUser() {
             await axios.put('/api/followuser/unfollow-user', {
-                followerId: this.loggedInUser.id,
+                followerId: this.userStore.getUser.id,
                 followingId: this.user.id
             }, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 if (response.status == 200) {
@@ -150,7 +145,7 @@ export default {
         async getUser() {
             await axios.get('/api/user/read-single-user/' + this.$route.params.id, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 this.user = response.data;

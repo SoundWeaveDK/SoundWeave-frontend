@@ -27,11 +27,13 @@
                     </NuxtLink>
                     <div class="w-full mobile:pl-3">
                         <NuxtLink :to="'/podcast/' + item.id" @click="storePodcastData(item)">
-                            <h2 class="title-font font-semibold text-lg text-gray-900 dark:text-neutral-100">
+                            <h2
+                                class="title-font font-semibold text-lg text-gray-900 dark:text-neutral-100 hover:text-gray-400">
                                 {{ item.podcast_name }}</h2>
                         </NuxtLink>
                         <NuxtLink :to="'/profile/' + item.userId" @click="storePodcastData(item)">
-                            <h3 class="text-gray-500 dark:text-gray-400 mb-">{{ item.fk_user_id.username }}</h3>
+                            <h3 class="text-black dark:text-white mb- hover:text-gray-400">{{ item.fk_user_id.username
+                            }}</h3>
                         </NuxtLink>
                     </div>
                 </div>
