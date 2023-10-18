@@ -15,8 +15,9 @@
                     class="fixed z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-2xl shadow-black w-44 dark:bg-gray-600 mt-1">
                     <ul v-if="search.length > 0">
                         <li v-for="podcast in filteredPodcasts" :key="podcast.id"
-                            class="px-2 py-1 hover:bg-gray-300 dark:hover-bg-gray-500 rounded-lg cursor-pointer">
-                            <NuxtLink :to="'/podcast/' + podcast.id">{{ podcast.podcast_name }}</NuxtLink>
+                            class="px-2 py-1 hover:bg-gray-300 dark:hover-bg-gray-500 rounded-lg">
+                            <NuxtLink class="flex" :to="'/podcast/' + podcast.id">{{ podcast.podcast_name }}
+                            </NuxtLink>
                         </li>
                     </ul>
                 </div>
@@ -71,10 +72,9 @@ export default {
             return this.$t('search');
         },
         filteredPodcasts() {
-            // Make sure to include the 'id' property in the filteredPodcasts array
-            return this.podcastData.filter(podcast => {
-                return podcast.podcast_name.toLowerCase().includes(this.search.toLowerCase()) && this.search.length > 0
-            });
+            return this.podcastStore.getPodcasts.filter((podcast) => {
+                return podcast.podcast_name.toLowerCase().includes(this.search.toLowerCase())
+            })
         },
     },
     created() {

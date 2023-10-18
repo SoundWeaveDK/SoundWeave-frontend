@@ -80,8 +80,9 @@
                                     <p class="text-black dark:text-white font-bold pr-2 pointer">{{
                                         comment.fk_user_id.username }}
                                     </p>
-                                    <Icon @click="deleteComment(comment.id)" name="mdi:comment-remove"
-                                        class="cursor-pointer text-black dark:text-white" size="1.2em" />
+                                    <Icon v-if="comment.userId === userStore.getUser.id" @click="deleteComment(comment.id)"
+                                        name="mdi:comment-remove" class="cursor-pointer text-black dark:text-white"
+                                        size="1.2em" />
                                 </div>
                                 <p class="text-black dark:text-white">{{ comment.comment }}</p>
                                 <button v-if="isLiked">
@@ -132,6 +133,7 @@ export default {
             this.getSinglePodcasts();
         }
         this.fetchComments();
+        console.log(this.userStore.getUser.id);
     },
     data() {
         return {
