@@ -67,8 +67,8 @@
                         <!-- volume -->
                         <div class="volume block h-full my-auto">
                             <Icon name="fa6-solid:volume-high" class="mr-3 h-full my-auto mb-1" size="1em" />
-                            <input class="my-auto" type="range" min="0" max="1" step="0.1" v-model="volume"
-                                @change="updateVolume">
+                            <input class="my-auto" type="range" min="0" max="1" step="0.01" v-model="volume"
+                                @input="updateVolume">
                         </div>
                     </div>
                 </div>
