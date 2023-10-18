@@ -25,7 +25,7 @@ const { locale } = useI18n()
                             <h1 class="text-xl">{{ $t('home') }}</h1>
                         </a>
                     </li>
-                    <li class="rounded-sm">
+                    <li v-if="userStore.getUser.id" class="rounded-sm">
                         <a href="/explore"
                             class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md hover:text-gray-400">
                             <Icon name="material-symbols:explore-outline-rounded" size="2em" />
@@ -34,7 +34,7 @@ const { locale } = useI18n()
                     </li>
                     <li>
                         <!-- Collection page -->
-                        <NuxtLink to="/collection"
+                        <NuxtLink v-if="userStore.getUser.id" to="/collection"
                             class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md hover:text-gray-400">
                             <Icon name="material-symbols:collections-bookmark" size="2em" />
                             <h1 class="text-xl">{{ $t('yourCollection') }}</h1>
