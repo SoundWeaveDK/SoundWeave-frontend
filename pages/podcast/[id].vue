@@ -37,15 +37,10 @@
                 </div>
 
                 <!-- description -->
-                <div v-if="podcastStore.getSelectedPodcast.created"
+                <div v-if="podcastStore.getSelectedPodcast.createdAt"
                     class="text-black dark:text-white text-xl font-bold mr-2 float-right">
+                    <p>{{ podcastStore.getSelectedPodcast.createdAt.split('T')[0] }}</p>
                     <!-- upload date -->
-                    <p>{{ podcastStore.getSelectedPodcast.created }}</p>
-                </div>
-                <div v-else>
-                    <p class="text-black dark:text-white text-xl font-bold mr-2 float-right">
-                        {{ podcastStore.getSelectedPodcast.createdAt.slice(0, 10) }}
-                    </p>
                 </div>
 
                 <div class=" text-black h-max-64 overflow-y-auto dark:text-white text-xl font-bold inline-block">
@@ -150,8 +145,8 @@ export default {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
-                if (response.data.status === 200) {
-                    this.podcastStore.setSelectedPodcast(response.data.podcast);
+                if (response.status === 200) {
+                    this.podcastStore.setSelectedPodcast(response.data);
                 }
             }).catch((error) => {
                 if (error) {

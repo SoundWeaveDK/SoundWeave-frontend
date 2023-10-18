@@ -1,7 +1,11 @@
 <template>
-    <div class=" h-screen p-4">
-        <h1 class="lg:pl-28 mobile:text-center text-xl text-black dark:text-white">{{ $t('yourFeed') }}</h1>
-        <PodcastBox v-if="podcastData" :podcastData="podcastData" />
+    <div class="px-24 py-12">
+        <div class="mb-8 ml-2">
+            <h1 class="mobile:text-center text-2xl text-black dark:text-white">{{ $t('yourFeed') }}</h1>
+        </div>
+        <div>
+            <PodcastBox v-if="podcastData" :podcastData="podcastData" />
+        </div>
     </div>
 </template>
 
