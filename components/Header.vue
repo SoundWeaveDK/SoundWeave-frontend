@@ -87,20 +87,6 @@ export default {
     methods: {
         toggleDropdown() {
             this.showDropdown = !this.showDropdown
-            if (this.showDropdown) {
-                // add event listener to window object
-                window.addEventListener('click', this.closeDropdown)
-            } else {
-                // remove event listener from window object
-                window.removeEventListener('click', this.closeDropdown)
-            }
-        },
-        closeDropdown(event) {
-            // check if target element is inside the dropdown
-            if (!this.$refs.dropdown.contains(event.target)) {
-                this.showDropdown = false
-                window.removeEventListener('click', this.closeDropdown)
-            }
         },
         logout() {
             const userCookie = useCookie('user')
