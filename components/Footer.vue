@@ -108,10 +108,11 @@ export default {
     data() {
         return {
             isPlaying: false,
-            currentTime: '0:00',
-            duration: '0:00',
+            currentTime: '00:00',
+            duration: '00:00',
             progress: 0,
             volume: 1,
+            Viewed: false,
         };
     },
     methods: {
@@ -121,6 +122,7 @@ export default {
                 this.isPlaying = false;
                 audio.pause();
             } else {
+                this.wait10();
                 this.isPlaying = true;
                 audio.play();
             }
@@ -248,6 +250,32 @@ export default {
                 }
             });
         },
+        async wait10() {
+            if (!this.Viewed) {
+                // run timer for 10 seconds
+                setTimeout(() => {
+                    this.addView();
+                    this.Viewed = true;
+                }, 10000);
+
+            }
+        },
+        async addView() {
+            await axios.post('/api/podcastviewed/add-viewed-podcast', {
+                userId: this.userStore.getUser.id,
+                podcastId: this.podcastStore.getSelectedPodcast.id,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        }
     },
 };
 </script>
