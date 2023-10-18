@@ -34,7 +34,7 @@
                                 <li v-if="userStore.getUser.id" class="mb-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <NuxtLink :to="linkto">{{ $t('profile') }}</NuxtLink>
                                 </li>
-                                <button v-if="loggedInUser.id" class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                <button v-if="userStore.getUser.id" class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <li class=""><a @click="logout">{{ $t('logout') }}</a>
                                     </li>
                                 </button>
