@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div id="searchDropdown"
-                    class="fixed z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-2xl border border-gray-4 shadow-black w-44 dark:bg-gray-600 mt-1">
+                    class="fixed z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-2xl shadow-black w-44 dark:bg-gray-600 mt-1">
                     <ul v-if="search.length > 0">
                         <li v-for="podcast in filteredPodcasts" :key="podcast.id"
                             class="px-2 py-1 hover:bg-gray-300 dark:hover-bg-gray-500 rounded-lg cursor-pointer">
@@ -87,6 +87,20 @@ export default {
     methods: {
         toggleDropdown() {
             this.showDropdown = !this.showDropdown
+            if (this.showDropdown) {
+                // add event listener to window object
+                window.addEventListener('click', this.closeDropdown)
+            } else {
+                // remove event listener from window object
+                window.removeEventListener('click', this.closeDropdown)
+            }
+        },
+        closeDropdown(event) {
+            // check if target element is inside the dropdown
+            if (!this.$refs.dropdown.contains(event.target)) {
+                this.showDropdown = false
+                window.removeEventListener('click', this.closeDropdown)
+            }
         },
         logout() {
             const userCookie = useCookie('user')
@@ -104,7 +118,7 @@ export default {
                 this.podcastData = response.data;
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log((error));
                 }
             });
         },
