@@ -172,7 +172,7 @@ export default defineI18nConfig(() => ({
                   manage: 'Administrer',
                   managePodcasts: 'Administrer podcasts',
                   uploadPodcast: 'Upload podcast',
-                  edit: 'Redigere',
+                  edit: 'Rediger',
                   delete: 'Slet',
                   error: 'Fejl',
                   failed: 'Mislykkedes at hente podcast!',
