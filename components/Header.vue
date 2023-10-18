@@ -96,10 +96,16 @@ export default {
             const userCookie = useCookie('user')
             const podcastCookie = useCookie('podcast')
             const watchLaterCookie = useCookie('watchLater')
+            const commentCookie = useCookie('comment')
+            const likeCookie = useCookie('liked')
+            const followCookie = useCookie('followed')
 
             userCookie.value = null
             podcastCookie.value = null
             watchLaterCookie.value = null
+            commentCookie.value = null
+            likeCookie.value = null
+            followCookie.value = null
             this.$router.push('/login')
         },
         async getPodcasts() {
