@@ -76,14 +76,20 @@
                         <div v-if="commentStore" v-for="comment in commentStore.getComments" :key="comment.id"
                             class="w-full p-2" :id="comment.id">
                             <div>
-                                <p class="text-black dark:text-white font-bold">{{ comment.fk_user_id.username }}
-                                    <button v-if="comment.userId === userStore.getUser.id"
-                                        class="bg-red text-black dark:text-white text-xs"
-                                        @click="deleteComment(comment.id)">
-                                        Delete
-                                    </button>
-                                </p>
+                                <div class="inline-flex">
+                                    <p class="text-black dark:text-white font-bold pr-2 pointer">{{
+                                        comment.fk_user_id.username }}
+                                    </p>
+                                    <Icon @click="deleteComment(comment.id)" name="mdi:comment-remove"
+                                        class="cursor-pointer text-black dark:text-white" size="1.2em" />
+                                </div>
                                 <p class="text-black dark:text-white">{{ comment.comment }}</p>
+                                <button v-if="isLiked">
+                                    <Icon name="carbon:thumbs-up" class="text-black dark:text-white" size="1.3em" />
+                                </button>
+                                <button v-else>
+                                    <Icon name="carbon:thumbs-up-filled" class="text-black dark:text-white" size="1.3em" />
+                                </button>
                                 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                             </div>
                         </div>
@@ -126,7 +132,6 @@ export default {
             this.getSinglePodcasts();
         }
         this.fetchComments();
-        console.log(this.commentStore.getComments);
     },
     data() {
         return {
@@ -172,7 +177,6 @@ export default {
             }).then((response) => {
                 if (response.status === 200) {
                     this.commentStore.setComments(response.data);
-                    console.log(this.useCommentStore.getComments);
                 }
             }).catch((error) => {
                 if (error) {
@@ -193,7 +197,6 @@ export default {
                 if (response.status === 201) {
                     this.newComment = "";
                     this.commentStore.addComment(response.data);
-                    console.log(response.data);
                 }
             }).catch((error) => {
                 if (error) {
