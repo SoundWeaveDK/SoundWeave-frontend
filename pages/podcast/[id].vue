@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-6 h-full">
-        <div class="col-span-4 h-full">
+        <div class="col-span-5 h-full">
             <div class="h-3/6 p-8">
                 <h1 class="text-4xl font-bold text-black dark:text-white pb-4 w-fit mx-auto">
                     {{ podcastStore.getSelectedPodcast.podcast_name }}
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-3">
             <!-- comment box -->
             <div class=" p-8 h-full">
                 <div class="rounded border-solid border-2 h-full">
