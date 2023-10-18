@@ -143,15 +143,11 @@ export default {
         },
         seek(event) {
             const audio = this.$refs.audioPlayer;
-            const progressElement = event.target;
-            const progressRect = progressElement.getBoundingClientRect();
-            const clickX = event.clientX - progressRect.left;
             const duration = audio.duration;
-            const progress = clickX / duration;
-            const newTime = duration * progress;
-            audio.currentTime = newTime;
-            // console.log("event: " + event.clientX + " progressReat: " + progressRect.left + " clickX: " + clickX + " progress: " + " duration: " + duration + + progress + " newTime: " + newTime);
-
+            const clientWidth = 256;
+            const offsetX = event.offsetX;
+            const progress = (offsetX / clientWidth) * duration;
+            audio.currentTime = progress;
         },
         updateVolume(event) {
             const audio = this.$refs.audioPlayer;

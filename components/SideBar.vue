@@ -15,18 +15,18 @@
             <div class="flex-1">
                 <ul class="pt-2 pb-4 space-y-1 text-sm">
                     <li class="rounded-sm">
-                        <a href="/"
+                        <NuxtLink to="/"
                             class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md hover:text-gray-400">
                             <Icon name="humbleicons:home" size="2em" />
                             <h1 class="text-xl">{{ $t('home') }}</h1>
-                        </a>
+                        </NuxtLink>
                     </li>
                     <li v-if="userStore.getUser.id" class="rounded-sm">
-                        <a href="/explore"
+                        <NuxtLink to="/explore"
                             class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md hover:text-gray-400">
                             <Icon name="material-symbols:explore-outline-rounded" size="2em" />
                             <h1 class="text-xl">{{ $t('feed') }}</h1>
-                        </a>
+                        </NuxtLink>
                     </li>
                     <li>
                         <!-- Collection page -->
