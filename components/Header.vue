@@ -19,6 +19,7 @@
                             <NuxtLink class="flex" :to="'/podcast/' + podcast.id">{{ podcast.podcast_name }}
                             </NuxtLink>
                         </li>
+                        <li v-if="filteredPodcasts.length === 0" class="px-2 py-1">No results found</li>
                     </ul>
                 </div>
             </div>
@@ -65,6 +66,7 @@ export default {
         } else {
             localStorage.setItem("locale", this.$i18n.locale);
         }
+        document.addEventListener('click', this.clearSearch);
     },
     computed: {
         ...mapStores(useUserStore, usePodcastStore),
@@ -120,6 +122,11 @@ export default {
         },
         updateLanguage() {
             localStorage.setItem('locale', this.$i18n.locale)
+        },
+        clearSearch(e) {
+            if (e.target.id !== 'searchDropdown') {
+                this.search = ''
+            }
         },
     },
 };
