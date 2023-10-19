@@ -1,11 +1,12 @@
 <template>
     <div class="grid grid-cols-6 h-full">
-        <div class="col-span-5 h-full">
+        <div class="col-span-5 mobile:col-span-6 h-full">
             <div class="h-3/6 p-8">
                 <h1 class="text-4xl font-bold text-black dark:text-white pb-4 w-fit mx-auto">
                     {{ podcastStore.getSelectedPodcast.podcast_name }}
                 </h1>
-                <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image" class="w-72 h-72 m-auto" />
+                <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image"
+                    class="w-72 h-72 mobile:w-52 mobile:h-52 m-auto" />
                 <div class="flex justify-center mt-2">
                     <div class="text-xs  mr-4">{{ currentTime }}</div>
                     <div class="w-64 h-2 bg-gray-300 rounded-full cursor-pointer mobile:hidden" @click="seek">
@@ -14,47 +15,47 @@
                     <p class="text-lg font-semibold md:hidden">-</p>
                     <div class="text-xs  ml-4">{{ duration }}</div>
                 </div>
-            </div>
-            <div class="p-8">
-                <div class="flex justify-between w-full">
-                    <div class="flex">
-                        <!-- Creator -->
-                        <NuxtLink :to="`/profile/${podcastStore.getSelectedPodcast.userId}`" class="flex">
-                            <img v-if="podcastStore.getSelectedPodcast.creator_image"
-                                :src="podcastStore.getSelectedPodcast.creator_image"
-                                class="w-10 h-10 mr-4 rounded-full float-left" />
-                            <img v-else src="../../assets/images/fishe.jpg" class="h-10 w-10 rounded mr-4"
-                                alt="Creator Image">
-                            <!-- <p class="text-black dark:text-white font-bold text-xl my-auto">{{ podcast.fk_user_id.username
+                <div>
+                    <div class="flex justify-between w-full">
+                        <div class="flex pb-3">
+                            <!-- Creator -->
+                            <NuxtLink :to="`/profile/${podcastStore.getSelectedPodcast.userId}`" class="flex">
+                                <img v-if="podcastStore.getSelectedPodcast.creator_image"
+                                    :src="podcastStore.getSelectedPodcast.creator_image"
+                                    class="w-10 h-10 mr-4 rounded-full float-left" />
+                                <img v-else src="../../assets/images/fishe.jpg" class="h-10 w-10 rounded mr-4"
+                                    alt="Creator Image">
+                                <!-- <p class="text-black dark:text-white font-bold text-xl my-auto">{{ podcast.fk_user_id.username
                             }}</p> -->
-                        </NuxtLink>
-                        <!-- listens -->
-                        <p class="text-black dark:text-white text-2xl font-bold ml-auto my-auto">
-                            {{ podcastStore.getSelectedPodcast.views }}
-                            <Icon name="fluent:headphones-sound-wave-20-filled" class="mr-2 h-full my-auto" />
+                            </NuxtLink>
+                            <!-- listens -->
+                            <p class="text-black dark:text-white text-2xl font-bold ml-auto my-auto">
+                                {{ podcastStore.getSelectedPodcast.views }}
+                                <Icon name="fluent:headphones-sound-wave-20-filled" class="mr-2 h-full my-auto" />
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- description -->
+                    <div v-if="podcastStore.getSelectedPodcast.created"
+                        class="text-black dark:text-white text-xl font-bold mr-2 float-right">
+                        <!-- upload date -->
+                        <p>{{ podcastStore.getSelectedPodcast.created }}</p>
+                    </div>
+                    <div v-else>
+                        <p class="text-black dark:text-white text-xl font-bold mr-2 float-right">
+                            {{ podcastStore.getSelectedPodcast.createdAt.slice(0, 10) }}
                         </p>
                     </div>
-                </div>
 
-                <!-- description -->
-                <div v-if="podcastStore.getSelectedPodcast.created"
-                    class="text-black dark:text-white text-xl font-bold mr-2 float-right">
-                    <!-- upload date -->
-                    <p>{{ podcastStore.getSelectedPodcast.created }}</p>
-                </div>
-                <div v-else>
-                    <p class="text-black dark:text-white text-xl font-bold mr-2 float-right">
-                        {{ podcastStore.getSelectedPodcast.createdAt.slice(0, 10) }}
-                    </p>
-                </div>
-
-                <div class=" text-black h-max-64 overflow-y-auto dark:text-white text-xl font-bold inline-block">
-                    <!-- description -->
-                    <p>{{ podcastStore.getSelectedPodcast.description }}</p>
+                    <div class=" text-black h-max-64 overflow-y-auto dark:text-white text-xl font-bold inline-block">
+                        <!-- description -->
+                        <p>{{ podcastStore.getSelectedPodcast.description }}</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-span-3">
+        <div class="col-span-6">
             <!-- comment box -->
             <div class=" p-8 h-full">
                 <div class="rounded border-solid border-2 h-full">
