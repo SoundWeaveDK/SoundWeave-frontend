@@ -35,6 +35,14 @@
                             </p>
                         </div>
                     </div>
+                </div>
+
+                <!-- description -->
+                <div v-if="podcastStore.getSelectedPodcast.createdAt"
+                    class="text-black dark:text-white text-xl font-bold mr-2 float-right">
+                    <p>{{ podcastStore.getSelectedPodcast.createdAt.split('T')[0] }}</p>
+                    <!-- upload date -->
+                </div>
 
                     <!-- description -->
                     <div v-if="podcastStore.getSelectedPodcast.created"
@@ -153,12 +161,12 @@ export default {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
-                if (response.data.status === 200) {
-                    this.podcastStore.setSelectedPodcast(response.data.podcast);
+                if (response.status === 200) {
+                    this.podcastStore.setSelectedPodcast(response.data);
                 }
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },

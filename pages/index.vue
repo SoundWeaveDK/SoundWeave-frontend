@@ -1,6 +1,14 @@
 <template>
-    <PodcastBox :podcastData="podcastStore.getPodcasts" />
+    <div class="px-24 py-12">
+        <div class="mb-8 ml-2">
+            <h1 class=" mobile:text-center text-2xl text-black dark:text-white">{{ $t('recomended') }}</h1>
+        </div>
+        <div>
+            <PodcastBox :podcastData="podcastStore.getPodcasts" />
+        </div>
+    </div>
 </template>
+
 <script>
 import axios from '@/utils/axiosInstance.ts'
 import { useUserStore } from "../stores/login"
@@ -29,7 +37,7 @@ export default {
                 this.podcastStore.setPodcasts(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -38,7 +46,7 @@ export default {
                 this.podcastStore.setPodcasts(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },

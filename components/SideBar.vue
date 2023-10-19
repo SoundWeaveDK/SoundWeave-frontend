@@ -1,16 +1,12 @@
-<script setup>
-const { locale } = useI18n()
-</script>
-
-<template >
+<template>
     <div
         class="flex overflow-y-auto flex-col h-screen p-3 text-black dark:text-white  bg-white dark:bg-slate-900 w-full border-solid border-2 border-blue-950 ">
         <div class="space-y-3">
             <div>
                 <!-- logo -->
-                <a href="/">
+                <NuxtLink href="/">
                     <img src="../assets/images/icon.png" class="w-20 m-auto" />
-                </a>
+                </NuxtLink>
             </div>
 
             <div class="flex items-center">
@@ -19,22 +15,22 @@ const { locale } = useI18n()
             <div class="flex-1">
                 <ul class="pt-2 pb-4 space-y-1 text-sm">
                     <li class="rounded-sm">
-                        <a href="/"
+                        <NuxtLink to="/"
                             class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md hover:text-gray-400">
                             <Icon name="humbleicons:home" size="2em" />
                             <h1 class="text-xl">{{ $t('home') }}</h1>
-                        </a>
+                        </NuxtLink>
                     </li>
-                    <li class="rounded-sm">
-                        <a href="/explore"
+                    <li v-if="userStore.getUser.id" class="rounded-sm">
+                        <NuxtLink to="/explore"
                             class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md hover:text-gray-400">
                             <Icon name="material-symbols:explore-outline-rounded" size="2em" />
                             <h1 class="text-xl">{{ $t('feed') }}</h1>
-                        </a>
+                        </NuxtLink>
                     </li>
                     <li>
                         <!-- Collection page -->
-                        <NuxtLink to="/collection"
+                        <NuxtLink v-if="userStore.getUser.id" to="/collection"
                             class="md:flex block mx-auto md:mx-0 items-center p-2 md:space-x-3 rounded-md hover:text-gray-400">
                             <Icon name="material-symbols:collections-bookmark" size="2em" />
                             <h1 class="text-xl">{{ $t('yourCollection') }}</h1>
@@ -58,9 +54,9 @@ const { locale } = useI18n()
                         <div v-else v-for="(creators, index) in followedStore.getFollowed">
                             <div v-if="index == followedStore.getFollowed.length - 1 && index > 4">
                                 <NuxtLink v-if="followMore" :to="'/profile/' + creators.id" class="flex py-2">
-                                    <img v-if="creators.creator_image == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="creators.profile_picture == null" src="../assets/images/fishe.jpg"
                                         class="w-10 h-10 rounded-full" />
-                                    <img v-else :src="creators.creator_image" class="w-10 h-10 rounded-full" />
+                                    <img v-else :src="creators.profile_picture" class="w-10 h-10 rounded-full" />
                                     <p class="text-sm my-auto px-2 ">{{ creators.username }}</p>
                                 </NuxtLink>
                                 <button class="flex py-2" @click="toggleFollow()">
@@ -73,17 +69,17 @@ const { locale } = useI18n()
                             </div>
                             <div v-else-if="index < 4">
                                 <NuxtLink :to="'/profile/' + creators.id" class="flex py-2">
-                                    <img v-if="creators.creator_image == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="creators.profile_picture == null" src="../assets/images/fishe.jpg"
                                         class="w-10 h-10 rounded-full" />
-                                    <img v-else :src="creators.creator_image" class="w-10 h-10 rounded-full" />
+                                    <img v-else :src="creators.profile_picture" class="w-10 h-10 rounded-full" />
                                     <p class="text-sm my-auto px-2 ">{{ creators.username }}</p>
                                 </NuxtLink>
                             </div>
                             <div v-else-if="followMore">
                                 <NuxtLink :to="'/profile/' + creators.id" class="flex py-2">
-                                    <img v-if="creators.creator_image == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="creators.profile_picture == null" src="../assets/images/fishe.jpg"
                                         class="w-10 h-10 rounded-full" />
-                                    <img v-else :src="creators.creator_image" class="w-10 h-10 rounded-full" />
+                                    <img v-else :src="creators.profile_picture" class="w-10 h-10 rounded-full" />
                                     <p class="text-sm my-auto px-2 ">{{ creators.username }}</p>
                                 </NuxtLink>
                             </div>
@@ -105,11 +101,11 @@ const { locale } = useI18n()
                         <div v-else v-for="(lists, index) in likedStore.getLiked ">
                             <div v-if="index == likedStore.getLiked.length - 1 && index > 4">
                                 <NuxtLink v-if="collectionMore" :to="'/podcast/' + lists.podcastId" class="flex py-2">
-                                    <img v-if="lists.podcast_image == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="lists.fk_podcast_id.thumbnail == null" src="../assets/images/fishe.jpg"
                                         class="w-10 h-10 rounded-full" />
-                                    <img v-else :src="lists.thumbnail" class="w-10 h-10 rounded-full" />
-                                    {{ console.log(lists) }}
-                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.podcast_name }}</p>
+                                    <img v-else :src="lists.fk_podcast_id.thumbnail" class="w-10 h-10 rounded-full" />
+                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.fk_podcast_id.podcast_name
+                                    }}</p>
                                 </NuxtLink>
                                 <button class="flex py-2" @click="toggleCollection()">
                                     <Icon v-if="collectionMore" name="ic:baseline-keyboard-arrow-up" />
@@ -121,18 +117,20 @@ const { locale } = useI18n()
                             </div>
                             <div v-else-if="index < 4">
                                 <NuxtLink :to="'/podcast/' + lists.podcastId" class="flex py-2">
-                                    <img v-if="lists.podcast_image == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="lists.fk_podcast_id.thumbnail == null" src="../assets/images/fishe.jpg"
                                         class="w-10 h-10 rounded-full" />
-                                    <img v-else :src="lists.thumbnail" class="w-10 h-10 rounded-full" />
-                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.podcast_name }}</p>
+                                    <img v-else :src="lists.fk_podcast_id.thumbnail" class="w-10 h-10 rounded-full" />
+                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.fk_podcast_id.podcast_name
+                                    }}</p>
                                 </NuxtLink>
                             </div>
                             <div v-else-if="collectionMore">
                                 <NuxtLink :to="'/podcast/' + lists.podcastId" class="flex py-2">
-                                    <img v-if="lists.podcast_image == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="lists.fk_podcast_id.thumbnail == null" src="../assets/images/fishe.jpg"
                                         class="w-10 h-10 rounded-full" />
-                                    <img v-else :src="lists.thumbnail" class="w-10 h-10 rounded-full" />
-                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.podcast_name }}</p>
+                                    <img v-else :src="lists.fk_podcast_id.thumbnail" class="w-10 h-10 rounded-full" />
+                                    <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.fk_podcast_id.podcast_name
+                                    }}</p>
                                 </NuxtLink>
                             </div>
                         </div>
@@ -195,7 +193,7 @@ export default {
                 }
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
             this.loaded = true;
@@ -210,7 +208,7 @@ export default {
                 this.favorites = response.data;
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },

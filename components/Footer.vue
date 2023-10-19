@@ -67,8 +67,8 @@
                         <!-- volume -->
                         <div class="volume block h-full my-auto">
                             <Icon name="fa6-solid:volume-high" class="mr-3 h-full my-auto mb-1" size="1em" />
-                            <input class="my-auto" type="range" min="0" max="1" step="0.1" v-model="volume"
-                                @change="updateVolume">
+                            <input class="my-auto" type="range" min="0" max="1" step="0.01" v-model="volume"
+                                @input="updateVolume">
                         </div>
                     </div>
                 </div>
@@ -143,15 +143,11 @@ export default {
         },
         seek(event) {
             const audio = this.$refs.audioPlayer;
-            const progressElement = event.target;
-            const progressRect = progressElement.getBoundingClientRect();
-            const clickX = event.clientX - progressRect.left;
             const duration = audio.duration;
-            const progress = clickX / duration;
-            const newTime = duration * progress;
-            audio.currentTime = newTime;
-            // console.log("event: " + event.clientX + " progressReat: " + progressRect.left + " clickX: " + clickX + " progress: " + " duration: " + duration + + progress + " newTime: " + newTime);
-
+            const clientWidth = 256;
+            const offsetX = event.offsetX;
+            const progress = (offsetX / clientWidth) * duration;
+            audio.currentTime = progress;
         },
         updateVolume(event) {
             const audio = this.$refs.audioPlayer;
@@ -166,7 +162,7 @@ export default {
                 this.watchLaterStore.setWatchLater(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -182,7 +178,7 @@ export default {
                 this.watchLaterStore.addWatchLater(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -195,7 +191,7 @@ export default {
                 this.watchLaterStore.deleteWatchLater(response.data.id);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -217,7 +213,7 @@ export default {
                 this.likedStore.setLiked(response.data);
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -229,11 +225,11 @@ export default {
                 headers: {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
-            }).then((response) => {
-                this.likedStore.addLiked(response.data);
+            }).then(() => {
+                this.getLikedPodcast();
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -242,11 +238,11 @@ export default {
                 headers: {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
-            }).then((response) => {
-                this.likedStore.deleteLiked(response.data.id);
+            }).then(() => {
+                this.getLikedPodcast();
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         },
@@ -272,7 +268,7 @@ export default {
 
             }).catch((error) => {
                 if (error) {
-                    alert((error));
+                    console.log(error);
                 }
             });
         }
