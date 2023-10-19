@@ -8,12 +8,12 @@
                 <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image"
                     class="w-72 h-72 mobile:w-52 mobile:h-52 m-auto" />
                 <div class="flex justify-center mt-2">
-                    <div class="text-xs  mr-4">{{ currentTime }}</div>
+                    <div class="text-xs mr-4 dark:text-white">{{ currentTime }}</div>
                     <div class="w-64 h-2 bg-gray-300 rounded-full cursor-pointer mobile:hidden" @click="seek">
                         <div class="h-full bg-blue-500 rounded-full" :style="{ width: progress + '%' }"></div>
                     </div>
                     <p class="text-lg font-semibold md:hidden">-</p>
-                    <div class="text-xs  ml-4">{{ duration }}</div>
+                    <div class="text-xs dark:text-white ml-4">{{ duration }}</div>
                 </div>
                 <div>
                     <div class="flex justify-between w-full">
