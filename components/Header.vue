@@ -15,9 +15,11 @@
                     class="fixed z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-2xl shadow-black w-44 dark:bg-gray-600 mt-1">
                     <ul v-if="search.length > 0">
                         <li v-for="podcast in filteredPodcasts" :key="podcast.id"
-                            class="px-2 py-1 hover:bg-gray-300 dark:hover-bg-gray-500 rounded-lg cursor-pointer">
-                            <NuxtLink :to="'/podcast/' + podcast.id">{{ podcast.podcast_name }}</NuxtLink>
+                            class="px-2 py-1 hover:bg-gray-300 dark:hover-bg-gray-500 rounded-lg">
+                            <NuxtLink class="flex" :to="'/podcast/' + podcast.id">{{ podcast.podcast_name }}
+                            </NuxtLink>
                         </li>
+                        <li v-if="filteredPodcasts.length === 0" class="px-2 py-1">No results found</li>
                     </ul>
                 </div>
             </div>
@@ -65,6 +67,7 @@ export default {
         } else {
             localStorage.setItem("locale", this.$i18n.locale);
         }
+        document.addEventListener('click', this.clearSearch);
     },
     computed: {
         ...mapStores(useUserStore, usePodcastStore),
@@ -72,10 +75,9 @@ export default {
             return this.$t('search');
         },
         filteredPodcasts() {
-            // Make sure to include the 'id' property in the filteredPodcasts array
-            return this.podcastData.filter(podcast => {
-                return podcast.podcast_name.toLowerCase().includes(this.search.toLowerCase()) && this.search.length > 0
-            });
+            return this.podcastStore.getPodcasts.filter((podcast) => {
+                return podcast.podcast_name.toLowerCase().includes(this.search.toLowerCase())
+            })
         },
     },
     created() {
@@ -97,13 +99,20 @@ export default {
             const userCookie = useCookie('user')
             const podcastCookie = useCookie('podcast')
             const watchLaterCookie = useCookie('watchLater')
+            const commentCookie = useCookie('comment')
+            const likeCookie = useCookie('liked')
+            const followCookie = useCookie('followed')
 
             userCookie.value = null
             podcastCookie.value = null
             watchLaterCookie.value = null
+            commentCookie.value = null
+            likeCookie.value = null
+            followCookie.value = null
 
             this.$router.push('/')
             location.reload()
+
         },
         async getPodcasts() {
             await axios.get('/api/podcast/read-preview-podcast', {
@@ -114,7 +123,11 @@ export default {
                     console.log(error);
                 }
             });
-        }
+        clearSearch(e) {
+            if (e.target.id !== 'searchDropdown') {
+                this.search = ''
+            }
+        },
     },
 };
 </script>
