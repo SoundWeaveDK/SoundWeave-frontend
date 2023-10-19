@@ -20,7 +20,7 @@
             <div class="flex items-center space-x-4 ml-4">
                 <div class="flex-shrink-0">
                     <img :src="user.profile_picture ? user.profile_picture : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
-                        alt="Profile picture" class="rounded-full w-24 h-24 mt-8">>
+                        alt="Profile picture" class="rounded-full w-24 h-24 mt-2">>
                 </div>
                 <div>
                     <h2 class="text-2xl font-medium text-black dark:text-white ">{{ user.username }}</h2>
@@ -42,8 +42,8 @@
                     </div>
                 </div>
             </div>
-            <div class="flex items-center space-x-4 ml-4">
-                <div>
+            <div class="flex items-center space-x-4 ml-4 mobile:flex-col">
+                <div class="mobile:mb-4">
                     <!-- edit profile box -->
                     <div v-if="userStore.getUser.id == user.id" class="h-8">
 
@@ -54,7 +54,7 @@
 
                     </div>
                 </div>
-                <div class="mt-3">
+                <div class="mt-4">
                     <!-- manage page -->
                     <div v-if="userStore.getUser.id == user.id" class="h-8">
 
@@ -64,7 +64,7 @@
                         </NuxtLink>
                     </div>
                 </div>
-                <div id="languageSelector" class="my-auto grow">
+                <div id="languageSelector" class="my-auto grow mobile:mt-2">
                     <form class="mb-4">
                         <label class="flex text-dark dark:text-white" for="locale-select">{{ $t('language') }}&nbsp;
                             <Icon class="self-center" :name="'circle-flags:' + $i18n.locale" />
