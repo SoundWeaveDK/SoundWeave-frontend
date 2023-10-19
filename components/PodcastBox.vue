@@ -18,7 +18,7 @@
             class="p-4 m-2  bg-gray-200 dark:bg-gray-700 rounded-lg w-2/3 sm:w-2/5 md:w-2/6 lg:w-1/5 xl:w-1/6">
             <div class="h-full w-full">
                 <div class="h-full w-full flex mobile:flex-row flex-col items-center">
-                    <NuxtLink class="w-full" :to="'/podcast/' + item.id" @click="storePodcastData(item)">
+                    <NuxtLink class="w-full" :to="'/podcast/' + item.id" @click.prevent="storePodcastData(item)">
                         <div class="bounding-box ">
                             <img alt="thumbnail"
                                 class="flex-shrink-0 rounded-lg object-cover object-center mb-4 mobile:mb-0"
@@ -26,12 +26,12 @@
                         </div>
                     </NuxtLink>
                     <div class="w-full mobile:pl-3">
-                        <NuxtLink :to="'/podcast/' + item.id" @click="storePodcastData(item)">
+                        <NuxtLink :to="'/podcast/' + item.id" @click.prevent="storePodcastData(item)">
                             <h2
                                 class="title-font font-semibold text-lg text-gray-900 dark:text-neutral-100 hover:text-gray-400">
                                 {{ item.podcast_name }}</h2>
                         </NuxtLink>
-                        <NuxtLink :to="'/profile/' + item.userId" @click="storePodcastData(item)">
+                        <NuxtLink :to="'/profile/' + item.userId" @click.prevent="storePodcastData(item)">
                             <h3 class="text-black dark:text-white mb- hover:text-gray-400">{{ item.fk_user_id.username
                             }}</h3>
                         </NuxtLink>
@@ -43,9 +43,10 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { usePodcastStore } from '~/stores/podcast'
 import { useUserStore } from "../stores/login"
+import Swal from 'sweetalert2'
 
 export default defineComponent({
     props: {
@@ -61,6 +62,18 @@ export default defineComponent({
         const storePodcastData = (podcast) => {
             if (userStore.user.id) {
                 podcastStore.setSelectedPodcast(podcast)
+            } else {
+                Swal.fire({
+                    title: 'You need to be logged in to view this podcast',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Login',
+                    cancelButtonText: 'Cancel',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/login'
+                    }
+                })
             }
         }
 
@@ -69,6 +82,7 @@ export default defineComponent({
                 isLoading.value = false
             },)
         })
+        //check if user is logged in if not don't redirect to podcast page
 
         return {
             storePodcastData,
