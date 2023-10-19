@@ -28,7 +28,7 @@
                     </button>
                 </div>
                 <div>
-                    <WatchLaterBox v-if="viewedStore.getViewed[0]" :podcastData="viewedStore.getViewed" />
+                    <HistoryBox v-if="viewedStore.getViewed[0]" :podcastData="viewedStore.getViewed" />
                     <p v-else class="p-4 text-black dark:text-white text-md font-bold">{{ $t('noHistory') }}</p>
                 </div>
             </div>

@@ -21,7 +21,7 @@
                     <NuxtLink class="w-full" :to="'/podcast/' + item.id" @click="storePodcastData(item)">
                         <div class="bounding-box ">
                             <img alt="thumbnail"
-                                class="flex-shrink-0 rounded-lg object-cover object-center mb-4 mobile:mb-0"
+                                class="flex-shrink-0 rounded-lg w-full object-cover object-center mb-4 mobile:mb-0"
                                 :src="item.thumbnail ? item.thumbnail : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'">
                         </div>
                     </NuxtLink>
