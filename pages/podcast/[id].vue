@@ -43,7 +43,7 @@
                         <div class="h-full">
                             <div class="flex">
                                 <div
-                                    class="text-black dark:text-white text-xl font-bold bg-gray-700 p-4 rounded-xl w-screen">
+                                    class="text-white text-xl font-semibold bg-gray-500 dark:bg-gray-700  p-4 rounded-xl w-screen">
                                     <p>{{ podcastStore.getSelectedPodcast.description }}
                                     </p>
                                 </div>

@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </div>
-            <div v-else class="ml-auto">
+            <div v-else class="ml-auto text-bold mobile:mr-4">
                 <NuxtLink href="/login" class="text-black dark:text-white hover:text-gray-400">{{ $t('login') }}</NuxtLink>
             </div>
         </nav>
