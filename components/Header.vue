@@ -3,7 +3,7 @@
         class="my-auto h-full w-full text-black dark:text-white bg-white dark:bg-slate-900 border-solid border-b-2 border-blue-950 ">
         <nav class="mx-auto h-full flex items-center justify-between lg:px-8">
             <!-- searchbar -->
-            <div class="relative ml-20 w-1/3">
+            <div class="relative ml-20 w-1/3" v-if="userStore.getUser.id">
                 <div>
                     <input type="text" v-model="search" :placeholder="placeholderText" @click="getPodcasts"
                         class="text-black dark:text-white p-2 w-full outline-none border-b-2 border-gray-500 dark:border-white dark:bg-transparent" />
@@ -23,7 +23,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="mr-20 flex justify-between ">
+            <div class="mr-20 flex justify-between ml-auto">
                 <!-- user settings button -->
                 <div style="position: relative;">
                     <div @click="toggleDropdown" class="flex items-center">
