@@ -44,74 +44,61 @@
                     <!-- upload date -->
                 </div>
 
+                <div class=" text-black h-max-64 overflow-y-auto dark:text-white text-xl font-bold inline-block">
                     <!-- description -->
-                    <div v-if="podcastStore.getSelectedPodcast.created"
-                        class="text-black dark:text-white text-xl font-bold mr-2 float-right">
-                        <!-- upload date -->
-                        <p>{{ podcastStore.getSelectedPodcast.created }}</p>
+                    <p>{{ podcastStore.getSelectedPodcast.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-span-6">
+        <!-- comment box -->
+        <div class=" p-8 h-full">
+            <div class="rounded border-solid border-2 h-full">
+                <div class="h-1/6">
+                    <div class="flex">
+                        <textarea v-model="newComment" type="text"
+                            class="w-full m-4 mb-0 border-solid border-b-2 bg-transparent text-black dark:text-white "
+                            :placeholder="placeholderText" />
+                    </div>
+                    <div>
+                        <button @click="postComment"
+                            class="bg-black dark:bg-white text-white dark:text-black rounded-full w-24 h-8 m-4 float-right">
+                            <p class="text-sm">{{ $t('comment') }}</p>
+                        </button>
+                    </div>
+                </div>
+                <div class="h-96 w-full overflow-y-auto">
+                    <!-- comments -->
+                    <div v-if="commentStore" v-for="comment in commentStore.getComments" :key="comment.id"
+                        class="w-full p-2" :id="comment.id">
+                        <div>
+                            <div class="inline-flex">
+                                <p class="text-black dark:text-white font-bold pr-2 pointer">{{
+                                    comment.fk_user_id.username }}
+                                </p>
+                                <Icon v-if="comment.userId === userStore.getUser.id" @click="deleteComment(comment.id)"
+                                    name="mdi:comment-remove" class="cursor-pointer text-black dark:text-white"
+                                    size="1.2em" />
+                            </div>
+                            <p class="text-black dark:text-white">{{ comment.comment }}</p>
+                            <button v-if="isLiked">
+                                <Icon name="carbon:thumbs-up" class="text-black dark:text-white" size="1.3em" />
+                            </button>
+                            <button v-else>
+                                <Icon name="carbon:thumbs-up-filled" class="text-black dark:text-white" size="1.3em" />
+                            </button>
+                            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                        </div>
                     </div>
                     <div v-else>
-                        <p class="text-black dark:text-white text-xl font-bold mr-2 float-right">
-                            {{ podcastStore.getSelectedPodcast.createdAt.slice(0, 10) }}
-                        </p>
-                    </div>
-
-                    <div class=" text-black h-max-64 overflow-y-auto dark:text-white text-xl font-bold inline-block">
-                        <!-- description -->
-                        <p>{{ podcastStore.getSelectedPodcast.description }}</p>
+                        <p class="text-black dark:text-white font-bold">No comments yet</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-span-6">
-            <!-- comment box -->
-            <div class=" p-8 h-full">
-                <div class="rounded border-solid border-2 h-full">
-                    <div class="h-1/6">
-                        <div class="flex">
-                            <textarea v-model="newComment" type="text"
-                                class="w-full m-4 mb-0 border-solid border-b-2 bg-transparent text-black dark:text-white "
-                                :placeholder="placeholderText" />
-                        </div>
-                        <div>
-                            <button @click="postComment"
-                                class="bg-black dark:bg-white text-white dark:text-black rounded-full w-24 h-8 m-4 float-right">
-                                <p class="text-sm">{{ $t('comment') }}</p>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="h-96 w-full overflow-y-auto">
-                        <!-- comments -->
-                        <div v-if="commentStore" v-for="comment in commentStore.getComments" :key="comment.id"
-                            class="w-full p-2" :id="comment.id">
-                            <div>
-                                <div class="inline-flex">
-                                    <p class="text-black dark:text-white font-bold pr-2 pointer">{{
-                                        comment.fk_user_id.username }}
-                                    </p>
-                                    <Icon v-if="comment.userId === userStore.getUser.id" @click="deleteComment(comment.id)"
-                                        name="mdi:comment-remove" class="cursor-pointer text-black dark:text-white"
-                                        size="1.2em" />
-                                </div>
-                                <p class="text-black dark:text-white">{{ comment.comment }}</p>
-                                <button v-if="isLiked">
-                                    <Icon name="carbon:thumbs-up" class="text-black dark:text-white" size="1.3em" />
-                                </button>
-                                <button v-else>
-                                    <Icon name="carbon:thumbs-up-filled" class="text-black dark:text-white" size="1.3em" />
-                                </button>
-                                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-                            </div>
-                        </div>
-                        <div v-else>
-                            <p class="text-black dark:text-white font-bold">No comments yet</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <audio ref="audioPlayer" :src="podcastStore.getSelectedPodcast.podcast_file" @timeupdate="onTimeUpdate"></audio>
     </div>
+    <audio ref="audioPlayer" :src="podcastStore.getSelectedPodcast.podcast_file" @timeupdate="onTimeUpdate"></audio>
 </template>
 
 <script setup>

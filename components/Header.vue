@@ -123,11 +123,12 @@ export default {
                     console.log(error);
                 }
             });
+        },
         clearSearch(e) {
             if (e.target.id !== 'searchDropdown') {
                 this.search = ''
             }
-        },
+        }
     },
 };
 </script>
