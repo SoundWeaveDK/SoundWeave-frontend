@@ -23,7 +23,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="mr-20 flex justify-between ml-auto">
+            <div v-if="userStore.getUser.id" class="mr-20 flex justify-between ml-auto">
                 <!-- user settings button -->
                 <div style="position: relative;">
                     <div @click="toggleDropdown" class="flex items-center">
@@ -35,20 +35,18 @@
                                 <li v-if="userStore.getUser.id" class="mb-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <NuxtLink :to="linkto">{{ $t('profile') }}</NuxtLink>
                                 </li>
-                                <button v-if="userStore.getUser.id" class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                <button class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <li class="">
                                         <NuxtLink @click="logout">{{ $t('logout') }}</NuxtLink>
-                                    </li>
-                                </button>
-                                <button v-else class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                    <li class="">
-                                        <NuxtLink href="/login">{{ $t('login') }}</NuxtLink>
                                     </li>
                                 </button>
                             </ul>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div v-else class="ml-auto">
+                <NuxtLink href="/login" class="text-black dark:text-white hover:text-gray-400">{{ $t('login') }}</NuxtLink>
             </div>
         </nav>
     </header>
