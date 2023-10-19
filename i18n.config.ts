@@ -70,6 +70,7 @@ export default defineI18nConfig(() => ({
                   noHistory: 'You have no podcasts in your history. Go to a podcast and click the play button to add it to your history.',
                   editProfile: 'Edit Profile',
                   recomended: 'Recomended for you',
+                  ad: 'Ad',
             },
             fr: {
                   welcome: 'Bienvenue',
@@ -137,6 +138,7 @@ export default defineI18nConfig(() => ({
                   noHistory: 'Vous n\'avez aucun podcast dans votre historique. Allez sur un podcast et cliquez sur le bouton Lecture pour l\'ajouter à votre historique.',
                   editProfile: 'Modifier le profil',
                   recomended: 'Recommandé pour vous',
+                  ad: 'Publicité',
             },
 
             da: {
@@ -205,6 +207,7 @@ export default defineI18nConfig(() => ({
                   noHistory: 'Du har ingen podcasts i din historie. Gå til en podcast og klik på knappen afspil for at tilføje den til din historie.',
                   editProfile: 'Rediger profil',
                   recomended: 'Anbefalet til dig',
+                  ad: 'Reklame',
             },
             jp: {
                   welcome: 'ようこそ',
@@ -271,6 +274,7 @@ export default defineI18nConfig(() => ({
                   noHistory: '履歴にポッドキャストがありません。ポッドキャストに移動して、再生ボタンをクリックして履歴に追加します。',
                   editProfile: 'プロフィールを編集',
                   recomended: 'おすすめ',
+                  ad: '広告',
             },
             cn: {
                   welcome: '欢迎',
@@ -337,6 +341,7 @@ export default defineI18nConfig(() => ({
                   noHistory: '您的历史中没有播客。转到播客并单击播放按钮将其添加到历史记录中。',
                   editProfile: '编辑个人资料',
                   recomended: '为您推荐',
+                  ad: '广告',
             },
             sa: {
                   welcome: 'أهلا بك',
@@ -403,6 +408,7 @@ export default defineI18nConfig(() => ({
                   noHistory: 'ليس لديك أي بودكاست في سجلك. انتقل إلى بودكاست وانقر فوق زر التشغيل لإضافته إلى سجلك.',
                   editProfile: 'تعديل الملف الشخصي',
                   recomended: 'موصى به لك',
+                  ad: 'إعلان',
             },
       }
 }))
