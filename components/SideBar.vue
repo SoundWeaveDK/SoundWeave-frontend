@@ -95,7 +95,7 @@
                         <p v-if="!userStore.getUser.id" class="flex items-center p-2 space-x-3 rounded-md">
                             {{ $t('loginFavorites') }}
                         </p>
-                        <p v-else-if="favorites.length == 0" class="flex items-center p-2 space-x-3 rounded-md">
+                        <p v-else-if="likedStore.getLiked.length == 0" class="flex items-center p-2 space-x-3 rounded-md">
                             {{ $t('noFavorites') }}
                         </p>
                         <div v-else v-for="(lists, index) in likedStore.getLiked ">
@@ -154,7 +154,6 @@ export default {
         ...mapStores(useUserStore, useFollowedStore, useLikedStore)
     },
     created() {
-        this.token = this.userStore.getAccessToken;
         if (this.userStore.getUser.id) {
             this.getFollowing();
             this.getFavorites();
@@ -163,11 +162,8 @@ export default {
     },
     data() {
         return {
-            token: '',
             followMore: false,
             collectionMore: false,
-            // my lists
-            favorites: [],
             loaded: false,
         };
     },
@@ -182,7 +178,7 @@ export default {
             // get the user's following
             await axios.get('/api/followuser/read-users-followers/' + this.userStore.getUser.id, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 this.followedStore.clearFollowed();
@@ -202,10 +198,10 @@ export default {
             // get the user's favorites
             await axios.get('/api/podcastliked/read-users-podcast-liked/' + this.userStore.getUser.id, {
                 headers: {
-                    Authorization: `Bearer ${this.token}`
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
-                this.favorites = response.data;
+                this.likedStore.setLiked(response.data);
             }).catch((error) => {
                 if (error) {
                     console.log(error);

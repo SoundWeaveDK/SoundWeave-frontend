@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                             <p class="text-lg font-semibold md:hidden">-</p>
-                            <div class="text-xs  ml-4" v-if="!adPlaying">{{ duration }}</div>
+                            <div class="text-xs  ml-4" v-if="!adPlaying && adPlayed">{{ duration }}</div>
                             <div class="text-xs  ml-4" v-else>{{ durationAd }}</div>
                         </div>
                     </div>
@@ -109,7 +109,6 @@ export default {
         podcastStore: {
             handler() {
                 if (this.$route.path == "/podcast/" + this.podcastStore.getSelectedPodcast.id) {
-
                     const audio = this.$refs.audioPlayer;
                     const adAudio = this.$refs.adAudio;
                     audio.pause();
