@@ -75,6 +75,7 @@ import icon from '@/assets/images/icon.png'
 import axios from '@/utils/axiosInstance.ts'
 import { useUserStore } from '@/stores/login.ts'
 import { mapStores } from 'pinia'
+import Swal from 'sweetalert2'
 
 export default {
     computed: {
@@ -90,14 +91,42 @@ export default {
     },
     beforeMount() {
         const userCookie = useCookie('user')
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            iconColor: 'white',
+            background: '#a5dc86',
+            customClass: {
+                popup: 'colored-toast'
+            },
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true
+        })
 
         if (userCookie.value != null) {
-            alert(this.$t('alreadyLoggedIn'));
+            Toast.fire({
+                icon: 'info',
+                title: this.$t('loginSuccess')
+            })
             this.$router.push('/');
         }
     },
     methods: {
         async verifyLogin() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top',
+                iconColor: 'white',
+                background: '#fc6060',
+                customClass: {
+                    popup: 'colored-toast'
+                },
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true
+            })
+
             this.isLoading = true;
             await axios.post('/api/user/login', {
                 email: this.email.toLowerCase(),
@@ -111,7 +140,11 @@ export default {
                 }
             }).catch((error) => {
                 if (error) {
-                    alert(this.$t('loginError') + '\n\n' + error.response.data.message);
+                    const errorMessage = this.$t('loginError') + '\n\n' + error.response.data.message;
+                    Toast.fire({
+                        icon: 'warning',
+                        title: errorMessage
+                    })
 
                     console.log(error);
                 }
