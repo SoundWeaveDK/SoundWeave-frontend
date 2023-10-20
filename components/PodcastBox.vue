@@ -3,7 +3,7 @@
         <div v-if="isLoading"
             class="flex-shrink-0 w-2/3 sm:w-1/4 md:w-1/4 lg:w-1/6 p-4 m-2 bg-gray-200 dark:bg-gray-700 rounded-lg overscroll-y-auto">
             <div class="h-full">
-                <div class="h-full flex mobile:flex-row flex-col items-center">
+                <div class="h-full flex flex-col items-center">
                     <div class="bounding-box">
                         <div class="animate-pulse flex-shrink-0 rounded-lg w-full mobile:w-40 h-40 bg-gray-400"></div>
                     </div>
@@ -15,13 +15,13 @@
             </div>
         </div>
         <div v-else v-for="item in podcastData" :key="item.id"
-            class="p-4 m-2  bg-gray-200 dark:bg-gray-700 rounded-lg w-2/3 sm:w-2/5 md:w-2/6 lg:w-1/5 xl:w-1/6">
+            class="p-4 m-2  bg-gray-200 dark:bg-gray-700 rounded-lg w-11/12 sm:w-2/5 md:w-2/6 lg:w-1/5 xl:w-1/6">
             <div class="h-full w-full">
-                <div class="h-full w-full flex mobile:flex-row flex-col items-center">
+                <div class="h-full w-full flex flex-col items-center">
                     <NuxtLink class="w-full" :to="'/podcast/' + item.id" @click.prevent="storePodcastData(item)">
                         <div class="bounding-box ">
                             <img alt="thumbnail"
-                                class="flex-shrink-0 rounded-lg object-cover object-center mb-4 mobile:mb-0"
+                                class="flex-shrink-0 rounded-lg object-cover object-center mb-4 mobile:mb-2"
                                 :src="item.thumbnail ? item.thumbnail : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'">
                         </div>
                     </NuxtLink>
