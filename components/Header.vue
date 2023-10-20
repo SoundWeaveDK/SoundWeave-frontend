@@ -27,7 +27,8 @@
                 <!-- user settings button -->
                 <div style="position: relative;">
                     <div @click="toggleDropdown" class="flex items-center">
-                        <img :src="userStore.getUser.profile_picture ? userStore.getUser.profile_picture : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
+                        <img id="drop"
+                            :src="userStore.getUser.profile_picture ? userStore.getUser.profile_picture : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
                             class="rounded-full h-12 w-12 cursor-pointer">
                         <div ref="dropdown" v-if="showDropdown"
                             class="flex mt-1 p-2 shadow-2xl shadow-black divide-y divide-gray-100 dark:bg-gray-600 dark:text-white text-black absolute top-full left-0 bg-white border-gray-200 rounded-md ">
@@ -66,6 +67,10 @@ export default {
             localStorage.setItem("locale", this.$i18n.locale);
         }
         document.addEventListener('click', this.clearSearch);
+        document.addEventListener('click', this.closeDropdown);
+    },
+    beforeDestroy() {
+        document.removeEventListener('click', this.closeDropdown);
     },
     computed: {
         ...mapStores(useUserStore, usePodcastStore),
@@ -126,6 +131,14 @@ export default {
             if (e.target.id !== 'searchDropdown') {
                 this.search = ''
             }
+        },
+        closeDropdown(event) {
+            // if element is dropdown, do nothing
+            if (event.target.id === 'drop') return;
+            // if element is inside dropdown, do nothing
+            if (event.target.closest('#drop')) return;
+            // otherwise, close dropdown
+            this.showDropdown = false;
         }
     },
 };
