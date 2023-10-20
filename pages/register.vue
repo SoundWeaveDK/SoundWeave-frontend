@@ -55,7 +55,7 @@
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                         {{ $t('gender') }}
                                     </label>
-                                    <select required v-model="gender" name="gender" id="gender"
+                                    <select autocomplete="sex" required v-model="gender" name="gender" id="gender"
                                         class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option v-for="genders in genders" :key="genders.id" :value="genders.id">
                                             {{ genders.gender_name }}</option>
@@ -65,9 +65,9 @@
                             <label for="birthday" class="mb-1 text-sm font-medium text-gray-900 dark:text-white">
                                 {{ $t('birthday') }}
                             </label>
-                            <input type="date" v-model="birthday" name="birthday" id="birthday"
+                            <input type="date" autocomplete="bday" v-model="birthday" name="birthday" id="birthday"
                                 class="mt-1 mb-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                autocomplete="birthday" placeholder="dd/mm/yyyy" required>
+                                placeholder="dd/mm/yyyy" required>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{
                                 $t('password') }}</label>
                             <input type="password" v-model="password" name="password" id="password"

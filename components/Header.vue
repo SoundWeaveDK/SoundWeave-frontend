@@ -5,7 +5,8 @@
             <!-- searchbar -->
             <div class="relative ml-20 w-1/3" v-if="userStore.getUser.id">
                 <div>
-                    <input type="text" v-model="search" :placeholder="placeholderText" @click="getPodcasts"
+                    <input type="text" v-model="search" autocomplete="off" :placeholder="placeholderText"
+                        @click="getPodcasts"
                         class="text-black dark:text-white p-2 w-full outline-none border-b-2 border-gray-500 dark:border-white dark:bg-transparent" />
                     <div class="absolute right-0 top-0 mt-2 mr-2 text-gray-600 dark:text-white">
                         <Icon name="ph:magnifying-glass-bold" size="1.3em" />
