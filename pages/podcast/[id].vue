@@ -1,6 +1,6 @@
 <template>
-    <div class="grid grid-cols-6 h-full">
-        <div class="col-span-5 mobile:col-span-6 h-full">
+    <div class="grid grid-cols-6 h-4/5">
+        <div class="col-span-6 h-full">
             <div class="h-3/6 p-8">
                 <h1 class="text-4xl font-bold text-black dark:text-white pb-4 w-fit mx-auto">
                     {{ podcastStore.getSelectedPodcast.podcast_name }}
@@ -20,40 +20,43 @@
                         <div class="flex pb-3">
                             <!-- Creator -->
                             <NuxtLink :to="`/profile/${podcastStore.getSelectedPodcast.userId}`" class="flex">
-                                <img v-if="podcastStore.getSelectedPodcast.creator_image"
-                                    :src="podcastStore.getSelectedPodcast.creator_image"
-                                    class="w-10 h-10 mr-4 rounded-full float-left" />
-                                <img v-else src="../../assets/images/fishe.jpg" class="h-10 w-10 rounded mr-4"
-                                    alt="Creator Image">
-                                <!-- <p class="text-black dark:text-white font-bold text-xl my-auto">{{ podcast.fk_user_id.username
-                            }}</p> -->
+                                <img :src="userStore.getUser.profile_picture ? userStore.getUser.profile_picture : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
+                                    class=" w-10 h-10 mr-4 rounded-full float-left" />
+                                <p class="text-black dark:text-white font-bold text-xl my-auto">{{
+                                    podcastStore.getSelectedPodcast.fk_user_id.username
+                                }}</p>
                             </NuxtLink>
                             <!-- listens -->
-                            <p class="text-black dark:text-white text-2xl font-bold ml-auto my-auto">
+                            <p class="flex text-black dark:text-white text-2xl font-bold ml-4 my-auto">
                                 {{ podcastStore.getSelectedPodcast.views }}
-                                <Icon name="fluent:headphones-sound-wave-20-filled" class="mr-2 h-full my-auto" />
+                                <Icon name="fluent:headphones-sound-wave-20-filled" class="mr-2 ml-2 h-full my-auto" />
                             </p>
                         </div>
+                        <!-- upload date -->
+                        <div v-if="podcastStore.getSelectedPodcast.createdAt"
+                            class="flex text-black dark:text-white text-xl font-bold ml-auto items-center ">
+                            <p>{{ podcastStore.getSelectedPodcast.createdAt.split('T')[0] }}</p>
+                        </div>
                     </div>
-                </div>
-
-                <!-- description -->
-                <div v-if="podcastStore.getSelectedPodcast.createdAt"
-                    class="text-black dark:text-white text-xl font-bold mr-2 float-right">
-                    <p>{{ podcastStore.getSelectedPodcast.createdAt.split('T')[0] }}</p>
-                    <!-- upload date -->
-                </div>
-
-                <div class=" text-black h-max-64 overflow-y-auto dark:text-white text-xl font-bold inline-block">
-                    <!-- description -->
-                    <p>{{ podcastStore.getSelectedPodcast.description }}</p>
+                    <!-- comment box -->
+                    <div class="pt-4 h-full">
+                        <div class="h-full">
+                            <div class="flex">
+                                <div
+                                    class="text-white text-xl font-semibold bg-gray-500 dark:bg-gray-700  p-4 rounded-xl w-screen">
+                                    <p>{{ podcastStore.getSelectedPodcast.description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-span-6">
         <!-- comment box -->
-        <div class=" p-8 h-full">
+        <div class="p-8 h-full">
             <div class="rounded border-solid border-2 h-full">
                 <div class="h-1/6">
                     <div class="flex">
@@ -82,11 +85,11 @@
                                     size="1.2em" />
                             </div>
                             <p class="text-black dark:text-white">{{ comment.comment }}</p>
-                            <button v-if="isLiked">
-                                <Icon name="carbon:thumbs-up" class="text-black dark:text-white" size="1.3em" />
-                            </button>
-                            <button v-else>
+                            <button v-if="isLiked" @click="removeCommentLike(comment.id)">
                                 <Icon name="carbon:thumbs-up-filled" class="text-black dark:text-white" size="1.3em" />
+                            </button>
+                            <button v-else @click="likeComment(comment.id)">
+                                <Icon name="carbon:thumbs-up" class="text-black dark:text-white" size="1.3em" />
                             </button>
                             <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                         </div>
@@ -129,7 +132,6 @@ export default {
             this.getSinglePodcasts();
         }
         this.fetchComments();
-        console.log(this.userStore.getUser.id);
     },
     data() {
         return {
@@ -139,6 +141,7 @@ export default {
             progress: 0,
             volume: 1,
             newComment: "",
+            isLiked: false,
         };
     },
     methods: {
@@ -202,14 +205,47 @@ export default {
                 }
             });
         },
-        deleteComment(commentId) {
-            axios.delete('/api/podcastcomments/delete-comment/' + commentId, {
+        async deleteComment(commentId) {
+            await axios.delete('/api/podcastcomments/delete-comment/' + commentId, {
                 headers: {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
                 if (response.status === 200) {
                     this.commentStore.deleteComment(commentId);
+                }
+            }).catch((error) => {
+                if (error) {
+                    console.log((error));
+                }
+            });
+        },
+        async likeComment(commentId) {
+            await axios.post('/api/commentlike/add-comment-like', {
+                userId: this.userStore.getUser.id,
+                commentId: commentId,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+                if (response.status === 201) {
+                    this.isLiked = true;
+                }
+            }).catch((error) => {
+                if (error) {
+                    alert((error));
+                }
+            });
+        },
+        async removeCommentLike(commentId) {
+            await axios.delete('/api/commentlike/delete-comment-like/' + commentId, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.getAccessToken}`
+                }
+            }).then((response) => {
+                if (response.status === 200) {
+                    this.isLiked = false;
                 }
             }).catch((error) => {
                 if (error) {

@@ -114,7 +114,6 @@ export default {
                     const adAudio = this.$refs.adAudio;
                     audio.pause();
                     adAudio.pause();
-                    console.log("joe biden")
                     this.isPlaying = false;
                     this.currentTime = '00:00';
                     this.duration = '00:00';

@@ -3,7 +3,7 @@
         class="my-auto h-full w-full text-black dark:text-white bg-white dark:bg-slate-900 border-solid border-b-2 border-blue-950 ">
         <nav class="mx-auto h-full flex items-center justify-between lg:px-8">
             <!-- searchbar -->
-            <div class="relative ml-20 w-1/3">
+            <div class="relative ml-20 w-1/3" v-if="userStore.getUser.id">
                 <div>
                     <input type="text" v-model="search" :placeholder="placeholderText" @click="getPodcasts"
                         class="text-black dark:text-white p-2 w-full outline-none border-b-2 border-gray-500 dark:border-white dark:bg-transparent" />
@@ -23,7 +23,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="mr-20 flex justify-between ">
+            <div v-if="userStore.getUser.id" class="mr-20 flex justify-between ml-auto">
                 <!-- user settings button -->
                 <div style="position: relative;">
                     <div @click="toggleDropdown" class="flex items-center">
@@ -35,20 +35,18 @@
                                 <li v-if="userStore.getUser.id" class="mb-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <NuxtLink :to="linkto">{{ $t('profile') }}</NuxtLink>
                                 </li>
-                                <button v-if="userStore.getUser.id" class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                <button class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
                                     <li class="">
                                         <NuxtLink @click="logout">{{ $t('logout') }}</NuxtLink>
-                                    </li>
-                                </button>
-                                <button v-else class="mt-2 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                    <li class="">
-                                        <NuxtLink href="/login">{{ $t('login') }}</NuxtLink>
                                     </li>
                                 </button>
                             </ul>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div v-else class="ml-auto text-bold mobile:mr-4">
+                <NuxtLink href="/login" class="text-black dark:text-white hover:text-gray-400">{{ $t('login') }}</NuxtLink>
             </div>
         </nav>
     </header>
