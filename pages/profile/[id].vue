@@ -64,7 +64,7 @@
                         </NuxtLink>
                     </div>
                 </div>
-                <div id="languageSelector" class="my-auto grow mobile:mt-2">
+                <div v-if="userStore.getUser.id == user.id" id="languageSelector" class="my-auto grow mobile:mt-2">
                     <form class="mb-4">
                         <label class="flex text-dark dark:text-white" for="locale-select">{{ $t('language') }}&nbsp;
                             <Icon class="self-center" :name="'circle-flags:' + $i18n.locale" />

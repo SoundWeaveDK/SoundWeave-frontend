@@ -63,7 +63,7 @@ export default defineComponent({
         const isLoading = ref(true)
 
         const storePodcastData = (podcast) => {
-            podcastStore.setSelectedPodcast(podcast)
+            podcastStore.setSelectedPodcast(podcast.fk_podcast_id)
         }
 
         const token = userStore.getAccessToken
