@@ -335,7 +335,6 @@ export default {
             }
         },
         async addView() {
-            console.log("add view");
             await axios.post('/api/podcastviewed/add-viewed-podcast', {
                 userId: this.userStore.getUser.id,
                 podcastId: this.podcastStore.getSelectedPodcast.id,
@@ -344,7 +343,7 @@ export default {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
-
+                console.log("View added");
             }).catch((error) => {
                 if (error) {
                     console.log(error);
