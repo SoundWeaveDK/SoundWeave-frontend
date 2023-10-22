@@ -1,5 +1,6 @@
 <template>
-    <div class="grid grid-cols-6">
+
+    <div v-if="podcastLoaded" class="grid grid-cols-6">
         <div class="col-span-6">
             <div class="p-8">
                 <h1 class="text-4xl font-bold text-black dark:text-white pb-4 w-fit mx-auto">
@@ -112,7 +113,6 @@
             </div>
         </div>
     </div>
-    <audio ref="audioPlayer" :src="podcastStore.getSelectedPodcast.podcast_file" @timeupdate="onTimeUpdate"></audio>
 </template>
 
 <script setup>
@@ -146,11 +146,7 @@ export default {
     },
     data() {
         return {
-            isPlaying: false,
-            currentTime: "0:00",
-            duration: "0:00",
-            progress: 0,
-            volume: 1,
+            podcastLoaded: false,
             newComment: "",
             isLiked: false,
             isExpanded: false,
@@ -165,22 +161,13 @@ export default {
             }).then((response) => {
                 if (response.status === 200) {
                     this.podcastStore.setSelectedPodcast(response.data);
+                    this.podcastLoaded = true;
                 }
             }).catch((error) => {
                 if (error) {
                     console.log(error);
                 }
             });
-        },
-        togglePlayback() {
-            const audio = this.$refs.audioPlayer;
-            if (this.isPlaying) {
-                this.isPlaying = false;
-                audio.pause();
-            } else {
-                this.isPlaying = true;
-                audio.play();
-            }
         },
         async fetchComments() {
             await axios.get('/api/podcastcomments/read-single-podcast-comments/' + this.podcastStore.getSelectedPodcast.id, {
