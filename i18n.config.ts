@@ -74,7 +74,7 @@ export default defineI18nConfig(() => ({
                   listens: 'Listens',
                   income: 'Income',
                   likes: 'Likes',
-                  top3: 'Youre most listtened to in these 3 countries',
+                  top3: 'You are most listened to in these 3 countries',
             },
             fr: {
                   welcome: 'Bienvenue',
