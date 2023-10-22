@@ -81,7 +81,7 @@ export default {
         filteredPodcasts() {
             return this.podcastStore.getPodcasts.filter((podcast) => {
                 return podcast.podcast_name.toLowerCase().includes(this.search.toLowerCase())
-            })
+            }).slice(0, 5)
         },
     },
     created() {
