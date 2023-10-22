@@ -50,9 +50,9 @@
                         <div class="h-full">
                             <div class="flex">
                                 <div
-                                    class="text-white text-xl font-semibold bg-gray-500 dark:bg-gray-700  p-4 rounded-xl w-screen">
-                                    <p>{{ podcastStore.getSelectedPodcast.description }}
-                                    </p>
+                                    class="text-white text-xl font-semibold bg-gray-500 dark:bg-gray-700  p-4 rounded-xl w-full">
+                                    <p class="whitespace-pre-wrap break-words">{{
+                                        podcastStore.getSelectedPodcast.description }}</p>
                                 </div>
                             </div>
                         </div>
