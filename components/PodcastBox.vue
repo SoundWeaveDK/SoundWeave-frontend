@@ -1,7 +1,6 @@
 <template>
     <section v-if="podcastData"
         class="text-gray-600 body-font flex flex-wrap overscroll-auto items-start mobile:justify-center">
-        {{ console.log(podcastData) }}
         <div v-if="isLoading"
             class="flex-shrink-0 w-2/3 sm:w-1/4 md:w-1/4 lg:w-1/6 p-4 m-2 bg-gray-200 dark:bg-gray-700 rounded-lg overscroll-y-auto">
             <div class="h-full">
@@ -18,7 +17,7 @@
         </div>
         <div v-else v-for="item in podcastData" :key="item.id"
             class="p-4 m-2  bg-gray-200 dark:bg-gray-700 rounded-lg w-11/12 sm:w-2/5 md:w-2/6 lg:w-1/5 xl:w-1/6">
-            <div class="h-full w-full">
+            <div v-if="item.fk_user_id.username" class="h-full w-full">
                 <div class="h-full w-full flex flex-col items-center">
                     <NuxtLink class="w-full" :to="'/podcast/' + item.id" @click.prevent="storePodcastData(item)">
                         <div class="bounding-box ">

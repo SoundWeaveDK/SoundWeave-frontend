@@ -1,6 +1,6 @@
 <template>
-    <!-- make a beutiful tailwind grid -->
-    <div v-if="podcastData && countryData" class="grid grid-cols-4 gap-4 p-12 h-full">
+    <h1 class="text-4xl font-bold text-center text-black dark:text-white py-4">{{ podcastData.podcast_name }}</h1>
+    <div v-if="podcastData && countryData" class="grid grid-cols-4 gap-4 p-12 pt-0 h-full">
         <div class="col-span-2 bg-white p-4 rounded-lg shadow-lg">
             <!-- Views -->
             <!-- centered text -->
