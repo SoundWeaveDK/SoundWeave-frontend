@@ -49,12 +49,16 @@
                     <div class="pt-4 h-full">
                         <div class="h-full">
                             <div class="flex">
-                                <div
-                                    class="text-white text-xl font-semibold bg-gray-500 dark:bg-gray-700  p-4 rounded-xl w-screen">
-                                    <p>{{ podcastStore.getSelectedPodcast.description }}
-                                    </p>
+                                <div class=" text-white text-xl font-semibold bg-gray-500 dark:bg-gray-700 overflow-hidden p-4 rounded-xl w-full"
+                                    :class="{ 'max-h-40': !isExpanded }">
+                                    <p class="whitespace-pre-wrap break-words">{{
+                                        podcastStore.getSelectedPodcast.description }}</p>
                                 </div>
                             </div>
+                            <button class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                @click="toggleExpanded">
+                                {{ isExpanded ? $t('seeLess') : $t('seeMore') }}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -149,6 +153,7 @@ export default {
             volume: 1,
             newComment: "",
             isLiked: false,
+            isExpanded: false,
         };
     },
     methods: {
@@ -283,6 +288,9 @@ export default {
             const progress = clickX / duration;
             const newTime = duration * progress;
             audio.currentTime = newTime;
+        },
+        toggleExpanded() {
+            this.isExpanded = !this.isExpanded;
         },
     }
 };
