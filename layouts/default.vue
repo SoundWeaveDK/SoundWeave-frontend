@@ -22,8 +22,11 @@
 </template>
 
 <script>
+import { useUserStore } from "../stores/login"
+import { mapStores } from "pinia";
 
 export default {
+
     data() {
         return {
             isMobile: false,

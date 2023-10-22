@@ -11,11 +11,17 @@
         <div v-else class="w-full h-full m-auto flex pl-4 pr-4">
             <div class="flex">
                 <div class="my-auto rounded">
-                    <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image"
-                        class="w-16 h-16 m-1 rounded-sm mobile:h-10 mobile:w-14">
+                    <div v-if="togglePlayBackStart && !adPlayed">
+                        <img src="/icon.png" alt="Podcast Image" class="w-16 h-16 m-1 rounded-sm mobile:h-10 mobile:w-14">
+                    </div>
+                    <div v-else>
+                        <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image"
+                            class="w-16 h-16 m-1 rounded-sm mobile:h-10 mobile:w-14">
+                    </div>
+
                 </div>
                 <button class="ml-3" @click="togglePlayback">
-                    <Icon v-if="isPlaying" name="fa6-solid:pause" size="2em" />
+                    <Icon v-if="isPlaying || adPlaying" name="fa6-solid:pause" size="2em" />
                     <Icon v-else name="fa6-solid:play" size="2em" />
                 </button>
             </div>
@@ -23,7 +29,10 @@
                 <div class="flex items-center justify-between h-full mx-4 my-auto ">
                     <div class="flex items-center my-auto">
                         <div class="flex flex-col">
-                            <div class="text-sm font-medium ">{{ podcastStore.getSelectedPodcast.podcast_name }}</div>
+                            <div v-if="togglePlayBackStart && !adPlayed" class="text-sm font-medium ">{{ $t('ad') }}</div>
+                            <div v-else>
+                                <div class="text-sm font-medium ">{{ podcastStore.getSelectedPodcast.podcast_name }}</div>
+                            </div>
                         </div>
                     </div>
                     <div class="h-full">
@@ -36,12 +45,17 @@
                             </NuxtLink>
                         </div>
                         <div class="flex items-center h-full">
-                            <div class="text-xs  mr-4">{{ currentTime }}</div>
+                            <div class="text-xs  mr-4" v-if="adPlayed">{{ currentTime }}</div>
+                            <div class="text-xs  mr-4" v-else>{{ currentTimeAd }}</div>
                             <div class="w-64 h-2 bg-gray-300 rounded-full cursor-pointer mobile:hidden" @click="seek">
-                                <div class="h-full bg-blue-500 rounded-full" :style="{ width: progress + '%' }"></div>
+                                <div class="h-full bg-blue-500 rounded-full" v-if="adPlayed"
+                                    :style="{ width: progress + '%' }"></div>
+                                <div class="h-full bg-blue-500 rounded-full" v-else :style="{ width: adProgress + '%' }">
+                                </div>
                             </div>
                             <p class="text-lg font-semibold md:hidden">-</p>
-                            <div class="text-xs  ml-4">{{ duration }}</div>
+                            <div class="text-xs  ml-4" v-if="!adPlaying && adPlayed">{{ duration }}</div>
+                            <div class="text-xs  ml-4" v-else>{{ durationAd }}</div>
                         </div>
                     </div>
                     <div class="h-full flex mobile:hidden">
@@ -74,6 +88,7 @@
                 </div>
                 <audio ref="audioPlayer" :src="podcastStore.getSelectedPodcast.podcast_file"
                     @timeupdate="onTimeUpdate"></audio>
+                <audio ref="adAudio" src="/soundweave-ad.mp3" preload="auto" @timeupdate="onTimeUpdate"></audio>
             </div>
         </div>
     </div>
@@ -89,6 +104,32 @@ import { useLikedStore } from '~/stores/liked'
 import { mapStores } from "pinia";
 
 export default {
+    watch: {
+        // when the thipodcastStore changes, reset the variables in data
+        podcastStore: {
+            handler() {
+                if (this.$route.path == "/podcast/" + this.podcastStore.getSelectedPodcast.id) {
+                    const audio = this.$refs.audioPlayer;
+                    const adAudio = this.$refs.adAudio;
+                    audio.pause();
+                    adAudio.pause();
+                    this.isPlaying = false;
+                    this.currentTime = '00:00';
+                    this.duration = '00:00';
+                    this.progress = 0;
+                    this.volume = 1;
+                    this.Viewed = false;
+                    this.adPlayed = false;
+                    this.adPlaying = false;
+                    this.currentTimeAd = '00:00';
+                    this.durationAd = '00:00';
+                    this.adProgress = 0;
+                    this.togglePlayBackStart = false;
+                }
+            },
+            deep: true
+        }
+    },
     computed: {
         ...mapStores(useUserStore, usePodcastStore, useWatchLaterStore, useLikedStore),
         destination() {
@@ -113,28 +154,65 @@ export default {
             progress: 0,
             volume: 1,
             Viewed: false,
+            adPlayed: false,
+            adPlaying: false,
+            currentTimeAd: '00:00',
+            durationAd: '00:00',
+            adProgress: 0,
+            togglePlayBackStart: false,
         };
     },
     methods: {
-        togglePlayback() {
+        async togglePlayback() {
+            this.togglePlayBackStart = true;
             const audio = this.$refs.audioPlayer;
-            if (this.isPlaying) {
-                this.isPlaying = false;
-                audio.pause();
+            const adAudio = this.$refs.adAudio;
+
+            if (!this.adPlayed) {
+
+                if (this.adPlaying) {
+                    adAudio.pause();
+                    this.adPlaying = false;
+                }
+                else {
+                    adAudio.play();
+                    this.adPlaying = true;
+
+                    adAudio.addEventListener('ended', () => {
+                        this.adPlaying = false;
+                        this.adPlayed = true;
+                        this.wait10();
+                        audio.play();
+                        this.isPlaying = true;
+                    });
+                }
+
             } else {
-                this.wait10();
-                this.isPlaying = true;
-                audio.play();
+                if (audio.paused) {
+                    audio.play();
+                    this.isPlaying = true;
+                } else {
+                    audio.pause();
+                    this.isPlaying = false;
+                }
             }
         },
         onTimeUpdate() {
             const audio = this.$refs.audioPlayer;
-            const duration = audio.duration;
-            const currentTime = audio.currentTime;
-            const progress = (currentTime / duration) * 100;
-            this.currentTime = this.formatTime(currentTime);
-            this.duration = this.formatTime(duration);
-            this.progress = progress;
+            const adAudio = this.$refs.adAudio;
+            if (this.adPlaying) {
+                const adDuration = adAudio.duration;
+                const adCurrentTime = adAudio.currentTime;
+                this.currentTimeAd = this.formatTime(adCurrentTime);
+                this.durationAd = this.formatTime(adDuration);
+                this.adProgress = (adCurrentTime / adDuration) * 100;
+            } else {
+                const duration = audio.duration;
+                const currentTime = audio.currentTime;
+                this.currentTime = this.formatTime(currentTime);
+                this.duration = this.formatTime(duration);
+                this.progress = (currentTime / duration) * 100;
+            }
         },
         formatTime(time) {
             const minutes = Math.floor(time / 60);
@@ -265,13 +343,13 @@ export default {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then((response) => {
-
+                console.log("View added");
             }).catch((error) => {
                 if (error) {
                     console.log(error);
                 }
             });
-        }
+        },
     },
 };
 </script>

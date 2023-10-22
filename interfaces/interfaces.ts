@@ -24,6 +24,7 @@ export interface Podcast {
 export interface Comment {
     comment: string;
     id: number;
+    userId: number;
     fk_user_id: {
         username: string;
     }
