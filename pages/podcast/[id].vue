@@ -1,7 +1,7 @@
 <template>
-    <div class="grid grid-cols-6 h-4/5">
-        <div class="col-span-6 h-full">
-            <div class="h-3/6 p-8">
+    <div class="grid grid-cols-6">
+        <div class="col-span-6">
+            <div class="p-8">
                 <h1 class="text-4xl font-bold text-black dark:text-white pb-4 w-fit mx-auto">
                     {{ podcastStore.getSelectedPodcast.podcast_name }}
                 </h1>
@@ -26,16 +26,6 @@
                                     podcastStore.getSelectedPodcast.fk_user_id.username
                                 }}</p>
                             </NuxtLink>
-                            <!-- listens -->
-                            <p class="flex text-black dark:text-white text-2xl font-bold ml-4 my-auto">
-                                {{ podcastStore.getSelectedPodcast.views }}
-                                <Icon name="fluent:headphones-sound-wave-20-filled" class="mr-2 ml-2 h-full my-auto" />
-                            </p>
-                            <!-- likes -->
-                            <p class="flex text-black dark:text-white text-2xl font-bold ml-4 my-auto">
-                                {{ podcastStore.getSelectedPodcast.likes }}
-                                <Icon name="icon-park-outline:like" size="1.5em" />
-                            </p>
                         </div>
                         <!-- upload date -->
                         <div v-if="podcastStore.getSelectedPodcast.createdAt"
@@ -43,7 +33,19 @@
                             <p>{{ podcastStore.getSelectedPodcast.createdAt.split('T')[0] }}</p>
                         </div>
                     </div>
-                    <!-- comment box -->
+                    <div class="flex justify-end w-full">
+                        <!-- listens -->
+                        <p class="flex text-black dark:text-white text-2xl font-bold ml-4 my-auto">
+                            {{ podcastStore.getSelectedPodcast.views }}
+                            <Icon name="fluent:headphones-sound-wave-20-filled" size="1.3em" />
+                        </p>
+                        <!-- likes -->
+                        <p class="flex text-black dark:text-white text-2xl font-bold ml-4 my-auto">
+                            {{ podcastStore.getSelectedPodcast.likes }}
+                            <Icon name="icon-park-outline:like" size="1.3em" />
+                        </p>
+                    </div>
+                    <!-- Description box -->
                     <div class="pt-4 h-full">
                         <div class="h-full">
                             <div class="flex">
@@ -151,7 +153,7 @@ export default {
     },
     methods: {
         async getSinglePodcasts() {
-            await axios.get('http://127.0.0.1:3000/api/podcast/read-single-podcast/ ' + this.$route.params.id, {
+            await axios.get('/api/podcast/read-single-podcast/ ' + this.$route.params.id, {
                 headers: {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }

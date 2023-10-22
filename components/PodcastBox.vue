@@ -1,13 +1,13 @@
 <template>
     <section class="text-gray-600 body-font flex flex-wrap overscroll-auto items-start mobile:justify-center">
         <div v-if="isLoading"
-            class="flex-shrink-0 w-2/3 sm:w-1/4 md:w-1/4 lg:w-1/6 p-4 m-2 bg-gray-200 dark:bg-gray-700 rounded-lg overscroll-y-auto">
+            class="flex-shrink-0 w-2/3 sm:w-2/5 md:w-2/5 lg:w-1/5 p-4 m-2 bg-gray-200 dark:bg-gray-700 rounded-lg overscroll-y-auto">
             <div class="h-full">
                 <div class="h-full flex flex-col items-center">
-                    <div class="bounding-box">
-                        <div class="animate-pulse flex-shrink-0 rounded-lg w-full mobile:w-40 h-40 bg-gray-400"></div>
+                    <div class="bounding-box w-full mb-4">
+                        <div class="animate-pulse flex-shrink-0 rounded-lg w-full mobile:w-full h-40 bg-gray-400"></div>
                     </div>
-                    <div class="w-full mobile:pl-3">
+                    <div class="w-full">
                         <div class="animate-pulse h-4 bg-gray-400 rounded w-3/4 mb-2"></div>
                         <div class="animate-pulse h-4 bg-gray-400 rounded w-1/2"></div>
                     </div>
