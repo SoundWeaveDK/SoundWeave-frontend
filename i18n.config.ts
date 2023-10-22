@@ -76,6 +76,8 @@ export default defineI18nConfig(() => ({
                   likes: 'Likes',
                   top3: 'You are most listened to in these 3 countries',
                   demographics: 'Demographics',
+                  seeLess: 'See Less',
+                  seeMore: 'See More',
             },
             fr: {
                   welcome: 'Bienvenue',
@@ -149,6 +151,8 @@ export default defineI18nConfig(() => ({
                   likes: 'Aime',
                   top3: 'Vous êtes le plus écouté dans ces 3 pays',
                   demographics: 'Démographie',
+                  seeLess: 'Voir moins',
+                  seeMore: 'Voir plus',
 
             },
 
@@ -224,6 +228,8 @@ export default defineI18nConfig(() => ({
                   likes: 'Synes godt om',
                   top3: 'Du er lyttet mest til i disse 3 lande',
                   demographics: 'Demografi',
+                  seeLess: 'Se mindre',
+                  seeMore: 'Se mere',
             },
             jp: {
                   welcome: 'ようこそ',
@@ -296,6 +302,8 @@ export default defineI18nConfig(() => ({
                   likes: '好き',
                   top3: 'これらの3つの国で最も聞かれています',
                   demographics: '人口統計',
+                  seeLess: 'もっと少なく見る',
+                  seeMore: 'もっと見る',
             },
             cn: {
                   welcome: '欢迎',
@@ -368,6 +376,8 @@ export default defineI18nConfig(() => ({
                   likes: '喜欢',
                   top3: '您在这3个国家中最受欢迎',
                   demographics: '人口统计',
+                  seeLess: '看得少',
+                  seeMore: '看更多',
             },
             sa: {
                   welcome: 'أهلا بك',
@@ -440,6 +450,8 @@ export default defineI18nConfig(() => ({
                   likes: 'إعجابات',
                   top3: 'أنت الأكثر استماعًا في هذه الدول الثلاث',
                   demographics: 'الديموغرافيا',
+                  seeLess: 'أظهر أقل',
+                  seeMore: 'أظهر المزيد',
             },
       }
 }))
