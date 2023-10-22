@@ -1,5 +1,7 @@
 <template>
-    <section class="text-gray-600 body-font flex flex-wrap overscroll-auto items-start mobile:justify-center">
+    <section v-if="podcastData"
+        class="text-gray-600 body-font flex flex-wrap overscroll-auto items-start mobile:justify-center">
+        {{ console.log(podcastData) }}
         <div v-if="isLoading"
             class="flex-shrink-0 w-2/3 sm:w-1/4 md:w-1/4 lg:w-1/6 p-4 m-2 bg-gray-200 dark:bg-gray-700 rounded-lg overscroll-y-auto">
             <div class="h-full">
@@ -32,8 +34,9 @@
                                 {{ item.podcast_name }}</h2>
                         </NuxtLink>
                         <NuxtLink :to="'/profile/' + item.userId">
-                            <h3 class="text-black dark:text-white mb- hover:text-gray-400">{{ item.fk_user_id.username
-                            }}</h3>
+                            <h3 class="text-black dark:text-white mb- hover:text-gray-400">
+                                {{ item.fk_user_id.username }}
+                            </h3>
                         </NuxtLink>
                     </div>
                 </div>

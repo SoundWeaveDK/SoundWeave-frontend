@@ -151,7 +151,7 @@ export default {
     },
     methods: {
         async getSinglePodcasts() {
-            await axios.get('http://127.0.0.1:3000/api/podcast/read-single-podcast/ ' + this.$route.params.id, {
+            await axios.get('/api/podcast/read-single-podcast/ ' + this.$route.params.id, {
                 headers: {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
