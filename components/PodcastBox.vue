@@ -31,7 +31,7 @@
                                 class="title-font font-semibold text-lg text-gray-900 dark:text-neutral-100 hover:text-gray-400">
                                 {{ item.podcast_name }}</h2>
                         </NuxtLink>
-                        <NuxtLink :to="'/profile/' + item.userId" @click.prevent="storePodcastData(item)">
+                        <NuxtLink :to="'/profile/' + item.userId">
                             <h3 class="text-black dark:text-white mb- hover:text-gray-400">{{ item.fk_user_id.username
                             }}</h3>
                         </NuxtLink>
