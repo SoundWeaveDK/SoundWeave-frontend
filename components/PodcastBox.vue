@@ -79,7 +79,7 @@ export default defineComponent({
 
         onMounted(() => {
             setTimeout(() => {
-                isLoading.value = true
+                isLoading.value = false
             },)
         })
         //check if user is logged in if not don't redirect to podcast page
