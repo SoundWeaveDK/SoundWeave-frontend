@@ -71,6 +71,10 @@ export default defineI18nConfig(() => ({
                   editProfile: 'Edit Profile',
                   recomended: 'Explore these podcasts',
                   ad: 'Ad',
+                  listens: 'Listens',
+                  income: 'Income',
+                  likes: 'Likes',
+                  top3: 'Youre most listtened to in these 3 countries',
             },
             fr: {
                   welcome: 'Bienvenue',
@@ -139,6 +143,11 @@ export default defineI18nConfig(() => ({
                   editProfile: 'Modifier le profil',
                   recomended: 'Explorez ces podcasts',
                   ad: 'Publicité',
+                  listens: 'Écoutes',
+                  income: 'Revenu',
+                  likes: 'Aime',
+                  top3: 'Vous êtes le plus écouté dans ces 3 pays',
+
             },
 
             da: {
@@ -208,6 +217,10 @@ export default defineI18nConfig(() => ({
                   editProfile: 'Rediger profil',
                   recomended: 'Udforsk disse podcasts',
                   ad: 'Reklame',
+                  listens: 'Lyttere',
+                  income: 'Indkomst',
+                  likes: 'Synes godt om',
+                  top3: 'Du er lyttet mest til i disse 3 lande',
             },
             jp: {
                   welcome: 'ようこそ',
@@ -275,6 +288,10 @@ export default defineI18nConfig(() => ({
                   editProfile: 'プロフィールを編集',
                   recomended: 'これらのポッドキャストを探索する',
                   ad: '広告',
+                  listens: 'リスン',
+                  income: '所得',
+                  likes: '好き',
+                  top3: 'これらの3つの国で最も聞かれています',
             },
             cn: {
                   welcome: '欢迎',
@@ -342,6 +359,10 @@ export default defineI18nConfig(() => ({
                   editProfile: '编辑个人资料',
                   recomended: '探索这些播客',
                   ad: '广告',
+                  listens: '收听',
+                  income: '收入',
+                  likes: '喜欢',
+                  top3: '您在这3个国家中最受欢迎',
             },
             sa: {
                   welcome: 'أهلا بك',
@@ -409,6 +430,10 @@ export default defineI18nConfig(() => ({
                   editProfile: 'تعديل الملف الشخصي',
                   recomended: 'استكشف هذه البودكاست',
                   ad: 'إعلان',
+                  listens: 'يستمع',
+                  income: 'دخل',
+                  likes: 'إعجابات',
+                  top3: 'أنت الأكثر استماعًا في هذه الدول الثلاث',
             },
       }
 }))
