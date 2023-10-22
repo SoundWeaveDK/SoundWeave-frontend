@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-7xl h-full mx-auto py-6 sm:px-6 lg:px-8">
+    <div v-if="podcastsLoaded" class="max-w-7xl h-full mx-auto py-6 sm:px-6 lg:px-8">
         <div v-if="loading">
             <div role="status" style="display: flex; align-items: center; justify-content: center;">
                 <svg aria-hidden=" true"
@@ -89,6 +89,7 @@ export default {
     },
     data() {
         return {
+            podcastsLoaded: false,
             token: "",
             user: {},
             loading: false
@@ -103,6 +104,7 @@ export default {
             }).then((response) => {
                 if (response.status == 200) {
                     this.podcastStore.setPodcasts(response.data);
+                    this.podcastsLoaded = true;
                 } else {
                     Swal.fire({
                         title: 'Error!',

@@ -326,10 +326,11 @@ export default {
         },
         async wait10() {
             if (!this.Viewed) {
+                this.Viewed = true;
                 // run timer for 10 seconds
                 setTimeout(() => {
                     this.addView();
-                    this.Viewed = true;
+
                 }, 10000);
 
             }

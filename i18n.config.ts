@@ -75,6 +75,7 @@ export default defineI18nConfig(() => ({
                   income: 'Income',
                   likes: 'Likes',
                   top3: 'You are most listened to in these 3 countries',
+                  demographics: 'Demographics',
             },
             fr: {
                   welcome: 'Bienvenue',
@@ -147,6 +148,7 @@ export default defineI18nConfig(() => ({
                   income: 'Revenu',
                   likes: 'Aime',
                   top3: 'Vous êtes le plus écouté dans ces 3 pays',
+                  demographics: 'Démographie',
 
             },
 
@@ -221,6 +223,7 @@ export default defineI18nConfig(() => ({
                   income: 'Indkomst',
                   likes: 'Synes godt om',
                   top3: 'Du er lyttet mest til i disse 3 lande',
+                  demographics: 'Demografi',
             },
             jp: {
                   welcome: 'ようこそ',
@@ -292,6 +295,7 @@ export default defineI18nConfig(() => ({
                   income: '所得',
                   likes: '好き',
                   top3: 'これらの3つの国で最も聞かれています',
+                  demographics: '人口統計',
             },
             cn: {
                   welcome: '欢迎',
@@ -363,6 +367,7 @@ export default defineI18nConfig(() => ({
                   income: '收入',
                   likes: '喜欢',
                   top3: '您在这3个国家中最受欢迎',
+                  demographics: '人口统计',
             },
             sa: {
                   welcome: 'أهلا بك',
@@ -434,6 +439,7 @@ export default defineI18nConfig(() => ({
                   income: 'دخل',
                   likes: 'إعجابات',
                   top3: 'أنت الأكثر استماعًا في هذه الدول الثلاث',
+                  demographics: 'الديموغرافيا',
             },
       }
 }))
