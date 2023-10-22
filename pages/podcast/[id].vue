@@ -7,14 +7,14 @@
                 </h1>
                 <img :src="podcastStore.getSelectedPodcast.thumbnail" alt="Podcast Image"
                     class="w-72 h-72 mobile:w-52 mobile:h-52 m-auto" />
-                <div class="flex justify-center mt-2">
+                <!-- <div class="flex justify-center mt-2">
                     <div class="text-xs mr-4 dark:text-white">{{ currentTime }}</div>
                     <div class="w-64 h-2 bg-gray-300 rounded-full cursor-pointer mobile:hidden" @click="seek">
                         <div class="h-full bg-blue-500 rounded-full" :style="{ width: progress + '%' }"></div>
                     </div>
                     <p class="text-lg font-semibold md:hidden">-</p>
                     <div class="text-xs dark:text-white ml-4">{{ duration }}</div>
-                </div>
+                </div> -->
                 <div>
                     <div class="flex justify-between w-full">
                         <div class="flex pb-3">
@@ -30,6 +30,11 @@
                             <p class="flex text-black dark:text-white text-2xl font-bold ml-4 my-auto">
                                 {{ podcastStore.getSelectedPodcast.views }}
                                 <Icon name="fluent:headphones-sound-wave-20-filled" class="mr-2 ml-2 h-full my-auto" />
+                            </p>
+                            <!-- likes -->
+                            <p class="flex text-black dark:text-white text-2xl font-bold ml-4 my-auto">
+                                {{ podcastStore.getSelectedPodcast.likes }}
+                                <Icon name="icon-park-outline:like" size="1.5em" />
                             </p>
                         </div>
                         <!-- upload date -->
@@ -146,7 +151,7 @@ export default {
     },
     methods: {
         async getSinglePodcasts() {
-            await axios.get('/api/podcast/read-single-podcast/' + this.$route.params.id, {
+            await axios.get('http://127.0.0.1:3000/api/podcast/read-single-podcast/ ' + this.$route.params.id, {
                 headers: {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }

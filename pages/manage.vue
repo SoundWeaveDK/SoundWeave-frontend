@@ -30,12 +30,23 @@
                             <img :src="podcast.thumbnail" class="h-20 w-20 rounded">
                             <div class="block h-full mx-4 my-auto">
                                 <p class="text-xl font-bold">{{ podcast.podcast_name }}</p>
-                                <p class="text-sm">
-                                    <Icon name="ph:vinyl-record" size="2em" />
-                                    {{ podcast.views }}
-                                </p>
+                                <div>
+                                    <p class="text-sm">
+                                        <Icon name="ph:vinyl-record" size="2em" />
+                                        {{ podcast.views }}
+                                    </p>
+                                    <p class="text-sm">
+                                        <Icon name="ph:currency-circle-dollar-bold" size="2em" />
+                                        {{ podcast.money }}
+                                    </p>
+                                </div>
                             </div>
+
                             <div class="flex float-right h-full my-auto ml-auto">
+                                <NuxtLink :to="`/analytics/${podcast.id}`" class=" hover:text-gray-400">
+                                    {{ $t('analytics') }}
+                                </NuxtLink>
+
                                 <button @click="editPodcast(podcast.id, podcast.podcast_name, podcast.description)"
                                     class="px-4 hover:text-gray-400">
                                     {{ $t('edit') }}
