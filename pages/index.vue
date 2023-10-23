@@ -56,6 +56,7 @@ export default {
         async getPreviewPodcasts() {
             await axios.get('/api/podcast/read-preview-podcast').then((response) => {
                 this.podcastStore.setPodcasts(response.data);
+                this.loaded = true;
             }).catch((error) => {
                 if (error) {
                     console.log(error);
