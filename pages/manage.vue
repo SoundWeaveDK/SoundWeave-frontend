@@ -37,7 +37,7 @@
                                     </p>
                                     <p class="text-sm">
                                         <Icon name="ph:currency-circle-dollar-bold" size="2em" />
-                                        {{ podcast.money }}
+                                        {{ podcast.views / 2 }}kr
                                     </p>
                                 </div>
                             </div>
