@@ -1,13 +1,15 @@
 <template>
-    <div v-if="podcastData.id">
-        <div v-if="userStore.getUser.id === podcastData.userId">
-            <div v-if="podcastData.views > 0">
-                <h1 class="text-4xl font-bold text-center text-black dark:text-white py-4">{{ podcastData.podcast_name }}
-                </h1>
-                <div class="grid grid-cols-4 gap-4 p-12 pt-0 h-full">
-                    <div class="col-span-2 bg-white p-4 rounded-lg shadow-lg">
-                        <!-- Views -->
-                        <!-- centered text -->
+    <div class="h-full" v-if="podcastData.id">
+        <div class="h-full" v-if="userStore.getUser.id === podcastData.userId">
+            <div class="h-full" v-if="podcastData.views > 0">
+                <div class="grid grid-cols-4 gap-4 p-12 h-full">
+                    <div class="col-span-1 bg-white p-4 rounded-lg shadow-lg">
+                        <div class="text-center truncate">
+                            <h2 class="text-2xl font-bold text-gray-800">{{ $t('podcastTitle') }}</h2>
+                            <p class="text-gray-700 text-3xl font-bold">{{ podcastData.podcast_name }}</p>
+                        </div>
+                    </div>
+                    <div class="col-span-1 bg-white p-4 rounded-lg shadow-lg">
                         <div class="text-center">
                             <h2 class="text-2xl font-bold text-gray-800">{{ $t('listens') }}</h2>
                             <p class="text-gray-700 text-3xl font-bold">{{ podcastData.views }}</p>
@@ -16,7 +18,6 @@
 
                     <div class="col-span-1 bg-white p-4 rounded-lg shadow-lg">
                         <div class="text-center">
-                            <!-- Money -->
                             <h2 class="text-2xl font-bold text-gray-800">{{ $t('income') }}</h2>
                             <p class="text-gray-700 text-3xl font-bold">{{ podcastData.views / 2 }}kr</p>
                         </div>
@@ -24,7 +25,6 @@
 
                     <div class="col-span-1 bg-white p-4 rounded-lg shadow-lg">
                         <div class="text-center">
-                            <!-- Likes -->
                             <h2 class="text-2xl font-bold text-gray-800">{{ $t('likes') }}</h2>
                             <p class="text-gray-700 text-3xl font-bold">{{ podcastData.likes }}</p>
                         </div>
@@ -40,9 +40,7 @@
                     </div>
 
                     <div class="col-span-4 bg-white p-4 rounded-lg shadow-lg">
-                        <!-- show top 3 contries -->
                         <h2 class="text-2xl font-bold text-gray-800 p-4">{{ $t('demographics') }}</h2>
-                        <!-- as a percentage -->
                         <div class="grid grid-cols-3 gap-4">
                             <div v-for="(country, index) in demographicData.labels" :key="index"
                                 class="bg-white p-4 rounded-lg shadow-lg">
@@ -67,7 +65,6 @@
     <div v-else class="flex justify-center items-center h-full">
         <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
     </div>
-    <!-- Data is unavailable -->
 </template>
 
 <script setup>
