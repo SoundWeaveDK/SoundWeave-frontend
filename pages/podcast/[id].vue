@@ -20,7 +20,7 @@
                         <div class="flex pb-3">
                             <!-- Creator -->
                             <NuxtLink :to="`/profile/${podcastStore.getSelectedPodcast.userId}`" class="flex">
-                                <img :src="userStore.getUser.profile_picture ? userStore.getUser.profile_picture : '/blank-profile-pict.png'"
+                                <img :src="podcastStore.getSelectedPodcast.fk_user_id.profile_picture ? podcastStore.getSelectedPodcast.fk_user_id.profile_picture : '/blank-profile-pict.png'"
                                     class=" w-10 h-10 mr-4 rounded-full float-left" />
                                 <p class="text-black dark:text-white font-bold text-xl my-auto">{{
                                     podcastStore.getSelectedPodcast.fk_user_id.username
