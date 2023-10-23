@@ -78,6 +78,8 @@ export default defineI18nConfig(() => ({
                   demographics: 'Demographics',
                   seeLess: 'See Less',
                   seeMore: 'See More',
+                  unavailable: 'The podcast is unavailable',
+                  noPodcast: 'No podcast available',
             },
             fr: {
                   welcome: 'Bienvenue',
@@ -153,7 +155,8 @@ export default defineI18nConfig(() => ({
                   demographics: 'Démographie',
                   seeLess: 'Voir moins',
                   seeMore: 'Voir plus',
-
+                  unavailable: 'Le podcast est indisponible',
+                  noPodcasts: 'Aucun podcast disponible',
             },
 
             da: {
@@ -230,6 +233,8 @@ export default defineI18nConfig(() => ({
                   demographics: 'Demografi',
                   seeLess: 'Se mindre',
                   seeMore: 'Se mere',
+                  unavailable: 'Podcasten er utilgængelig',
+                  noPodcasts: 'Ingen podcast tilgængelig',
             },
             jp: {
                   welcome: 'ようこそ',
@@ -304,6 +309,8 @@ export default defineI18nConfig(() => ({
                   demographics: '人口統計',
                   seeLess: 'もっと少なく見る',
                   seeMore: 'もっと見る',
+                  unavailable: 'ポッドキャストは利用できません',
+                  noPodcasts: '利用可能なポッドキャストはありません',
             },
             cn: {
                   welcome: '欢迎',
@@ -378,6 +385,8 @@ export default defineI18nConfig(() => ({
                   demographics: '人口统计',
                   seeLess: '看得少',
                   seeMore: '看更多',
+                  unavailable: '播客不可用',
+                  noPodcasts: '没有可用的播客',
             },
             sa: {
                   welcome: 'أهلا بك',
@@ -452,6 +461,8 @@ export default defineI18nConfig(() => ({
                   demographics: 'الديموغرافيا',
                   seeLess: 'أظهر أقل',
                   seeMore: 'أظهر المزيد',
+                  unavailable: 'البودكاست غير متوفر',
+                  noPodcasts: 'لا يوجد بودكاست متاح',
             },
       }
 }))

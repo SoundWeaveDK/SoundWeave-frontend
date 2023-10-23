@@ -1,11 +1,17 @@
 <template>
-    <div class="px-24 py-12">
+    <div v-if="loaded" class="px-24 py-12">
         <div class="mb-8 ml-2">
             <h1 class="mobile:text-center text-2xl text-black dark:text-white">{{ $t('yourFeed') }}</h1>
         </div>
         <div>
-            <PodcastBox v-if="podcastData" :podcastData="podcastData" />
+            <PodcastBox v-if="podcastData[0]" :podcastData="podcastData" />
+            <div v-else class="flex justify-center items-center">
+                <h1 class="text-2xl text-black dark:text-white">{{ $t('noPodcasts') }}</h1>
+            </div>
         </div>
+    </div>
+    <div v-else class="flex justify-center items-center h-full">
+        <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
     </div>
 </template>
 
@@ -40,6 +46,7 @@ export default {
     },
     data() {
         return {
+            loaded: false,
             token: '',
             loggedInUser: [],
             followed: [],
@@ -74,6 +81,7 @@ export default {
                 }
             }).then((response) => {
                 this.podcastData = response.data;
+                this.loaded = true;
             }).catch((error) => {
                 if (error) {
                     console.log(error);
