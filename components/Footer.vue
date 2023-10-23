@@ -312,12 +312,13 @@ export default {
             });
         },
         async deleteLikedPodcast() {
-            await axios.delete('/api/podcastliked/delete-single-liked-podcast/' + this.likedStore.getLiked.find(Liked => Liked.podcastId == this.podcastStore.getSelectedPodcast.id).id, {
+            await axios.delete('/api/podcastliked/delete-single-liked-podcast/id/' + this.likedStore.getLiked.find(Liked => Liked.podcastId == this.podcastStore.getSelectedPodcast.id).id + '/podcastId/' + this.podcastStore.getSelectedPodcast.id, {
                 headers: {
                     Authorization: `Bearer ${this.userStore.getAccessToken}`
                 }
             }).then(() => {
                 this.getLikedPodcast();
+                console.log("");
             }).catch((error) => {
                 if (error) {
                     console.log(error);
