@@ -138,7 +138,7 @@ export default {
             return this.$t('comment');
         },
         showSeeMoreButton() {
-            return this.podcastStore.getSelectedPodcast.description.length > 400;
+            return this.podcastStore.getSelectedPodcast.description.length > 500;
         },
     },
     created() {
