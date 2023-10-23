@@ -80,6 +80,7 @@ export default defineI18nConfig(() => ({
                   seeMore: 'See More',
                   unavailable: 'The podcast is unavailable',
                   noPodcasts: 'No podcast available',
+                  noUploads: 'You haven\'t uploaded any podcasts yet.',
             },
             fr: {
                   welcome: 'Bienvenue',
@@ -157,6 +158,7 @@ export default defineI18nConfig(() => ({
                   seeMore: 'Voir plus',
                   unavailable: 'Le podcast est indisponible',
                   noPodcasts: 'Aucun podcast disponible',
+                  noUploads: 'Vous n\'avez pas encore téléchargé de podcasts.',
             },
 
             da: {
@@ -235,6 +237,7 @@ export default defineI18nConfig(() => ({
                   seeMore: 'Se mere',
                   unavailable: 'Podcasten er utilgængelig',
                   noPodcasts: 'Ingen podcast tilgængelig',
+                  noUploads: 'Du har ikke uploadet nogen podcasts endnu.',
             },
             jp: {
                   welcome: 'ようこそ',
@@ -311,6 +314,7 @@ export default defineI18nConfig(() => ({
                   seeMore: 'もっと見る',
                   unavailable: 'ポッドキャストは利用できません',
                   noPodcasts: '利用可能なポッドキャストはありません',
+                  noUploads: 'まだポッドキャストをアップロードしていません。',
             },
             cn: {
                   welcome: '欢迎',
@@ -387,6 +391,7 @@ export default defineI18nConfig(() => ({
                   seeMore: '看更多',
                   unavailable: '播客不可用',
                   noPodcasts: '没有可用的播客',
+                  noUploads: '您还没有上传任何播客。',
             },
             sa: {
                   welcome: 'أهلا بك',
@@ -463,6 +468,7 @@ export default defineI18nConfig(() => ({
                   seeMore: 'أظهر المزيد',
                   unavailable: 'البودكاست غير متوفر',
                   noPodcasts: 'لا يوجد بودكاست متاح',
+                  noUploads: 'لم تقم بتحميل أي بودكاست حتى الآن.',
             },
       }
 }))

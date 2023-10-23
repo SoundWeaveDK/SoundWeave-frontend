@@ -25,7 +25,7 @@
             </div>
             <div>
                 <div class="text-black dark:text-white overflow-auto " style="height: 90%;">
-                    <div v-for="podcast in podcastStore.getPodcasts">
+                    <div v-if="podcastStore.getPodcasts[0]" v-for="podcast in podcastStore.getPodcasts">
                         <div class="flex rounded my-4 p-4 border-solid border-2 border-blue-950 ">
                             <img :src="podcast.thumbnail" class="h-20 w-20 rounded">
                             <div class="block h-full mx-4 my-auto">
@@ -57,9 +57,15 @@
                             </div>
                         </div>
                     </div>
+                    <div v-else class="flex justify-center items-center">
+                        <h1 class="text-2xl text-black dark:text-white pt-24">{{ $t('noUploads') }}</h1>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div v-else class="flex justify-center items-center h-full">
+        <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
     </div>
 </template>
 
