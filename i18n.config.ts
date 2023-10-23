@@ -82,6 +82,7 @@ export default defineI18nConfig(() => ({
                   noPodcasts: 'No podcast available',
                   noUploads: 'You haven\'t uploaded any podcasts yet.',
                   noAnalytics: 'The podcast has no analytics yet. Come back later to see the analytics.',
+                  podcastTitle: 'Podcast Title',
             },
             fr: {
                   welcome: 'Bienvenue',
@@ -161,6 +162,7 @@ export default defineI18nConfig(() => ({
                   noPodcasts: 'Aucun podcast disponible',
                   noUploads: 'Vous n\'avez pas encore téléchargé de podcasts.',
                   noAnalytics: 'Le podcast n\'a pas encore d\'analyse. Revenez plus tard pour voir les analyses.',
+                  podcastTitle: 'Titre du podcast',
             },
 
             da: {
@@ -241,6 +243,7 @@ export default defineI18nConfig(() => ({
                   noPodcasts: 'Ingen podcast tilgængelig',
                   noUploads: 'Du har ikke uploadet nogen podcasts endnu.',
                   noAnalytics: 'Podcasten har endnu ingen analyser. Kom tilbage senere for at se analyserne.',
+                  podcastTitle: 'Podcast titel',
             },
             jp: {
                   welcome: 'ようこそ',
@@ -319,6 +322,7 @@ export default defineI18nConfig(() => ({
                   noPodcasts: '利用可能なポッドキャストはありません',
                   noUploads: 'まだポッドキャストをアップロードしていません。',
                   noAnalytics: 'ポッドキャストにはまだ分析がありません。後で分析を確認してください。',
+                  podcastTitle: 'ポッドキャストのタイトル',
             },
             cn: {
                   welcome: '欢迎',
@@ -397,6 +401,7 @@ export default defineI18nConfig(() => ({
                   noPodcasts: '没有可用的播客',
                   noUploads: '您还没有上传任何播客。',
                   noAnalytics: '播客尚无分析。稍后再来看看分析。',
+                  podcastTitle: '播客标题',
             },
             sa: {
                   welcome: 'أهلا بك',
@@ -475,6 +480,7 @@ export default defineI18nConfig(() => ({
                   noPodcasts: 'لا يوجد بودكاست متاح',
                   noUploads: 'لم تقم بتحميل أي بودكاست حتى الآن.',
                   noAnalytics: 'لا توجد تحليلات للبودكاست حتى الآن. عد لاحقًا لرؤية التحليلات.',
+                  podcastTitle: 'عنوان البودكاست',
             },
       }
 }))
