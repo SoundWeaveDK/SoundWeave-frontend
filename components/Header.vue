@@ -29,7 +29,7 @@
                 <div style="position: relative;">
                     <div @click="toggleDropdown" class="flex items-center">
                         <img id="drop"
-                            :src="userStore.getUser.profile_picture ? userStore.getUser.profile_picture : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
+                            :src="userStore.getUser.profile_picture ? userStore.getUser.profile_picture : '/blank-profile-pict.png'"
                             class="rounded-full h-12 w-12 cursor-pointer">
                         <div ref="dropdown" v-if="showDropdown"
                             class="flex mt-1 p-2 shadow-2xl shadow-black divide-y divide-gray-100 dark:bg-gray-600 dark:text-white text-black absolute top-full left-0 bg-white border-gray-200 rounded-md ">

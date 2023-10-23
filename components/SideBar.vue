@@ -54,7 +54,7 @@
                         <div v-else v-for="(creators, index) in followedStore.getFollowed">
                             <div v-if="index == followedStore.getFollowed.length - 1 && index >= 4">
                                 <NuxtLink v-if="followMore" :to="'/profile/' + creators.id" class="flex py-2">
-                                    <img v-if="creators.profile_picture == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="creators.profile_picture == null" src="/blank-profile-pict.png"
                                         class="w-10 h-10 rounded-full" />
                                     <img v-else :src="creators.profile_picture" class="w-10 h-10 rounded-full" />
                                     <p class="text-sm my-auto px-2 ">{{ creators.username }}</p>
@@ -69,7 +69,7 @@
                             </div>
                             <div v-else-if="index < 4">
                                 <NuxtLink :to="'/profile/' + creators.id" class="flex py-2">
-                                    <img v-if="creators.profile_picture == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="creators.profile_picture == null" src="/blank-profile-pict.png"
                                         class="w-10 h-10 rounded-full" />
                                     <img v-else :src="creators.profile_picture" class="w-10 h-10 rounded-full" />
                                     <p class="text-sm my-auto px-2 ">{{ creators.username }}</p>
@@ -77,7 +77,7 @@
                             </div>
                             <div v-else-if="followMore">
                                 <NuxtLink :to="'/profile/' + creators.id" class="flex py-2">
-                                    <img v-if="creators.profile_picture == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="creators.profile_picture == null" src="/blank-profile-pict.png"
                                         class="w-10 h-10 rounded-full" />
                                     <img v-else :src="creators.profile_picture" class="w-10 h-10 rounded-full" />
                                     <p class="text-sm my-auto px-2 ">{{ creators.username }}</p>
@@ -101,7 +101,7 @@
                         <div v-else v-for="(lists, index) in likedStore.getLiked ">
                             <div v-if="index == likedStore.getLiked.length - 1 && index >= 4">
                                 <NuxtLink v-if="collectionMore" :to="'/podcast/' + lists.podcastId" class="flex py-2">
-                                    <img v-if="lists.fk_podcast_id.thumbnail == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="lists.fk_podcast_id.thumbnail == null" src="/blank-profile-pict.png"
                                         class="w-10 h-10 rounded-full" />
                                     <img v-else :src="lists.fk_podcast_id.thumbnail" class="w-10 h-10 rounded-full" />
                                     <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.fk_podcast_id.podcast_name
@@ -117,7 +117,7 @@
                             </div>
                             <div v-else-if="index < 4">
                                 <NuxtLink :to="'/podcast/' + lists.podcastId" class="flex py-2">
-                                    <img v-if="lists.fk_podcast_id.thumbnail == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="lists.fk_podcast_id.thumbnail == null" src="/blank-profile-pict.png"
                                         class="w-10 h-10 rounded-full" />
                                     <img v-else :src="lists.fk_podcast_id.thumbnail" class="w-10 h-10 rounded-full" />
                                     <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.fk_podcast_id.podcast_name
@@ -126,7 +126,7 @@
                             </div>
                             <div v-else-if="collectionMore">
                                 <NuxtLink :to="'/podcast/' + lists.podcastId" class="flex py-2">
-                                    <img v-if="lists.fk_podcast_id.thumbnail == null" src="../assets/images/fishe.jpg"
+                                    <img v-if="lists.fk_podcast_id.thumbnail == null" src="/blank-profile-pict.png"
                                         class="w-10 h-10 rounded-full" />
                                     <img v-else :src="lists.fk_podcast_id.thumbnail" class="w-10 h-10 rounded-full" />
                                     <p class="text-xl my-auto px-2 hover:text-gray-500">{{ lists.fk_podcast_id.podcast_name

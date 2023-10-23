@@ -1,5 +1,4 @@
 <template>
-
     <div v-if="podcastLoaded" class="grid grid-cols-6">
         <div class="col-span-6">
             <div class="p-8">
@@ -21,7 +20,7 @@
                         <div class="flex pb-3">
                             <!-- Creator -->
                             <NuxtLink :to="`/profile/${podcastStore.getSelectedPodcast.userId}`" class="flex">
-                                <img :src="userStore.getUser.profile_picture ? userStore.getUser.profile_picture : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
+                                <img :src="userStore.getUser.profile_picture ? userStore.getUser.profile_picture : '/blank-profile-pict.png'"
                                     class=" w-10 h-10 mr-4 rounded-full float-left" />
                                 <p class="text-black dark:text-white font-bold text-xl my-auto">{{
                                     podcastStore.getSelectedPodcast.fk_user_id.username
@@ -56,7 +55,8 @@
                                         podcastStore.getSelectedPodcast.description }}</p>
                                 </div>
                             </div>
-                            <button class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            <button v-if="showSeeMoreButton"
+                                class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                 @click="toggleExpanded">
                                 {{ isExpanded ? $t('seeLess') : $t('seeMore') }}
                             </button>
@@ -136,6 +136,9 @@ export default {
         ...mapStores(useUserStore, usePodcastStore, useCommentStore, useCommentLikeStore),
         placeholderText() {
             return this.$t('comment');
+        },
+        showSeeMoreButton() {
+            return this.podcastStore.getSelectedPodcast.description.length > 400;
         },
     },
     created() {
