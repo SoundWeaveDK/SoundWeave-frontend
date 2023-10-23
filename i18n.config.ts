@@ -79,7 +79,7 @@ export default defineI18nConfig(() => ({
                   seeLess: 'See Less',
                   seeMore: 'See More',
                   unavailable: 'The podcast is unavailable',
-                  noPodcast: 'No podcast available',
+                  noPodcasts: 'No podcast available',
             },
             fr: {
                   welcome: 'Bienvenue',
