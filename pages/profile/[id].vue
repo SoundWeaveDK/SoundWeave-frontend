@@ -19,7 +19,7 @@
         <div v-if="user" class="p-6">
             <div class="flex items-center space-x-4 ml-4">
                 <div class="flex-shrink-0">
-                    <img :src="user.profile_picture ? user.profile_picture : 'https://cdn.vanderbilt.edu/vu-URL/wp-content/uploads/sites/288/2019/03/19223634/Image-Coming-Soon-Placeholder.png'"
+                    <img :src="user.profile_picture ? user.profile_picture : '/blank-profile-pict.png'"
                         alt="Profile picture" class="rounded-full w-24 h-24 mt-2">
                 </div>
                 <div>
