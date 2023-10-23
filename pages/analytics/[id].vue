@@ -1,58 +1,66 @@
 <template>
-    <h1 class="text-4xl font-bold text-center text-black dark:text-white py-4">{{ podcastData.podcast_name }}</h1>
-    <div v-if="podcastData.id" class="grid grid-cols-4 gap-4 p-12 pt-0 h-full">
-        <div class="col-span-2 bg-white p-4 rounded-lg shadow-lg">
-            <!-- Views -->
-            <!-- centered text -->
-            <div class="text-center">
-                <h2 class="text-2xl font-bold text-gray-800">{{ $t('listens') }}</h2>
-                <p class="text-gray-700 text-3xl font-bold">{{ podcastData.views }}</p>
-            </div>
-        </div>
-
-        <div class="col-span-1 bg-white p-4 rounded-lg shadow-lg">
-            <div class="text-center">
-                <!-- Money -->
-                <h2 class="text-2xl font-bold text-gray-800">{{ $t('income') }}</h2>
-                <p class="text-gray-700 text-3xl font-bold">{{ podcastData.views / 2 }}kr</p>
-            </div>
-        </div>
-
-        <div class="col-span-1 bg-white p-4 rounded-lg shadow-lg">
-            <div class="text-center">
-                <!-- Likes -->
-                <h2 class="text-2xl font-bold text-gray-800">{{ $t('likes') }}</h2>
-                <p class="text-gray-700 text-3xl font-bold">{{ podcastData.likes }}</p>
-            </div>
-        </div>
-
-
-        <div class="col-span-2 bg-white p-4 rounded-lg shadow-lg ">
-            <Line v-if="lineData.labels.length > 0" :data="lineData" :options="lineOptions" />
-        </div>
-
-        <div class="col-span-2 bg-white p-4 rounded-lg shadow-lg">
-            <Pie v-if="pieData.labels.length > 0" :options="pieOptions" :data="pieData" />
-        </div>
-
-        <div class="col-span-4 bg-white p-4 rounded-lg shadow-lg">
-            <!-- show top 3 contries -->
-            <h2 class="text-2xl font-bold text-gray-800 p-4">{{ $t('demographics') }}</h2>
-            <!-- as a percentage -->
-            <div class="grid grid-cols-3 gap-4">
-                <div v-for="(country, index) in demographicData.labels" :key="index"
-                    class="bg-white p-4 rounded-lg shadow-lg">
+    <div v-if="podcastData.id">
+        <div v-if="userStore.getUser.id === podcastData.userId">
+            <h1 class="text-4xl font-bold text-center text-black dark:text-white py-4">{{ podcastData.podcast_name }}</h1>
+            <div class="grid grid-cols-4 gap-4 p-12 pt-0 h-full">
+                <div class="col-span-2 bg-white p-4 rounded-lg shadow-lg">
+                    <!-- Views -->
+                    <!-- centered text -->
                     <div class="text-center">
-                        <h2 class="text-2xl font-bold text-gray-800">{{ country }}</h2>
-                        <p class="text-gray-700 text-3xl font-bold">{{ demographicData.data[index] }} %</p>
+                        <h2 class="text-2xl font-bold text-gray-800">{{ $t('listens') }}</h2>
+                        <p class="text-gray-700 text-3xl font-bold">{{ podcastData.views }}</p>
+                    </div>
+                </div>
+
+                <div class="col-span-1 bg-white p-4 rounded-lg shadow-lg">
+                    <div class="text-center">
+                        <!-- Money -->
+                        <h2 class="text-2xl font-bold text-gray-800">{{ $t('income') }}</h2>
+                        <p class="text-gray-700 text-3xl font-bold">{{ podcastData.views / 2 }}kr</p>
+                    </div>
+                </div>
+
+                <div class="col-span-1 bg-white p-4 rounded-lg shadow-lg">
+                    <div class="text-center">
+                        <!-- Likes -->
+                        <h2 class="text-2xl font-bold text-gray-800">{{ $t('likes') }}</h2>
+                        <p class="text-gray-700 text-3xl font-bold">{{ podcastData.likes }}</p>
+                    </div>
+                </div>
+
+
+                <div class="col-span-2 bg-white p-4 rounded-lg shadow-lg ">
+                    <Line v-if="lineData.labels.length > 0" :data="lineData" :options="lineOptions" />
+                </div>
+
+                <div class="col-span-2 bg-white p-4 rounded-lg shadow-lg">
+                    <Pie v-if="pieData.labels.length > 0" :options="pieOptions" :data="pieData" />
+                </div>
+
+                <div class="col-span-4 bg-white p-4 rounded-lg shadow-lg">
+                    <!-- show top 3 contries -->
+                    <h2 class="text-2xl font-bold text-gray-800 p-4">{{ $t('demographics') }}</h2>
+                    <!-- as a percentage -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div v-for="(country, index) in demographicData.labels" :key="index"
+                            class="bg-white p-4 rounded-lg shadow-lg">
+                            <div class="text-center">
+                                <h2 class="text-2xl font-bold text-gray-800">{{ country }}</h2>
+                                <p class="text-gray-700 text-3xl font-bold">{{ demographicData.data[index] }} %</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div v-else class="flex justify-center items-center h-full">
+            <h1 class="text-4xl font-bold text-center text-black dark:text-white py-4">{{ $t('unavailable') }}</h1>
+        </div>
     </div>
-    <div v-else class="flex justify-center items-center h-screen">
+    <div v-else class="flex justify-center items-center h-full">
         <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
     </div>
+    <!-- Data is unavailable -->
 </template>
 
 <script setup>
@@ -80,9 +88,6 @@ export default {
     },
     created() {
         this.getPodcast()
-        this.getData()
-        this.getPie()
-        this.getLine()
     },
 
     data() {
@@ -128,6 +133,11 @@ export default {
             }).then((response) => {
                 if (response.status === 200) {
                     this.podcastData = response.data
+                    if (this.userStore.getUser.id === this.podcastData.userId) {
+                        this.getData()
+                        this.getPie()
+                        this.getLine()
+                    }
                 }
             }).catch((error) => {
                 if (error) {
